@@ -1,6 +1,5 @@
 import { IonContent, IonPage, IonButton } from "@ionic/react";
 import { useEffect } from "react";
-import "../css/global.css";
 import "../css/pages/Landing.css";
 
 function Landing() {
