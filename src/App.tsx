@@ -11,6 +11,7 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { ellipse, square, triangle } from "ionicons/icons";
+
 import Landing from "./pages/Landing";
 import Tab1 from "./pages/Tab1";
 
@@ -32,6 +33,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import "./css/global.css";
 
 setupIonicReact();
 
