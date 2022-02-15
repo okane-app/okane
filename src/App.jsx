@@ -2,6 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
   IonIcon,
+  IonInput,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
@@ -12,8 +13,9 @@ import {
 import { IonReactRouter } from "@ionic/react-router";
 import { ellipse, square, triangle } from "ionicons/icons";
 
-import Landing from "./pages/Landing";
-import Tab1 from "./pages/Tab1";
+import Accueil from "./pages/Accueil";
+import Connexion from "./pages/Connexion";
+import Inscription from "./pages/Inscription";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -43,20 +45,23 @@ function App() {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/landing">
-              <Landing />
+            <Route exact path="/connexion">
+              <Connexion />
             </Route>
-            <Route exact path="/tab1">
-              <Tab1 />
+            <Route exact path="/inscription">
+              <Inscription />
+            </Route>
+            <Route exact path="/accueil">
+              <Accueil />
             </Route>
             <Route exact path="/">
-              <Redirect to="/landing" />
+              <Redirect to="/accueil" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/tab1">
+            <IonTabButton tab="tab1" href="/accueil">
               <IonIcon icon={triangle} />
-              <IonLabel>Tab 1</IonLabel>
+              <IonLabel>Accueil</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
