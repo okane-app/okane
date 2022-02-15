@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: "***REMOVED***",
   authDomain: "***REMOVED***",
   projectId: "***REMOVED***",
   storageBucket: "***REMOVED***",
