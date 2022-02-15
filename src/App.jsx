@@ -1,7 +1,7 @@
 import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
-  IonIcon,
+  IonIcon, IonInput,
   IonLabel,
   IonRouterOutlet,
   IonTabBar,
@@ -14,6 +14,7 @@ import { ellipse, square, triangle } from "ionicons/icons";
 
 import Landing from "./pages/Landing";
 import Tab1 from "./pages/Tab1";
+import Login from "./pages/Login";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -34,6 +35,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import "./css/global.css";
+import Register from "./pages/Register";
 
 setupIonicReact();
 
@@ -43,6 +45,12 @@ function App() {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/register">
+              <Register />
+            </Route>
             <Route exact path="/landing">
               <Landing />
             </Route>
