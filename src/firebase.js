@@ -1,30 +1,15 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth } from "firebase/auth";
 
-import {
-  getFirestore,
-  query,
-  getDocs,
-  collection,
-  where,
-  addDoc,
-}from "firebase/firestore";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 import {
-  GoogleAuthProvider,
-  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
 } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "***REMOVED***",
   authDomain: "***REMOVED***",
@@ -35,38 +20,36 @@ const firebaseConfig = {
   measurementId: "***REMOVED***",
 };
 
-
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
-export const auth = getAuth(app);
+const auth = getAuth(app);
 
-// log email password
-const logInWithEmailAndPassword = async (email, password) => {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
+const login = async (email, password) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      alert("Connexion réussie !");
+    })
+    .catch((error) => {
+      console.error(error.message);
+    });
 };
 
-// enregistrer mail et mdp
-const registerWithEmailAndPassword = async (name, email, password) => {
+const register = async (email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
     await addDoc(collection(db, "users"), {
       uid: user.uid,
-      name,
       authProvider: "local",
       email,
     });
+
+    if (user) {
+      alert("Inscription réussie !");
+    }
   } catch (err) {
     console.error(err);
-    alert(err.message);
   }
 };
 
@@ -76,21 +59,19 @@ const sendPasswordReset = async (email) => {
     alert("Password reset link sent!");
   } catch (err) {
     console.error(err);
-    alert(err.message);
   }
 };
+
 const logout = () => {
   signOut(auth);
 };
+
 export {
+  auth,
   db,
   signInWithEmailAndPassword,
-  logInWithEmailAndPassword,
-  registerWithEmailAndPassword,
+  login,
+  register,
   sendPasswordReset,
   logout,
 };
-
-
-
-
