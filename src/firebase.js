@@ -27,8 +27,9 @@ const auth = getAuth(app);
 const login = async (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      const user = userCredential.user;
+      // const user = userCredential.user;
       alert("Connexion réussie !");
+      console.log(auth.currentUser);
     })
     .catch((error) => {
       console.error(error.message);
@@ -46,7 +47,7 @@ const register = async (email, password) => {
     });
 
     if (user) {
-      alert("Inscription réussie !");
+      console.log(auth.currentUser);
     }
   } catch (err) {
     console.error(err);
