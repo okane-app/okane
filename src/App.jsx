@@ -45,19 +45,12 @@ function App() {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/connexion">
-              <Connexion />
-            </Route>
-            <Route exact path="/inscription">
-              <Inscription />
-            </Route>
-            <Route exact path="/splash">
-              <Splash />
-            </Route>
-            <Route exact path="/">
-              <Redirect to="/splash" />
-            </Route>
+            <Route path="/connexion" component={Connexion} exact />
+            <Route path="/inscription" component={Inscription} exact />
+            <Route path="/splash" component={Splash} exact />
+            <Route exact path="/" render={() => <Redirect to="/splash" />} />
           </IonRouterOutlet>
+          
           <IonTabBar slot="bottom">
             <IonTabButton tab="tab1" href="/accueil">
               <IonIcon icon={triangle} />

@@ -5,6 +5,7 @@ import { auth, register } from "../firebase";
 
 import "../css/no-tab.css";
 import "../css/pages/Inscription.css";
+import { IonPage } from "@ionic/react";
 
 function Inscription() {
   const [email, setEmail] = useState("");
@@ -17,46 +18,47 @@ function Inscription() {
   }, [user, loading]);
 
   return (
-    
-    <div className="register">
-      <div className="register__container">
-
-      <input
-          type="text"
-          className="register__textBox"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        />
+    <IonPage>
+      <div className="register">
+        <div className="register__container">
 
         <input
-          type="text"
-          className="register__textBox"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
-        />
+            type="text"
+            className="register__textBox"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+          />
 
-        <input
-          type="password"
-          className="register__textBox"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
+          <input
+            type="text"
+            className="register__textBox"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="E-mail Address"
+          />
 
-        <button
-          className="register__btn"
-          onClick={() => register(username,email, password)}
-        >
-          Register
-        </button>
+          <input
+            type="password"
+            className="register__textBox"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
 
-        <div>
-          Already have an account? <Link to="/connexion">Login</Link> now.
+          <button
+            className="register__btn"
+            onClick={() => register(username,email, password)}
+          >
+            Register
+          </button>
+
+          <div>
+            Already have an account? <Link to="/connexion">Login</Link> now.
+          </div>
         </div>
       </div>
-    </div>
+    </IonPage>
   );
 }
 export default Inscription;
