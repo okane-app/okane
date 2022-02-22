@@ -13,8 +13,9 @@ import { IonReactRouter } from "@ionic/react-router";
 import { triangle } from "ionicons/icons";
 
 import Splash from "./pages/Splash";
-import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
+import Connexion from "./pages/Connexion";
+import Dashboard from "./pages/Dashboard";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -44,12 +45,13 @@ function App() {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/splash" component={Splash} exact />
             <Route exact path="/" render={() => <Redirect to="/splash" />} />
-            <Route path="/connexion" component={Connexion} exact />
+            <Route path="/splash" component={Splash} exact />
             <Route path="/inscription" component={Inscription} exact />
+            <Route path="/connexion" component={Connexion} exact />
+            <Route path="/dashboard" component={Dashboard} exact />
           </IonRouterOutlet>
-          
+
           <IonTabBar slot="bottom">
             <IonTabButton tab="tab1" href="/accueil">
               <IonIcon icon={triangle} />
