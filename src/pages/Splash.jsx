@@ -1,9 +1,11 @@
 import { IonContent, IonPage, IonButton } from "@ionic/react";
+import { hideTabs } from "../utils";
 
-import "../css/no-tab.css";
 import "../css/pages/Splash.css";
 
 function Splash() {
+  hideTabs();
+
   return (
     <IonPage>
       <IonContent fullscreen>
