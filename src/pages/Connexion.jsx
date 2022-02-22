@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import "../css/no-tab.css";
 import "../css/pages/Connexion.css";
+import { IonPage } from "@ionic/react";
 
 function Accueil() {
   const [email, setEmail] = useState("");
@@ -20,33 +21,35 @@ function Accueil() {
   }, [user, loading]);
 
   return (
-    <div className="login">
-      <div className="login__container">
-        <input
-          type="text"
-          className="login__textBox"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
-        />
-        <input
-          type="password"
-          className="login__textBox"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <button className="login__btn" onClick={() => login(email, password)}>
-          Login
-        </button>
-        <div>
-          <Link to="/reset">Forgot Password</Link>
-        </div>
-        <div>
-          Don't have an account? <Link to="/inscription">Register</Link> now.
+    <IonPage>
+      <div className="login">
+        <div className="login__container">
+          <input
+            type="text"
+            className="login__textBox"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="E-mail Address"
+          />
+          <input
+            type="password"
+            className="login__textBox"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          <button className="login__btn" onClick={() => login(email, password)}>
+            Login
+          </button>
+          <div>
+            <Link to="/reset">Forgot Password</Link>
+          </div>
+          <div>
+            Don't have an account? <Link to="/inscription">Register</Link> now.
+          </div>
         </div>
       </div>
-    </div>
+    </IonPage>
   );
 }
 export default Accueil;
