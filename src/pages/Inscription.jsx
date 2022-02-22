@@ -50,7 +50,10 @@ function Inscription() {
 
           <button
             className="register__btn"
-            onClick={() => register(username, email, password)}
+            onClick={async () => {
+              await register(username, email, password);
+              window.location.href = "./dashboard"; // TODO change
+            }}
           >
             Register
           </button>
