@@ -36,7 +36,6 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import "./css/global.css";
 
 setupIonicReact();
 
@@ -55,7 +54,7 @@ function App() {
 
           <IonTabBar slot="bottom">
             <IonTabButton tab="dashboard" href="/dashboard">
-              <IonIcon icon={triangle} />
+              <IonIcon icon={square} />
               <IonLabel>Accueil</IonLabel>
             </IonTabButton>
           </IonTabBar>
