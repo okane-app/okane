@@ -44,10 +44,10 @@ function App() {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/connexion" component={Connexion} exact />
-            <Route path="/inscription" component={Inscription} exact />
             <Route path="/splash" component={Splash} exact />
             <Route exact path="/" render={() => <Redirect to="/splash" />} />
+            <Route path="/connexion" component={Connexion} exact />
+            <Route path="/inscription" component={Inscription} exact />
           </IonRouterOutlet>
           
           <IonTabBar slot="bottom">
