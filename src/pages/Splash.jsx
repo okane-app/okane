@@ -1,7 +1,7 @@
 import { IonContent, IonPage, IonButton } from "@ionic/react";
 
 import "../css/no-tab.css";
-import "../css/pages/Accueil.css";
+import "../css/pages/Splash.css";
 
 function Splash() {
   return (
