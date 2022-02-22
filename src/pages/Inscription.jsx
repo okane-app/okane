@@ -3,7 +3,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 import { auth, register } from "../firebase";
 
-import "../css/no-tab.css";
+import { hideTabs } from "../utils";
+
 import "../css/pages/Inscription.css";
 import { IonPage } from "@ionic/react";
 
@@ -17,12 +18,13 @@ function Inscription() {
     if (loading) return;
   }, [user, loading]);
 
+  hideTabs();
+
   return (
     <IonPage>
       <div className="register">
         <div className="register__container">
-
-        <input
+          <input
             type="text"
             className="register__textBox"
             value={username}
@@ -48,7 +50,7 @@ function Inscription() {
 
           <button
             className="register__btn"
-            onClick={() => register(username,email, password)}
+            onClick={() => register(username, email, password)}
           >
             Register
           </button>

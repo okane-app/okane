@@ -3,7 +3,8 @@ import { Link, Redirect } from "react-router-dom";
 import { auth, login } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import "../css/no-tab.css";
+import { hideTabs } from "../utils";
+
 import "../css/pages/Connexion.css";
 import { IonPage } from "@ionic/react";
 
@@ -19,6 +20,8 @@ function Accueil() {
     }
     if (user) <Redirect to="/accueil" />;
   }, [user, loading]);
+
+  hideTabs();
 
   return (
     <IonPage>

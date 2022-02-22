@@ -2,7 +2,8 @@ import { useState } from "react";
 import { IonContent, IonPage, IonButton } from "@ionic/react";
 import { auth } from "../firebase";
 
-import "../css/yes-tab.css";
+import { showTabs } from "../utils";
+
 import "../css/pages/Dashboard.css";
 
 function Dashboard() {
@@ -15,6 +16,8 @@ function Dashboard() {
       window.location.href = "./splash";
     }
   });
+
+  showTabs();
 
   return (
     <IonPage>
