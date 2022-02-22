@@ -54,9 +54,9 @@ function App() {
           </IonRouterOutlet>
 
           <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/accueil">
+            <IonTabButton tab="dashboard" href="/dashboard">
               <IonIcon icon={triangle} />
-              <IonLabel>Splash</IonLabel>
+              <IonLabel>Accueil</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
