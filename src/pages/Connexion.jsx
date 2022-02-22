@@ -41,7 +41,13 @@ function Accueil() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
-          <button className="login__btn" onClick={() => login(email, password)}>
+          <button
+            className="login__btn"
+            onClick={async () => {
+              await login(email, password);
+              window.location.href = "./dashboard"; // TODO change
+            }}
+          >
             Login
           </button>
           <div>
