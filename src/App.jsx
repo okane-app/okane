@@ -13,7 +13,7 @@ import {
 import { IonReactRouter } from "@ionic/react-router";
 import { ellipse, square, triangle } from "ionicons/icons";
 
-import Accueil from "./pages/Accueil";
+import Splash from "./pages/Splash";
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
 
@@ -51,17 +51,17 @@ function App() {
             <Route exact path="/inscription">
               <Inscription />
             </Route>
-            <Route exact path="/accueil">
-              <Accueil />
+            <Route exact path="/splash">
+              <Splash />
             </Route>
             <Route exact path="/">
-              <Redirect to="/accueil" />
+              <Redirect to="/splash" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="tab1" href="/accueil">
               <IonIcon icon={triangle} />
-              <IonLabel>Accueil</IonLabel>
+              <IonLabel>Splash</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
