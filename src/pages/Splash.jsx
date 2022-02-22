@@ -3,7 +3,7 @@ import { IonContent, IonPage, IonButton } from "@ionic/react";
 import "../css/no-tab.css";
 import "../css/pages/Accueil.css";
 
-function Accueil() {
+function Splash() {
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -20,4 +20,4 @@ function Accueil() {
   );
 }
 
-export default Accueil;
+export default Splash;
