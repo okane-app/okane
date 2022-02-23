@@ -40,7 +40,7 @@ setupIonicReact();
 
 function App() {
   return (
-    <IonApp>
+    <IonApp className="app">
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>

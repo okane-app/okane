@@ -1,0 +1,42 @@
+*{
+    background-color: white;
+    color: black;
+}
+.titre{
+    text-align: center;
+    
+}
+
+.login__container{
+    margin: auto;
+    width: 500px;
+ 
+    text-align: center;
+}
+
+.login__textBox{
+    text-align: center;
+    border-radius: 25px;
+    justify-content: space-between;
+    margin-top: 10px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    display: block;
+    padding: 7px;
+
+}
+.login__btn{
+    margin-top: 10px;
+    border-radius: 25px;
+    background: #5DB075;
+    padding: 11px;
+    height: 100%;
+    width: 100%;
+}
+
+.lien{
+    color: #5DB075;
+    
+}
+
