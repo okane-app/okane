@@ -21,6 +21,9 @@ function Accueil() {
 
   return (
     <div className="login">
+      <div className ="titre">
+        <h1>Connexion</h1>
+      </div>
       <div className="login__container">
         <input
           type="text"
@@ -36,14 +39,22 @@ function Accueil() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+        <div>
+          <Link className="lien" to="/reset">Forgot Password ?</Link>
+        </div>
+        <div className="social">
+        <p><i className="fab fa-google"></i></p>
+        <p><i class="fab fa-youtube"></i></p>
+        <p><i class="fab fa-facebook-f"></i></p>
+
+
+        </div>
         <button className="login__btn" onClick={() => login(email, password)}>
           Login
         </button>
+        
         <div>
-          <Link to="/reset">Forgot Password</Link>
-        </div>
-        <div>
-          Don't have an account? <Link to="/inscription">Register</Link> now.
+          Don't have an account? <Link className="lien" to="/inscription">Register</Link> now.
         </div>
       </div>
     </div>
