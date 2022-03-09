@@ -8,10 +8,10 @@ function Accueil() {
     <IonPage>
       <IonContent fullscreen>
         <h1 className="motto">Ne dépense plus jamais de trop.</h1>
-        <IonButton expand="block" href="/connexion">
+        <IonButton color="primary" expand="block" href="/connexion">
           Connexion
         </IonButton>
-        <IonButton expand="block" href="/inscription">
+        <IonButton color="secondary"  expand="block" href="/inscription">
           Inscription
         </IonButton>
         <p className="version">Version 1.0.0a</p>

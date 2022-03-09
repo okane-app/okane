@@ -1,0 +1,41 @@
+*{
+    background-color: white;
+    color: black;
+    font-size: medium;
+}
+.titre{
+    text-align: center;
+    
+}
+
+.register__container{
+    margin: auto;
+    width: 500px;
+    text-align: center
+}
+
+.register__btn{
+    margin-top: 10px;
+    border-radius: 25px;
+    background: #5DB075;
+    padding: 11px;
+    height: 100%;
+    width: 100%;
+}
+
+.register__textBox{
+    background-color: #E8E8E8;
+    text-align: center;
+    border-radius: 25px;
+    justify-content: space-between;
+    margin-top: 10px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    display: block;
+    padding: 7px;
+}
+
+.lien{
+    color: #5DB075;
+}

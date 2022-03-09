@@ -42,13 +42,7 @@ function Accueil() {
         <div>
           <Link className="lien" to="/reset">Forgot Password ?</Link>
         </div>
-        <div className="social">
-        <p><i className="fab fa-google"></i></p>
-        <p><i class="fab fa-youtube"></i></p>
-        <p><i class="fab fa-facebook-f"></i></p>
-
-
-        </div>
+      
         <button className="login__btn" onClick={() => login(email, password)}>
           Login
         </button>

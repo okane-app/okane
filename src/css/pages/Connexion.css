@@ -1,6 +1,8 @@
 *{
     background-color: white;
     color: black;
+    font-size: medium;
+
 }
 .titre{
     text-align: center;
@@ -15,6 +17,7 @@
 }
 
 .login__textBox{
+    background-color: #E8E8E8;
     text-align: center;
     border-radius: 25px;
     justify-content: space-between;

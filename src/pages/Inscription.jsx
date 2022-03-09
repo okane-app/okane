@@ -17,6 +17,9 @@ function Inscription() {
 
   return (
     <div className="register">
+       <div className ="titre">
+        <h1>Inscription</h1>
+      </div>
       <div className="register__container">
         <input
           type="text"
@@ -32,6 +35,17 @@ function Inscription() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+         <input
+          type="password"
+          className="register__textBox"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Confirm your password"
+        />
+        <div>
+          <input type="checkbox" name="ConditionGeneral" value="newsletter" />
+          <label for="ConditionGeneral">j'accepte les <Link>condtions général d'utilisation</Link></label>
+        </div>
         <button
           className="register__btn"
           onClick={() => register(email, password)}
@@ -39,8 +53,9 @@ function Inscription() {
           Register
         </button>
         <div>
-          Already have an account? <Link to="/connexion">Login</Link> now.
+          Already have an account? <Link className="lien" to="#">Login</Link> now.
         </div>
+
       </div>
     </div>
   );
