@@ -10,7 +10,7 @@ import { IonPage } from "@ionic/react";
 
 import { doc, setDoc } from "firebase/firestore";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import { db } from "../firebase";
 
@@ -30,10 +30,13 @@ function Inscription() {
 		try {
 			const res = await createUserWithEmailAndPassword(auth, email, password);
 			const user = res.user;
+
+			await updateProfile(user, { displayName: username });
+
 			await setDoc(doc(db, "users", user.uid), {
-				username: username,
+				// username: username,
 				authProvider: "local",
-				email, // email: email
+				// email, // email: email
 			}).then(() => {
 				window.location.href = "./dashboard"; // TODO change
 			});

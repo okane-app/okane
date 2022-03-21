@@ -22,7 +22,7 @@ function Dashboard() {
 	return (
 		<IonPage>
 			<IonContent fullscreen>
-				<p>{JSON.stringify(user?.email)}</p>
+				<p>Bienvenue, {user?.displayName}</p>
 				<button onClick={() => logout()}>Déconnexion</button>
 			</IonContent>
 		</IonPage>
