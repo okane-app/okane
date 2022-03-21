@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { auth, login } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -12,12 +12,13 @@ function Connexion() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [user] = useAuthState(auth);
+	const history = useHistory();
 
 	useEffect(() => {
 		if (user) {
-			console.log("connecté");
+			history.push("/dashboard");
 		}
-	}, [user]);
+	}, [user, history]);
 
 	hideTabs();
 
