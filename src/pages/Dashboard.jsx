@@ -1,29 +1,29 @@
-import { useState } from "react";
-import { IonContent, IonPage, IonButton } from "@ionic/react";
-import { auth, logout } from "../firebase";
-
-import { showTabs } from "../utils";
-
 import "../css/pages/Dashboard.css";
 
-function Dashboard() {
-	const [user, setUser] = useState(null);
+import { IonButton, IonContent, IonPage } from "@ionic/react";
+import { auth, logout } from "../firebase";
+import { useEffect, useState } from "react/";
 
-	auth.onAuthStateChanged((user) => {
-		if (user) {
-			setUser(user);
-		} else {
-			window.location.href = "/splash";
-		}
-	});
+import Depenses from "./components/Depenses";
+import { onAuthStateChanged } from "firebase/auth";
+import { showTabs } from "../utils";
+
+function Dashboard() {
+	// onAuthStateChanged(auth, (user) => {
+	// 	if (!user) window.location.href = "/splash";
+	// });
+
+	const user = JSON.parse(localStorage.getItem("user"));
 
 	showTabs();
 
 	return (
 		<IonPage>
 			<IonContent fullscreen>
-				<p>Bienvenue, {user?.displayName}</p>
-				<button onClick={() => logout()}>Déconnexion</button>
+				<Depenses user={user} />
+
+				{/* TODO move */}
+				<IonButton onClick={() => logout()}>Déconnexion</IonButton>
 			</IonContent>
 		</IonPage>
 	);

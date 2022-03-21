@@ -1,24 +1,22 @@
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
-import { auth } from "../firebase";
-
-import { hideTabs } from "../utils";
-
 import "../css/pages/Inscription.css";
-import { IonPage } from "@ionic/react";
 
-import { doc, setDoc } from "firebase/firestore";
-
+import { Link, useHistory } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
+import { IonPage } from "@ionic/react";
+import { auth } from "../firebase";
 import { db } from "../firebase";
+import { hideTabs } from "../utils";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Inscription() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
 	const [user, loading] = useAuthState(auth);
+	const history = useHistory();
 
 	useEffect(() => {
 		if (loading) return;
@@ -38,7 +36,7 @@ function Inscription() {
 				authProvider: "local",
 				// email, // email: email
 			}).then(() => {
-				window.location.href = "./dashboard"; // TODO change
+				history.push("/dashboard");
 			});
 		} catch (err) {
 			console.error(err);

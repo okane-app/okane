@@ -1,13 +1,8 @@
-import { initializeApp } from "firebase/app";
+import { sendPasswordResetEmail, signOut } from "firebase/auth";
+
 import { getAuth } from "firebase/auth";
-
 import { getFirestore } from "firebase/firestore";
-
-import {
-	signInWithEmailAndPassword,
-	sendPasswordResetEmail,
-	signOut,
-} from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
 	apiKey: "***REMOVED***",
@@ -36,6 +31,7 @@ const sendPasswordReset = (email) => {
 
 const logout = () => {
 	signOut(auth);
+	localStorage.removeItem("user");
 };
 
 export { auth, db, sendPasswordReset, logout };

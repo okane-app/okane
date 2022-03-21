@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-
-import { hideTabs } from "../utils";
-
 import "../css/pages/Connexion.css";
+
+import { Link, useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import { IonPage } from "@ionic/react";
+import { auth } from "../firebase";
+import { hideTabs } from "../utils";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Connexion() {
 	const [email, setEmail] = useState("");
@@ -23,8 +23,9 @@ function Connexion() {
 
 	const login = (email, password) => {
 		signInWithEmailAndPassword(auth, email, password)
-			.then(() => {
-				window.location.href = "./dashboard"; // TODO change
+			.then((userCredential) => {
+				localStorage.setItem("user", JSON.stringify(userCredential.user));
+				history.push("/dashboard");
 			})
 			.catch((error) => {
 				console.error(error.message);
