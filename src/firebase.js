@@ -1,11 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 import {
 	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
 	sendPasswordResetEmail,
 	signOut,
 } from "firebase/auth";
@@ -24,39 +23,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-const login = (email, password) => {
-	signInWithEmailAndPassword(auth, email, password)
-		// .then((userCredential) => {
-		//   // const user = userCredential.user;
-		//   alert("Connexion réussie !");
-		//   console.log(auth.currentUser);
-		// })
-		.catch((error) => {
-			console.error(error.message);
-		});
-};
+// TODO MOVE
 
-const register = async (username, email, password) => {
+const sendPasswordReset = (email) => {
 	try {
-		const res = await createUserWithEmailAndPassword(auth, email, password);
-		const user = res.user;
-		await setDoc(doc(db, "users", user.uid), {
-			username: username,
-			authProvider: "local",
-			email, // email: email
-		});
-
-		if (user) {
-			console.log(auth.currentUser);
-		}
-	} catch (err) {
-		console.error(err);
-	}
-};
-
-const sendPasswordReset = async (email) => {
-	try {
-		await sendPasswordResetEmail(auth, email);
+		sendPasswordResetEmail(auth, email);
 		alert("Password reset link sent!");
 	} catch (err) {
 		console.error(err);
@@ -67,12 +38,4 @@ const logout = () => {
 	signOut(auth);
 };
 
-export {
-	auth,
-	db,
-	signInWithEmailAndPassword,
-	login,
-	register,
-	sendPasswordReset,
-	logout,
-};
+export { auth, db, sendPasswordReset, logout };

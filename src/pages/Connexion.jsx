@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { auth, login } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { hideTabs } from "../utils";
@@ -19,6 +20,16 @@ function Connexion() {
 			history.push("/dashboard");
 		}
 	}, [user, history]);
+
+	const login = (email, password) => {
+		signInWithEmailAndPassword(auth, email, password)
+			.then(() => {
+				window.location.href = "./dashboard"; // TODO change
+			})
+			.catch((error) => {
+				console.error(error.message);
+			});
+	};
 
 	hideTabs();
 
@@ -42,9 +53,8 @@ function Connexion() {
 					/>
 					<button
 						className="login__btn"
-						onClick={async () => {
-							await login(email, password);
-							window.location.href = "./dashboard"; // TODO change
+						onClick={() => {
+							login(email, password);
 						}}>
 						Login
 					</button>
