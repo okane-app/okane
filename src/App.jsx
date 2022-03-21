@@ -1,16 +1,16 @@
 import { Redirect, Route } from "react-router-dom";
 import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact,
+	IonApp,
+	IonIcon,
+	IonLabel,
+	IonRouterOutlet,
+	IonTabBar,
+	IonTabButton,
+	IonTabs,
+	setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { triangle } from "ionicons/icons";
+import { square } from "ionicons/icons";
 
 import Splash from "./pages/Splash";
 import Inscription from "./pages/Inscription";
@@ -39,28 +39,28 @@ import "./theme/variables.css";
 setupIonicReact();
 
 function App() {
-  return (
-    <IonApp>
-      <IonReactRouter>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route exact path="/" render={() => <Redirect to="/splash" />} />
-            <Route path="/splash" component={Splash} exact />
-            <Route path="/inscription" component={Inscription} exact />
-            <Route path="/connexion" component={Connexion} exact />
-            <Route path="/dashboard" component={Dashboard} exact />
-          </IonRouterOutlet>
+	return (
+		<IonApp>
+			<IonReactRouter>
+				<IonTabs>
+					<IonRouterOutlet>
+						<Route exact path="/" render={() => <Redirect to="/splash" />} />
+						<Route path="/splash" component={Splash} exact />
+						<Route path="/inscription" component={Inscription} exact />
+						<Route path="/connexion" component={Connexion} exact />
+						<Route path="/dashboard" component={Dashboard} exact />
+					</IonRouterOutlet>
 
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="dashboard" href="/dashboard">
-              <IonIcon icon={square} />
-              <IonLabel>Accueil</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonReactRouter>
-    </IonApp>
-  );
+					<IonTabBar slot="bottom">
+						<IonTabButton tab="dashboard" href="/dashboard">
+							<IonIcon icon={square} />
+							<IonLabel>Accueil</IonLabel>
+						</IonTabButton>
+					</IonTabBar>
+				</IonTabs>
+			</IonReactRouter>
+		</IonApp>
+	);
 }
 
 export default App;
