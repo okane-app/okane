@@ -7,25 +7,19 @@ import {
 	collection,
 	addDoc,
 } from "firebase/firestore";
-import IconPicker from 'react-icon-picker';
+import { square } from "ionicons/icons";
+import randomColor from "randomcolor";
+
 
 const divStyle = {
-	color: 'green',
+	color: randomColor(),
 };
 
-
+console.log(randomColor());
 
 const NouvelleCategorie = (props) => {
-	const icons = [
-		'fas fa-camera',
-		'fas fa-fish',
-		'fas fa-align-center',
-		'fas fa-align-justify'
-	];
 
-	const [color, setColor] = useState({
-		icon: ''
-	});
+
 	const [user] = useState(props.user);
 	const [nom, SetNom] = useState("");
 	const [limite, SetLimite] = useState(0);
@@ -59,17 +53,7 @@ const NouvelleCategorie = (props) => {
 						onChange={(e) => SetLimite((e.target.value))}
 					/>
 
-					<IconPicker
-						icons={icons}
-						defaultValue="fas fa-camera"
-						onChange={(icon) => {
-							setColor({
-								...color,
-								icon
-							})
-						}}
-					/>
-
+				<IonIcon icon={square} style={divStyle} classname="squareIcon"/>
 					<IonButton onClick={createUser}>
 						Ajouter
 					</IonButton>

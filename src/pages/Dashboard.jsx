@@ -6,13 +6,16 @@ import { collection } from "firebase/firestore";
 import { db } from "../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
+import { square } from "ionicons/icons";
 
 const Dashboard = (props) => {
 	const [user] = useState(props.user);
+	
 
 	const [depenses, loading, error] = useCollectionData(
-		collection(db, "users", user.uid, "depenses")
+		collection(db, "users", "DyUabIIgp0fvrPEBdA5gEGYExkI2", "categories")
 	);
+
 
 	return (
 		<IonPage>
@@ -23,7 +26,7 @@ const Dashboard = (props) => {
 					{depenses && (
 						<ul>
 							{depenses.map((depense, index) => {
-								return <li key={index}>{JSON.stringify(depense)}</li>;
+								return <IonIcon key={depenses.id} icon={square} style={{color: depense.couleur}}/>;
 							})}
 						</ul>
 					)}
