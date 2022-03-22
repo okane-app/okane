@@ -26,6 +26,7 @@ import {
 } from "@ionic/react";
 import { Redirect, Route } from "react-router-dom";
 
+import NouvelleCategorie from "./pages/NouvelleCategorie"
 import Connexion from "./pages/Connexion";
 import Dashboard from "./pages/Dashboard";
 import { IonReactRouter } from "@ionic/react-router";
@@ -50,6 +51,9 @@ const App = () => {
 						<Route exact path="/connexion">
 							<Connexion />
 						</Route>
+						<Route exact path="/nouvellecategorie">
+							<NouvelleCategorie  />
+						</Route>
 						<Route exact path="/dashboard">
 							<Dashboard user={currentUser} />
 						</Route>
@@ -58,9 +62,15 @@ const App = () => {
 						</Route>
 					</IonRouterOutlet>
 					<IonTabBar slot="bottom">
+						<IonTabButton tab="nouvellecategorie" href="/nouvellecategorie">
+							<IonIcon icon={square} />
+							<IonLabel>Nouvelle Categorie</IonLabel>
+					
+						</IonTabButton>
 						<IonTabButton tab="dashboard" href="/dashboard">
 							<IonIcon icon={square} />
 							<IonLabel>Accueil</IonLabel>
+					
 						</IonTabButton>
 					</IonTabBar>
 				</IonTabs>
