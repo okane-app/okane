@@ -1,6 +1,6 @@
 import "./css/Dashboard.css";
 
-import { IonContent, IonPage } from "@ionic/react";
+import { IonContent, IonPage, IonIcon } from "@ionic/react";
 
 import { collection } from "firebase/firestore";
 import { db } from "../firebase";

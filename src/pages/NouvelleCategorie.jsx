@@ -1,29 +1,43 @@
 import "./css/Connexion.css";
 
-import { IonContent, IonPage, IonButton } from "@ionic/react";
-import {db} from "../firebase"
+import { IonContent, IonPage, IonButton, IonIcon } from "@ionic/react";
+import { db } from "../firebase"
 import { useState } from "react";
-  
-const Firestore = () => {
-    const [nom  , SetNom] = useState("");
-    const [limite , SetLimite] = useState("");
-    const sub = (e) => {
-    
-          
-        // Add data to the store
-        db.collection("users").add({
-            Nom: nom,
-            Limite: limite,
-        })
-        .then((docRef) => {
-            alert("Data Successfully Submitted");
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
-    }
-  
-    return (
+import {
+	collection,
+	addDoc,
+} from "firebase/firestore";
+import IconPicker from 'react-icon-picker';
+
+const divStyle = {
+	color: 'green',
+};
+
+
+
+const NouvelleCategorie = (props) => {
+	const icons = [
+		'fas fa-camera',
+		'fas fa-fish',
+		'fas fa-align-center',
+		'fas fa-align-justify'
+	];
+
+	const [color, setColor] = useState({
+		icon: ''
+	});
+	const [user] = useState(props.user);
+	const [nom, SetNom] = useState("");
+	const [limite, SetLimite] = useState(0);
+	const usersCollectionRef = collection(db, "users", "DyUabIIgp0fvrPEBdA5gEGYExkI2", "categories");
+
+
+	const createUser = async () => {
+		await addDoc(usersCollectionRef, { nom: nom, limite: parseFloat(limite) });
+	};
+
+
+	return (
 		<IonPage>
 			<IonContent fullscreen>
 				<div className="container">
@@ -38,21 +52,32 @@ const Firestore = () => {
 
 					<label htmlFor="limite">Plafond</label>
 					<input
-						type="text"
+						type="number"
 						name="limite"
 						id="limite"
 						value={limite}
-						onChange={(e) => SetLimite(e.target.value)}
+						onChange={(e) => SetLimite((e.target.value))}
 					/>
 
-					<IonButton onClick={() => sub()}>
-						Connexion
+					<IconPicker
+						icons={icons}
+						defaultValue="fas fa-camera"
+						onChange={(icon) => {
+							setColor({
+								...color,
+								icon
+							})
+						}}
+					/>
+
+					<IonButton onClick={createUser}>
+						Ajouter
 					</IonButton>
 				</div>
 			</IonContent>
-		</IonPage>
-      
-    );
+		</IonPage >
+
+	);
 }
-  
-export default Firestore;
+
+export default NouvelleCategorie;

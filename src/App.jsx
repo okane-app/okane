@@ -70,7 +70,6 @@ const App = () => {
 						<IonTabButton tab="dashboard" href="/dashboard">
 							<IonIcon icon={square} />
 							<IonLabel>Accueil</IonLabel>
-					
 						</IonTabButton>
 					</IonTabBar>
 				</IonTabs>
