@@ -16,7 +16,6 @@ const Dashboard = (props) => {
 		collection(db, "users", "DyUabIIgp0fvrPEBdA5gEGYExkI2", "categories")
 	);
 
-
 	return (
 		<IonPage>
 			<IonContent fullscreen>
@@ -26,7 +25,7 @@ const Dashboard = (props) => {
 					{depenses && (
 						<ul>
 							{depenses.map((depense, index) => {
-								return <IonIcon key={depenses.id} icon={square} style={{color: depense.couleur}}/>;
+								return <li><IonIcon key={depenses.id} icon={square} style={{color: depense.couleur}}/>{depense.limite} {depense.nom}</li>;
 							})}
 						</ul>
 					)}
