@@ -1,8 +1,7 @@
 {
-  "name": "Okane",
+  "name": "okane-v3",
   "integrations": {
     "capacitor": {}
   },
-  "type": "react",
-  "id": "cab99c81"
+  "type": "react"
 }

@@ -1,32 +1,36 @@
+import "./css/Dashboard.css";
+
+import { IonContent, IonPage } from "@ionic/react";
+
+import { collection } from "firebase/firestore";
+import { db } from "../firebase";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
-import { IonContent, IonPage, IonButton } from "@ionic/react";
-import { auth, logout } from "../firebase";
 
-import { showTabs } from "../utils";
+const Dashboard = (props) => {
+	const [user] = useState(props.user);
 
-import "../css/pages/Dashboard.css";
-
-function Dashboard() {
-	const [user, setUser] = useState(null);
-
-	auth.onAuthStateChanged((user) => {
-		if (user) {
-			setUser(user);
-		} else {
-			window.location.href = "/splash";
-		}
-	});
-
-	showTabs();
+	const [depenses, loading, error] = useCollectionData(
+		collection(db, "users", user.uid, "depenses")
+	);
 
 	return (
 		<IonPage>
 			<IonContent fullscreen>
-				<p>Bienvenue, {user?.displayName}</p>
-				<button onClick={() => logout()}>Déconnexion</button>
+				<div className="container">
+					{error && <p>Erreur : {JSON.stringify(error)}</p>}
+					{loading && <p>Chargement de vos dernières dépenses...</p>}
+					{depenses && (
+						<ul>
+							{depenses.map((depense, index) => {
+								return <li key={index}>{JSON.stringify(depense)}</li>;
+							})}
+						</ul>
+					)}
+				</div>
 			</IonContent>
 		</IonPage>
 	);
-}
+};
 
 export default Dashboard;
