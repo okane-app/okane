@@ -1,17 +1,13 @@
-/* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
-/* Basic CSS for apps built with Ionic */
 import "@ionic/react/css/normalize.css";
 import "@ionic/react/css/structure.css";
 import "@ionic/react/css/typography.css";
-/* Optional CSS utils that can be commented out */
 import "@ionic/react/css/padding.css";
 import "@ionic/react/css/float-elements.css";
 import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
-/* Theme variables */
 import "./theme/variables.css";
 
 import {
@@ -25,33 +21,45 @@ import {
 	setupIonicReact,
 } from "@ionic/react";
 import { Redirect, Route } from "react-router-dom";
+import { square, triangle } from "ionicons/icons";
+import { useEffect, useState } from "react";
 
 import Connexion from "./pages/Connexion";
 import Dashboard from "./pages/Dashboard";
 import { IonReactRouter } from "@ionic/react-router";
 import Splash from "./pages/Splash";
+import Test from "./pages/Test";
 import { auth } from "./firebase";
-import { square } from "ionicons/icons";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 setupIonicReact();
 
 const App = () => {
-	const [currentUser] = useAuthState(auth);
+	const [currentUser, setCurrentUser] = useState(null);
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setCurrentUser(user);
+		});
+		return () => unsubscribe();
+	}, []);
 
 	return (
 		<IonApp>
 			<IonReactRouter>
 				<IonTabs>
 					<IonRouterOutlet>
-						<Route exact path="/splash">
+						<Route path="/splash">
 							<Splash />
 						</Route>
-						<Route exact path="/connexion">
+						<Route path="/connexion">
 							<Connexion />
 						</Route>
-						<Route exact path="/dashboard">
+						<Route path="/dashboard">
 							<Dashboard user={currentUser} />
+						</Route>
+						<Route path="/test">
+							<Test />
 						</Route>
 						<Route exact path="/">
 							<Redirect to="/splash" />
@@ -61,6 +69,11 @@ const App = () => {
 						<IonTabButton tab="dashboard" href="/dashboard">
 							<IonIcon icon={square} />
 							<IonLabel>Accueil</IonLabel>
+						</IonTabButton>
+
+						<IonTabButton tab="test" href="/test">
+							<IonIcon icon={triangle} />
+							<IonLabel>Test</IonLabel>
 						</IonTabButton>
 					</IonTabBar>
 				</IonTabs>

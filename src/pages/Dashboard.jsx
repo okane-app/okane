@@ -1,15 +1,12 @@
 import "./css/Dashboard.css";
 
-import { IonContent, IonPage } from "@ionic/react";
+import { IonButton, IonContent, IonPage } from "@ionic/react";
 
 import { collection } from "firebase/firestore";
 import { db } from "../firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { useState } from "react";
 
-const Dashboard = (props) => {
-	const [user] = useState(props.user);
-
+const Dashboard = ({ user }) => {
 	const [depenses, loading, error] = useCollectionData(
 		collection(db, "users", user.uid, "depenses")
 	);
@@ -27,6 +24,7 @@ const Dashboard = (props) => {
 							})}
 						</ul>
 					)}
+					<IonButton routerLink="/test">Test</IonButton>
 				</div>
 			</IonContent>
 		</IonPage>
