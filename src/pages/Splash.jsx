@@ -10,6 +10,10 @@ const Splash = ({ navigation }) => {
 				title="Connexion"
 				onPress={() => navigation.navigate("Connexion")}
 			/>
+			<Button
+				title="Inscription"
+				onPress={() => navigation.navigate("Inscription")}
+			/>
 			<StatusBar style="auto" />
 		</View>
 	);
