@@ -30,14 +30,16 @@ const Accueil = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Dernières dépenses</Text>
 			{depenses && (
-				<FlatList
-					style={styles.depenses}
-					data={depenses}
-					renderItem={renderDepense}
-					keyExtractor={(item) => item.nom}
-				/>
+				<>
+					<Text style={styles.title}>Dernières dépenses</Text>
+					<FlatList
+						style={styles.depenses}
+						data={depenses}
+						renderItem={renderDepense}
+						keyExtractor={(item) => item.nom}
+					/>
+				</>
 			)}
 			{loading && <Text>Chargement de vos dernières dépenses...</Text>}
 			{error && <Text>Erreur : {JSON.stringify(error)}</Text>}
