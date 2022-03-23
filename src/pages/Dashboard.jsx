@@ -1,21 +1,19 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
+import { auth } from "../../firebase";
 
-const Splash = ({ navigation }) => {
+const Dashboard = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
-			<Text>Hello, World!</Text>
-			<Button
-				title="Connexion"
-				onPress={() => navigation.navigate("Connexion")}
-			/>
+			<Text>Dashboard</Text>
+			<Text>{auth.currentUser?.uid}</Text>
 			<StatusBar style="auto" />
 		</View>
 	);
 };
 
-export default Splash;
+export default Dashboard;
 
 const styles = StyleSheet.create({
 	container: {
