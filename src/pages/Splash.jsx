@@ -1,25 +1,27 @@
-import { IonContent, IonPage, IonButton } from "@ionic/react";
-import { hideTabs } from "../utils";
+import { Button, StyleSheet, Text, View } from "react-native";
 
-import "../css/pages/Splash.css";
+import { StatusBar } from "expo-status-bar";
 
-function Splash() {
-  hideTabs();
-
-  return (
-    <IonPage>
-      <IonContent fullscreen>
-        <h1 className="motto">Ne dépense plus jamais de trop.</h1>
-        <IonButton expand="block" routerLink="/connexion">
-          Connexion
-        </IonButton>
-        <IonButton expand="block" routerLink="/inscription">
-          Inscription
-        </IonButton>
-        <p className="version">Version 1.0.0a</p>
-      </IonContent>
-    </IonPage>
-  );
-}
+const Splash = ({ navigation }) => {
+	return (
+		<View style={styles.container}>
+			<Text>Hello, World!</Text>
+			<Button
+				title="Connexion"
+				onPress={() => navigation.navigate("Connexion")}
+			/>
+			<StatusBar style="auto" />
+		</View>
+	);
+};
 
 export default Splash;
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+});

@@ -1,72 +1,60 @@
-import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Button, StyleSheet, TextInput, View } from "react-native";
+
+import { CommonActions } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useState } from "react";
 
-import { hideTabs } from "../utils";
-
-import "../css/pages/Connexion.css";
-import { IonPage } from "@ionic/react";
-
-function Connexion() {
+const Connexion = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [user] = useAuthState(auth);
-	const history = useHistory();
 
-	useEffect(() => {
-		if (user) {
-			history.push("/dashboard");
-		}
-	}, [user, history]);
-
-	const login = (email, password) => {
-		signInWithEmailAndPassword(auth, email, password)
-			.then(() => {
-				window.location.href = "./dashboard"; // TODO change
+	const login = async (email, password) => {
+		await signInWithEmailAndPassword(auth, email, password);
+		navigation.dispatch(
+			CommonActions.reset({
+				index: 0,
+				routes: [{ name: "UserTab" }],
 			})
-			.catch((error) => {
-				console.error(error.message);
-			});
+		);
 	};
 
-	hideTabs();
-
 	return (
-		<IonPage>
-			<div className="login">
-				<div className="login__container">
-					<input
-						type="text"
-						className="login__textBox"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						placeholder="E-mail Address"
-					/>
-					<input
-						type="password"
-						className="login__textBox"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						placeholder="Password"
-					/>
-					<button
-						className="login__btn"
-						onClick={() => {
-							login(email, password);
-						}}>
-						Login
-					</button>
-					<div>
-						<Link to="/reset">Forgot Password</Link>
-					</div>
-					<div>
-						Don't have an account? <Link to="/inscription">Register</Link> now.
-					</div>
-				</div>
-			</div>
-		</IonPage>
+		<View style={styles.container}>
+			<TextInput
+				style={styles.input}
+				placeholder="Adresse mail"
+				onChangeText={setEmail}
+			/>
+			<TextInput
+				style={styles.input}
+				placeholder="Mot de passe"
+				secureTextEntry={true}
+				onChangeText={setPassword}
+			/>
+			<Button
+				title="Connexion"
+				onPress={() => {
+					login(email, password);
+				}}
+			/>
+			<StatusBar style="auto" />
+		</View>
 	);
-}
+};
+
 export default Connexion;
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+
+	input: {
+		marginVertical: 10,
+	},
+});
