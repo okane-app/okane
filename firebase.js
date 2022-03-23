@@ -1,13 +1,6 @@
-import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-
 import { getFirestore } from "firebase/firestore";
-
-import {
-	signInWithEmailAndPassword,
-	sendPasswordResetEmail,
-	signOut,
-} from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDYtDHbBmWAjUBGbFV7mwA3be5yofjkwlM",
@@ -20,22 +13,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-// TODO MOVE
-
-const sendPasswordReset = (email) => {
-	try {
-		sendPasswordResetEmail(auth, email);
-		alert("Password reset link sent!");
-	} catch (err) {
-		console.error(err);
-	}
-};
-
-const logout = () => {
-	signOut(auth);
-};
-
-export { auth, db, sendPasswordReset, logout };
+export { auth, db };
