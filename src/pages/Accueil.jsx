@@ -29,19 +29,12 @@ const Accueil = ({ navigation }) => {
 		// const icon = "logo-github";
 
 		return (
-			<View
-				style={{
-					flexDirection: "row",
-					minWidth: "60%",
-					justifyContent: "space-between",
-					borderBottomWidth: 1,
-					borderBottomColor: "#E8E8E8",
-				}}>
+			<View style={styles.depense}>
 				{/* <Text style={styles.depense}>
 					<Ionicons name={icon} />
 				</Text> */}
-				<Text style={styles.depense}>{item.nom}</Text>
-				<Text style={styles.depense}>{item.montant} €</Text>
+				<Text style={{ fontSize: 16 }}>{item.nom}</Text>
+				<Text style={{ fontSize: 16 }}>{item.montant} €</Text>
 			</View>
 		);
 	};
@@ -101,8 +94,12 @@ const styles = StyleSheet.create({
 	},
 
 	depense: {
+		flexDirection: "row",
+		minWidth: "60%",
+		justifyContent: "space-between",
+		borderBottomWidth: 1,
+		borderBottomColor: "#E8E8E8",
 		paddingTop: 16,
 		paddingBottom: 16,
-		fontSize: 16,
 	},
 });
