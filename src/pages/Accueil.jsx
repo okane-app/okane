@@ -9,10 +9,6 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 const Accueil = ({ navigation }) => {
 	const user = auth.currentUser;
 
-	// const [categories] = useCollectionData(
-	// 	collection(db, "users", user.uid, "categories")
-	// );
-
 	const [depenses, loading, error] = useCollectionData(
 		query(
 			collection(db, "users", user.uid, "depenses"),
@@ -21,23 +17,15 @@ const Accueil = ({ navigation }) => {
 		)
 	);
 
-	const renderDepense = ({ item }) => {
-		// const icon = categories.find((categorie) => {
-		// 	if ()
-		// })
-
-		// const icon = "logo-github";
-
-		return (
-			<View style={styles.depense}>
-				{/* <Text style={styles.depense}>
+	const renderDepense = ({ item }) => (
+		<View style={styles.depense}>
+			{/* <Text style={styles.depense}>
 					<Ionicons name={icon} />
 				</Text> */}
-				<Text style={{ fontSize: 16 }}>{item.nom}</Text>
-				<Text style={{ fontSize: 16 }}>{item.montant} €</Text>
-			</View>
-		);
-	};
+			<Text style={{ fontSize: 16 }}>{item.nom}</Text>
+			<Text style={{ fontSize: 16 }}>{item.montant} €</Text>
+		</View>
+	);
 
 	return (
 		<View style={styles.container}>
@@ -46,6 +34,15 @@ const Accueil = ({ navigation }) => {
 			<View style={styles.semi}>
 				<View style={styles.dernieresDepenses}>
 					<Text style={styles.title}>Dernières dépenses</Text>
+
+					{depenses && depenses.length === 0 && (
+						<View style={styles.container}>
+							<Text>
+								Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
+							</Text>
+						</View>
+					)}
+
 					{depenses && (
 						<FlatList
 							style={styles.listeDepenses}
@@ -54,8 +51,18 @@ const Accueil = ({ navigation }) => {
 							keyExtractor={(item) => item.nom}
 						/>
 					)}
-					{loading && <Text>Chargement de vos dernières dépenses...</Text>}
-					{error && <Text>Erreur : {JSON.stringify(error)}</Text>}
+
+					{loading && (
+						<View style={styles.container}>
+							<Text>Chargement de vos dernières dépenses...</Text>
+						</View>
+					)}
+
+					{error && (
+						<View style={styles.container}>
+							<Text>Erreur : {JSON.stringify(error)}</Text>
+						</View>
+					)}
 				</View>
 			</View>
 			<StatusBar style="auto" />
@@ -82,11 +89,10 @@ const styles = StyleSheet.create({
 	},
 
 	dernieresDepenses: {
-		alignItems: "center",
-		justifyContent: "center",
+		flex: 1,
 		paddingTop: 25,
-		paddingLeft: 16,
-		paddingRight: 16,
+		paddingLeft: 20, // 16 avec icône couleur
+		paddingRight: 20, // 16
 	},
 
 	listeDepenses: {
