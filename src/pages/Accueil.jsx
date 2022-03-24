@@ -18,9 +18,6 @@ const Accueil = ({ navigation }) => {
 
 	const renderDepense = ({ item }) => (
 		<View style={styles.depense}>
-			{/* <Text style={styles.depense}>
-					<Ionicons name={icon} />
-				</Text> */}
 			<Text style={{ fontSize: 16 }}>{item.nom}</Text>
 			<Text style={{ fontSize: 16 }}>{item.montant} €</Text>
 		</View>
