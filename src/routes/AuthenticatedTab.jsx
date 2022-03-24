@@ -7,7 +7,11 @@ const Tab = createBottomTabNavigator();
 
 const AuthenticatedTab = () => {
 	return (
-		<Tab.Navigator>
+		<Tab.Navigator 
+		screenOptions={{
+			headerTitleAlign: "center",
+		}}
+		>
 			<Tab.Screen
 				name="Accueil"
 				component={Accueil}
