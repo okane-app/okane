@@ -8,22 +8,28 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
+import { auth, db } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 import { signOut, updateProfile } from "firebase/auth";
 
 import { CommonActions } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
-import { auth } from "../../firebase";
 import { useState } from "react";
 
 const Profil = ({ navigation }) => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [pseudo, setPseudo] = useState("");
 
-	const changerPseudo = (pseudo) => {
-		updateProfile(auth.currentUser, {
+	const changerPseudo = async (pseudo) => {
+		await updateProfile(auth.currentUser, {
 			displayName: pseudo,
-		}).then(() => setModalVisible(!modalVisible));
+		});
+		await updateDoc(doc(db, "users", auth.currentUser.uid), {
+			username: pseudo,
+		});
+
+		setModalVisible(!modalVisible);
 	};
 
 	const logout = async () => {
