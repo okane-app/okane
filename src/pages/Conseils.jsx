@@ -1,5 +1,7 @@
 import {
 	FlatList,
+	KeyboardAvoidingView,
+	Platform,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -47,7 +49,9 @@ const Conseils = () => {
 	);
 
 	return (
-		<View style={styles.container}>
+		<KeyboardAvoidingView
+			style={styles.container}
+			behavior={Platform.OS === "ios" ? "padding" : "height"}>
 			<View style={styles.main}>
 				<Text style={styles.title}>Vos conseils</Text>
 
@@ -59,7 +63,7 @@ const Conseils = () => {
 				/>
 			</View>
 
-			<View style={styles.inputArea}>
+			<View style={styles.form}>
 				<View style={styles.input}>
 					<TextInput
 						onChangeText={setInputMessage}
@@ -75,7 +79,7 @@ const Conseils = () => {
 			</View>
 
 			<StatusBar style="light" />
-		</View>
+		</KeyboardAvoidingView>
 	);
 };
 
@@ -88,6 +92,7 @@ const styles = StyleSheet.create({
 
 	main: {
 		flex: 6,
+		width: "100%",
 		alignItems: "center",
 	},
 
@@ -100,36 +105,43 @@ const styles = StyleSheet.create({
 
 	chat: {
 		flex: 1,
+		alignSelf: "stretch",
 		marginTop: 40,
 	},
 
 	message: {
 		backgroundColor: "white",
 		padding: 20,
-		width: 350,
 		borderRadius: 10,
 		marginBottom: 10,
+		marginLeft: 25,
+		marginRight: 25,
+	},
+
+	messageContent: {
+		fontSize: 14,
 	},
 
 	messageAuthor: {
 		color: "gray",
 	},
 
-	inputArea: {
+	form: {
 		flex: 1,
+		width: "100%",
 		flexDirection: "row",
-		justifyContent: "center",
+		justifyContent: "space-between",
 		alignItems: "center",
 	},
 
 	input: {
 		justifyContent: "center",
+		width: 275,
 		height: 50,
-		width: 245,
-		margin: 12,
 		padding: 10,
 		backgroundColor: "white",
 		borderRadius: 7,
+		marginLeft: 25,
 	},
 
 	button: {
@@ -138,6 +150,8 @@ const styles = StyleSheet.create({
 		borderRadius: 7,
 		backgroundColor: "white",
 		justifyContent: "center",
+		alignItems: "center",
+		marginRight: 25,
 	},
 
 	buttonText: {
