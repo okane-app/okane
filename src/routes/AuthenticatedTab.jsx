@@ -1,4 +1,5 @@
 import Accueil from "../pages/Accueil";
+import Conseils from "../pages/Conseils";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Profil from "../pages/Profil";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,11 +8,10 @@ const Tab = createBottomTabNavigator();
 
 const AuthenticatedTab = () => {
 	return (
-		<Tab.Navigator 
-		screenOptions={{
-			headerTitleAlign: "center",
-		}}
-		>
+		<Tab.Navigator
+			screenOptions={{
+				headerTitleAlign: "center",
+			}}>
 			<Tab.Screen
 				name="Accueil"
 				component={Accueil}
@@ -41,8 +41,9 @@ const AuthenticatedTab = () => {
 			/>
 			<Tab.Screen
 				name="Conseils"
-				component={Accueil}
+				component={Conseils}
 				options={{
+					headerShown: false, // TODO keep or not
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons
 							name="chatbubble-ellipses-outline"
