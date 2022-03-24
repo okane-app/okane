@@ -8,21 +8,27 @@ import {
 	TouchableHighlight,
 	View,
 } from "react-native";
-import { collection, orderBy, query } from "firebase/firestore";
+import {
+	Timestamp,
+	addDoc,
+	collection,
+	orderBy,
+	query,
+} from "firebase/firestore";
+import { auth, db } from "../../firebase";
 import {
 	useCollectionData,
 	useCollectionDataOnce,
 } from "react-firebase-hooks/firestore";
 
 import { StatusBar } from "expo-status-bar";
-import { db } from "../../firebase";
 import { useState } from "react";
 
 const Conseils = () => {
-	// const user = auth.currentUser;
+	const user = auth.currentUser;
 
 	const [messages, loadingMessages, errorMessages] = useCollectionData(
-		query(collection(db, "messages"), orderBy("timestamp", "desc"))
+		query(collection(db, "messages"), orderBy("timestamp", "asc"))
 	);
 
 	// once?
@@ -48,6 +54,14 @@ const Conseils = () => {
 		</View>
 	);
 
+	const addMessage = async (message) => {
+		await addDoc(collection(db, "messages"), {
+			content: message,
+			timestamp: Timestamp.now(),
+			uid: user.uid,
+		});
+	};
+
 	return (
 		<KeyboardAvoidingView
 			style={styles.container}
@@ -71,7 +85,10 @@ const Conseils = () => {
 						placeholder="Partage ton expérience !"
 					/>
 				</View>
-				<TouchableHighlight onPress={() => {}}>
+				<TouchableHighlight
+					onPress={() => {
+						addMessage(inputMessage).then(() => setInputMessage(""));
+					}}>
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Envoyer</Text>
 					</View>
