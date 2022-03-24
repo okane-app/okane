@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
 		paddingRight: 10,
 	},
 	accountMenuText: {
-		fontWeight: "bold",
+		fontSize: 16,
+		fontWeight: "500",
 	},
 	centeredView: {
 		flex: 1,
