@@ -23,6 +23,8 @@ const Inscription = ({ navigation }) => {
 				// Création de l'utilisateur dans Firestore
 				await setDoc(doc(db, "users", user.uid), {
 					authProvider: "local",
+					uid: user.uid,
+					username,
 				});
 			}
 		);
