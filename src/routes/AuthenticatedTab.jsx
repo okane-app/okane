@@ -1,6 +1,7 @@
 import Accueil from "../pages/Accueil";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import NouvelleDepense from "../pages/NouvelleDepense"
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +28,7 @@ const AuthenticatedTab = () => {
 			/>
 			<Tab.Screen
 				name="Nouvelle dépense"
-				component={Accueil}
+				component={NouvelleDepense}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name="add-circle-outline" color={color} size={size} />
