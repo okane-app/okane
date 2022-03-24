@@ -5,11 +5,12 @@ import { db, auth } from "../../firebase"
 import { StatusBar } from "expo-status-bar";
 import RNPickerSelect from 'react-native-picker-select';
 import { useCollection, useCollectionData, useCollectionOnce } from "react-firebase-hooks/firestore";
-import { collection, limit, orderBy, query, addDoc } from "firebase/firestore";
+import { collection, limit, orderBy, query, addDoc, onSnapshot } from "firebase/firestore";
 
 
 const NouvelleDepense = ({ navigation }) => {
     const user = auth.currentUser;
+    
 
     const [checked, setChecked] = useState('first');
     const [categorie, setCategorie] = useState("1");
@@ -26,14 +27,16 @@ const NouvelleDepense = ({ navigation }) => {
         await addDoc(usersCollectionRef, { nom: nom, montant: parseFloat(montant), categorie: categorie, date: date });
     };
 
-    const [categories, loading, error] = useCollection(
-        query(
-            collection(db, "users", user.uid, "categories"),
+    
+    // const [categories, loading, error] = useCollection(
+    //     query(
+    //         collection(db, "users", user.uid, "categories"),
 
-        )
-    );
+    //     )
+    // );
 
-    console.log(categories.data)
+    const d = db.collection("users").get()
+    console.log(d)
 
     return (
         <View style={styles.container}>
@@ -67,19 +70,19 @@ const NouvelleDepense = ({ navigation }) => {
                     onPress={() => setChecked('troisième')} />
             </View>
 
-            {categories && (
-                <RNPickerSelect
+           
+                {/* <RNPickerSelect
                     onValueChange={setCategorie}
-                    data={categories}
-                    items={[                        
-                        { label: categories.nom, value: categories.keys }
+                    items={[    
+                                            
+                        { label:categories.nom, value: KEYID }
                     ]}
                 >
-                 </RNPickerSelect>
-            )}
-            
-            {loading && <Text>Chargement des catégories</Text>}
-            {error && <Text>Erreur : {JSON.stringify(error)}</Text>}
+                 </RNPickerSelect> */}
+         
+             
+            {/* {loading && <Text>Chargement des catégories</Text>}
+            {error && <Text>Erreur : {JSON.stringify(error)}</Text>} */}
 
 
             <Text style={styles.link_color} onPress={() => navigation.navigate("NouvelleCategorie")}>
