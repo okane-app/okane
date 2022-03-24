@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 
-	semi: { flex: 1, width: "100%" },
+	semi: { flex: 1, alignSelf: "stretch" },
 
 	title: {
 		fontSize: 30,
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
 
 	depense: {
 		flexDirection: "row",
-		minWidth: "60%",
 		justifyContent: "space-between",
 		borderBottomWidth: 1,
 		borderBottomColor: "#E8E8E8",
