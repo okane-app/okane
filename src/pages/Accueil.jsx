@@ -2,7 +2,6 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { auth, db } from "../../firebase";
 import { collection, limit, orderBy, query } from "firebase/firestore";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
