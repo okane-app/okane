@@ -1,8 +1,13 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
+import { auth } from "../../firebase";
 
 const Splash = ({ navigation }) => {
+	if (auth.currentUser) {
+		navigation.replace("AuthenticatedTab");
+	}
+
 	return (
 		<View style={styles.container}>
 			<Text>Hello, World!</Text>

@@ -29,7 +29,7 @@ const Inscription = ({ navigation }) => {
 		navigation.dispatch(
 			CommonActions.reset({
 				index: 0,
-				routes: [{ name: "UserTab" }],
+				routes: [{ name: "AuthenticatedTab" }],
 			})
 		);
 	};
