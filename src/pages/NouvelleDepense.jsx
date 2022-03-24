@@ -1,16 +1,16 @@
-import { Button, StyleSheet, Text, View, TextInput,FlatList } from "react-native";
+import { Button, StyleSheet, Text, View, TextInput, FlatList } from "react-native";
 import { useState } from "react";
 import { RadioButton } from 'react-native-paper';
-import { db,auth } from "../../firebase"
+import { db, auth } from "../../firebase"
 import { StatusBar } from "expo-status-bar";
 import RNPickerSelect from 'react-native-picker-select';
 import { useCollection, useCollectionData, useCollectionOnce } from "react-firebase-hooks/firestore";
-import { collection, limit, orderBy, query,addDoc } from "firebase/firestore";
+import { collection, limit, orderBy, query, addDoc } from "firebase/firestore";
 
 
 const NouvelleDepense = ({ navigation }) => {
     const user = auth.currentUser;
-    
+
     const [checked, setChecked] = useState('first');
     const [categorie, setCategorie] = useState("1");
     const [nom, setNom] = useState("");
@@ -20,45 +20,20 @@ const NouvelleDepense = ({ navigation }) => {
     const usersCollectionRef = collection(db, "users", user.uid, "depenses");
 
     let date = new Date();
-    
+
 
     const ajouter = async () => {
-        await addDoc(usersCollectionRef, { nom: nom, montant: parseFloat(montant), categorie: categorie, date: date});
+        await addDoc(usersCollectionRef, { nom: nom, montant: parseFloat(montant), categorie: categorie, date: date });
     };
 
-    const [categories, loading, error] = useCollectionData(
-		query(
-			collection(db, "users", user.uid, "categories"),
-			
-		)
-	);
-    
-    
+    const [categories, loading, error] = useCollection(
+        query(
+            collection(db, "users", user.uid, "categories"),
 
-     const[categorieUid] = useCollectionOnce(
-         query(collection(db, "users", user.uid, "categories", categorie.uid),
-         )
-     );
- 
-    const renderCategorie = ({ item }) => (
-        
-		<View
-			style={{
-				flexDirection: "row",
-				justifyContent: "space-between",
-				width: 300,
-			}}>
-			 <RNPickerSelect
-                 onValueChange={setCategorie}
-                items={[
-                    {label: item.nom, value:categorieUid  }
-    
-                ]}
-            >
-            </RNPickerSelect>
-		</View>
-	);
+        )
+    );
 
+    console.log(categories.data)
 
     return (
         <View style={styles.container}>
@@ -93,14 +68,18 @@ const NouvelleDepense = ({ navigation }) => {
             </View>
 
             {categories && (
-				<FlatList
-					data={categories}
-					renderItem={renderCategorie}
-					keyExtractor={(item) => item.nom}
-				/>
-			)}
-			{loading && <Text>Chargement des catégories</Text>}
-			{error && <Text>Erreur : {JSON.stringify(error)}</Text>}
+                <RNPickerSelect
+                    onValueChange={setCategorie}
+                    data={categories}
+                    items={[                        
+                        { label: categories.nom, value: categories.keys }
+                    ]}
+                >
+                 </RNPickerSelect>
+            )}
+            
+            {loading && <Text>Chargement des catégories</Text>}
+            {error && <Text>Erreur : {JSON.stringify(error)}</Text>}
 
 
             <Text style={styles.link_color} onPress={() => navigation.navigate("NouvelleCategorie")}>
@@ -124,7 +103,7 @@ const NouvelleDepense = ({ navigation }) => {
             <Button
                 title="Ajouter"
                 onPress={() => {
-                    ajouter(nom, montant,categorie);
+                    ajouter(nom, montant, categorie);
                 }}
             />
             {/* Voir pour changer la zone fréquence en une somme qui sera débité tout les mois */}
