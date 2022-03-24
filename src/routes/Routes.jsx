@@ -13,7 +13,7 @@ const Routes = () => {
 					headerShown: false,
 				}}>
 				<Stack.Screen name="GuestStack" component={GuestStack} />
-				<Stack.Screen name="UserTab" component={AuthenticatedTab} />
+				<Stack.Screen name="AuthenticatedTab" component={AuthenticatedTab} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
