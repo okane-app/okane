@@ -17,7 +17,7 @@ const NouvelleCategorie = ({ navigation }) => {
     const [Limite, setLimite] = useState("");
     const [icon, setIcon] = useState("");
 
-    const usersCollectionRef = collection(db, "users", "DyUabIIgp0fvrPEBdA5gEGYExkI2", "categories");
+    const usersCollectionRef = collection(db, "users", user.uid, "categories");
 
 
 
