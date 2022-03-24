@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { auth, db } from "../../firebase";
 import { collection, limit, orderBy, query } from "firebase/firestore";
+import CircularProgress from "react-native-circular-progress-indicator";
 
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -28,7 +29,11 @@ const Accueil = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={[styles.semi, { backgroundColor: "#5BB774" }]}></View>
+			<View
+				style={[styles.semi, styles.container, { backgroundColor: "#5BB774" }]}
+			>
+				<CircularProgress value={58} />
+			</View>
 
 			<View style={styles.semi}>
 				<View style={styles.dernieresDepenses}>
