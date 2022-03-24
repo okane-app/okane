@@ -1,4 +1,11 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+	FlatList,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableHighlight,
+	View,
+} from "react-native";
 import { collection, orderBy, query } from "firebase/firestore";
 import {
 	useCollectionData,
@@ -7,6 +14,7 @@ import {
 
 import { StatusBar } from "expo-status-bar";
 import { db } from "../../firebase";
+import { useState } from "react";
 
 const Conseils = () => {
 	// const user = auth.currentUser;
@@ -19,6 +27,8 @@ const Conseils = () => {
 	const [users, loadingUsers, errorUsers] = useCollectionDataOnce(
 		collection(db, "users")
 	);
+
+	const [inputMessage, setInputMessage] = useState("");
 
 	const getUsername = (uid) => {
 		if (users) {
@@ -38,14 +48,31 @@ const Conseils = () => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Vos conseils</Text>
+			<View style={styles.main}>
+				<Text style={styles.title}>Vos conseils</Text>
 
-			<FlatList
-				style={styles.chat}
-				data={messages}
-				renderItem={renderMessage}
-				keyExtractor={(item, index) => index}
-			/>
+				<FlatList
+					style={styles.chat}
+					data={messages}
+					renderItem={renderMessage}
+					keyExtractor={(item, index) => index}
+				/>
+			</View>
+
+			<View style={styles.inputArea}>
+				<View style={styles.input}>
+					<TextInput
+						onChangeText={setInputMessage}
+						value={inputMessage}
+						placeholder="Partage ton expérience !"
+					/>
+				</View>
+				<TouchableHighlight onPress={() => {}}>
+					<View style={styles.button}>
+						<Text style={styles.buttonText}>Envoyer</Text>
+					</View>
+				</TouchableHighlight>
+			</View>
 
 			<StatusBar style="light" />
 		</View>
@@ -57,6 +84,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		backgroundColor: "#5BB774",
+	},
+
+	main: {
+		flex: 6,
+		alignItems: "center",
 	},
 
 	title: {
@@ -81,6 +113,35 @@ const styles = StyleSheet.create({
 
 	messageAuthor: {
 		color: "gray",
+	},
+
+	inputArea: {
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+
+	input: {
+		justifyContent: "center",
+		height: 50,
+		width: 245,
+		margin: 12,
+		padding: 10,
+		backgroundColor: "white",
+		borderRadius: 7,
+	},
+
+	button: {
+		height: 50,
+		padding: 10,
+		borderRadius: 7,
+		backgroundColor: "white",
+		justifyContent: "center",
+	},
+
+	buttonText: {
+		fontWeight: "500",
 	},
 });
 
