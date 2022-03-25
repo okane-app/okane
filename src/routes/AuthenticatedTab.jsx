@@ -44,7 +44,7 @@ const AuthenticatedTab = () => {
 				name="Conseils"
 				component={Conseils}
 				options={{
-					headerShown: false, // TODO keep or not
+					headerShown: false,
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons
 							name="chatbubble-ellipses-outline"
@@ -58,6 +58,7 @@ const AuthenticatedTab = () => {
 				name="Profil"
 				component={Profil}
 				options={{
+					headerShown: false,
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name="person-circle-outline" color={color} size={size} />
 					),

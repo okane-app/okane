@@ -45,7 +45,7 @@ const Conseils = () => {
 	const user = auth.currentUser;
 
 	const [messages, loadingMessages, errorMessages] = useCollectionData(
-		query(collection(db, "messages"), orderBy("timestamp", "asc"))
+		query(collection(db, "messages"), orderBy("timestamp", "asc")) // TODO random shuffle
 	);
 
 	const [users, loadingUsers, errorUsers] = useCollectionData(
