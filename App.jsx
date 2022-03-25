@@ -7,6 +7,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 TimeAgo.addDefaultLocale(fr);
 
 export default function App() {
-	const [user] = useAuthState(auth);
-	return <Routes user={user} />;
+	const [currentUser] = useAuthState(auth);
+	return <Routes user={currentUser} />;
 }
