@@ -1,7 +1,13 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+	FlatList,
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+} from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, limit, orderBy, query } from "firebase/firestore";
-
+import { collection, query } from "firebase/firestore";
+import Swiper from "react-native-swiper";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -35,13 +41,13 @@ const Depenses = ({ navigation }) => {
 	};
 
 	const renderCategorie = ({ item }) => (
-		<View style={styles.depense}>
+		<TouchableOpacity style={styles.depense}>
 			{/* <Text style={styles.depense}>
 					<Ionicons name={icon} />
 				</Text> */}
 			<Text style={{ fontSize: 16 }}>{item.nom}</Text>
 			<Text style={{ fontSize: 16 }}>{item.limite} €</Text>
-		</View>
+		</TouchableOpacity>
 	);
 
 	const dpt = depenses ? depensesTotales() : 0;
@@ -49,22 +55,31 @@ const Depenses = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<View
-				style={[styles.semi, styles.container, { backgroundColor: "#5BB774" }]}
-			>
-				{depenses && (
-					<CircularProgress
-						value={dpt}
-						radius={120}
-						duration={2000}
-						textColor={"#ecf0f1"}
-						maxValue={max}
-						title={"EUROS"}
-						titleColor={"white"}
-						titleStyle={{ fontWeight: "bold" }}
-					/>
-				)}
-			</View>
+			<Swiper>
+				<View
+					style={[
+						styles.semi,
+						styles.container,
+						{ backgroundColor: "#5BB774" },
+					]}
+				>
+					{depenses && (
+						<CircularProgress
+							value={dpt}
+							radius={120}
+							duration={2000}
+							textColor={"#ecf0f1"}
+							maxValue={max}
+							title={"EUROS"}
+							titleColor={"white"}
+							titleStyle={{ fontWeight: "bold" }}
+						/>
+					)}
+				</View>
+				<View style={styles.slide2}>
+					<Text style={styles.text}>Beautiful</Text>
+				</View>
+			</Swiper>
 
 			<View style={styles.semi}>
 				<View style={styles.dernieresDepenses}>
@@ -139,5 +154,16 @@ const styles = StyleSheet.create({
 		borderBottomColor: "#E8E8E8",
 		paddingTop: 16,
 		paddingBottom: 16,
+	},
+	slide2: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "#97CAE5",
+	},
+	text: {
+		color: "#fff",
+		fontSize: 30,
+		fontWeight: "bold",
 	},
 });
