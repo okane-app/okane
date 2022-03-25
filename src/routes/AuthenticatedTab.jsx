@@ -18,7 +18,7 @@ const AuthenticatedTab = () => {
 				component={Accueil}
 				options={{
 					tabBarIcon: ({ color, size }) => (
-						<Ionicons name="home" color={color} size={size} />
+						<Ionicons name="home-outline" color={color} size={size} />
 					),
 				}}
 			/>
@@ -27,7 +27,7 @@ const AuthenticatedTab = () => {
 				component={Accueil}
 				options={{
 					tabBarIcon: ({ color, size }) => (
-						<Ionicons name="cash-outline" color={color} size={size} />
+						<Ionicons name="wallet-outline" color={color} size={size} />
 					),
 				}}
 			/>
