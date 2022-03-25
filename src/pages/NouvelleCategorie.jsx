@@ -2,7 +2,6 @@ import { Button, StyleSheet, Text, TextInput, ScrollView, View, Image } from "re
 //import {Picker} from '@react-native-picker/picker';
 import { db, auth } from "../../firebase"
 import { StatusBar } from "expo-status-bar";
-import { CommonActions } from "@react-navigation/native";
 import { useState } from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';

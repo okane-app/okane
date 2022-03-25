@@ -66,8 +66,8 @@ const NouvelleDepense = ({ navigation }) => {
                 <RNPickerSelect
                     value={categorie}
                     onValueChange={setCategorie}
-                    placeholder={{ label: 'Choisis une catégorie...', value: undefined, }}
-                    items={categories?.map((categorie) => ({ label: categorie.nom, value: categorie.id }))}
+                    placeholder={{ label: 'Choisis une catégorie...', value: undefined }}
+                    items={categories?.map((categorie) => ({ key: categorie.id, label: categorie.nom, value: categorie.id }))}
                 />
             )}
 

@@ -1,18 +1,14 @@
-import { FlatList, StyleSheet, Text, View, Button } from "react-native";
+import { FlatList, StyleSheet, Text, View, TouchableHighlight } from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, deleteDoc, limit, orderBy, query } from "firebase/firestore";
-
+import { collection, deleteDoc, query,doc } from "firebase/firestore";
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 const allCategorie = ({ navigation }) => {
 	const user = auth.currentUser;
-    const usersCollectionRef = collection(db, "users", user.uid, "categories");
-
-    const supprimer = async () => {
-        await deleteDoc(db, {categories})
-    }
+	const usersCollectionRef = collection(db, "users", user.uid, "categories");
 
 	const [categories, loading, error] = useCollectionData(
 		query(
@@ -21,8 +17,12 @@ const allCategorie = ({ navigation }) => {
 		)
 	);
 
+	const supprimer = async () => {
+		await deleteDoc(doc(db,{categories}))
+	}
+
 	const renderCategorie = ({ item }) => (
-		
+
 		<View
 
 			style={{
@@ -30,18 +30,13 @@ const allCategorie = ({ navigation }) => {
 				justifyContent: "space-between",
 				width: 300,
 			}}>
+			<TouchableHighlight onPress={() => { supprimer();}}>
+				<Icon name="close" size={16} />
+			</TouchableHighlight>
 			<Text style={styles.depense}>{item.nom}</Text>
-            <Button 
-             title="Supprimer"
-			 
-             onPress={() => {
-                  alert("bonjour");
-             }
-			}
-            /> 
 
 		</View>
-		
+
 	);
 
 	return (
@@ -53,17 +48,17 @@ const allCategorie = ({ navigation }) => {
 					data={categories}
 					renderItem={renderCategorie}
 					keyExtractor={(item) => item.nom}
-					
+
 				/>
-            
+
 			)}
-        
-            
+
+
 			{loading && <Text>Chargement de vos dernières catégorie</Text>}
 			{error && <Text>Erreur : {JSON.stringify(error)}</Text>}
 			<StatusBar style="auto" />
 
-            
+
 		</View>
 	);
 };
