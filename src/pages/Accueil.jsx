@@ -71,6 +71,7 @@ const Accueil = ({ navigation }) => {
 						activeStrokeSecondaryColor={"#BB0B0B"}
 						maxValue={max}
 						title={`${pourcentage}% dépensés`}
+						subtitle={"Ryou JTM UwU"}
 						titleColor={"white"}
 						titleStyle={{ fontWeight: "bold", fontSize: 15 }}
 						textStyle={{ fontSize: 40 }}
