@@ -1,6 +1,5 @@
 import { Button, StyleSheet, TextInput, View } from "react-native";
 
-import { CommonActions } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
