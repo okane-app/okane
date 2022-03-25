@@ -37,7 +37,7 @@ const Conseils = () => {
 	const getUsername = (uid) => {
 		if (users) {
 			const user = users.find((user) => user.uid === uid);
-			return user ? "- " + user.username : "- Utilisateur supprimé";
+			return user ? "@" + user.username : "Utilisateur supprimé";
 		} else {
 			return "Chargement...";
 		}
