@@ -1,4 +1,5 @@
 import Accueil from "../pages/Accueil";
+import Depenses from "../pages/Depenses";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Profil from "../pages/Profil";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,10 +8,10 @@ const Tab = createBottomTabNavigator();
 
 const AuthenticatedTab = () => {
 	return (
-		<Tab.Navigator 
-		screenOptions={{
-			headerTitleAlign: "center",
-		}}
+		<Tab.Navigator
+			screenOptions={{
+				headerTitleAlign: "center",
+			}}
 		>
 			<Tab.Screen
 				name="Accueil"
@@ -23,7 +24,7 @@ const AuthenticatedTab = () => {
 			/>
 			<Tab.Screen
 				name="Dépenses"
-				component={Accueil}
+				component={Depenses}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name="cash-outline" color={color} size={size} />
