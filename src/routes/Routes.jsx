@@ -5,15 +5,17 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-const Routes = () => {
+const Routes = ({ user }) => {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator
 				screenOptions={{
 					headerShown: false,
 				}}>
-				<Stack.Screen name="GuestStack" component={GuestStack} />
-				<Stack.Screen name="AuthenticatedTab" component={AuthenticatedTab} />
+				{!user && <Stack.Screen name="GuestStack" component={GuestStack} />}
+				{user && (
+					<Stack.Screen name="AuthenticatedTab" component={AuthenticatedTab} />
+				)}
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

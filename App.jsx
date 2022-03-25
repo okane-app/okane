@@ -1,5 +1,9 @@
 import Routes from "./src/routes/Routes";
+import { auth } from "./firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function App() {
-	return <Routes />;
+	const [user] = useAuthState(auth);
+
+	return <Routes user={user} />;
 }
