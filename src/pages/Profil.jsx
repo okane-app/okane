@@ -1,6 +1,8 @@
 import {
+	Alert,
 	Image,
 	Modal,
+	Platform,
 	Pressable,
 	StyleSheet,
 	Text,
@@ -19,7 +21,28 @@ import { useState } from "react";
 
 const Profil = ({ navigation }) => {
 	const [modalVisible, setModalVisible] = useState(false);
-	const [pseudo, setPseudo] = useState("");
+	const [pseudo, setPseudo] = useState(auth.currentUser?.displayName);
+
+	const platform = Platform.OS;
+
+	// Utilise le modal d'alerte natif pour iOS
+	if (platform === "ios" && modalVisible) {
+		Alert.prompt("Changer de pseudo", "", [
+			{
+				text: "Annuler",
+				onPress: () => setModalVisible(false),
+				style: "cancel",
+			},
+			{
+				text: "Confirmer",
+				onPress: (pseudo) => {
+					changerPseudo(pseudo);
+					setModalVisible(!modalVisible);
+					setPseudo(pseudo);
+				},
+			},
+		]);
+	}
 
 	const changerPseudo = async (pseudo) => {
 		// Met à jour le pseudo interne de l'utilisateur
@@ -30,8 +53,6 @@ const Profil = ({ navigation }) => {
 		await updateDoc(doc(db, "users", auth.currentUser.uid), {
 			username: pseudo,
 		});
-
-		setModalVisible(!modalVisible);
 	};
 
 	const logout = async () => {
@@ -57,42 +78,47 @@ const Profil = ({ navigation }) => {
 
 			<View style={styles.infoContainer}>
 				<Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-					{auth.currentUser?.displayName}
+					{pseudo}
 				</Text>
 			</View>
 
 			<View style={styles.accountMenuBox}>
-				<Modal
-					animationType="slide"
-					transparent={true}
-					visible={modalVisible}
-					onRequestClose={() => {
-						setModalVisible(!modalVisible);
-					}}>
-					<View style={styles.centeredView}>
-						<View style={styles.modalView}>
-							<TextInput
-								style={styles.input}
-								onChangeText={setPseudo}
-								placeholder="Pseudo"
-								value={pseudo}
-							/>
-							<View style={styles.modalButton}>
-								<Pressable
-									style={[styles.button, styles.buttonClose]}
-									onPress={() => changerPseudo(pseudo)}>
-									<Text style={styles.textStyle}>Appliquer</Text>
-								</Pressable>
-								<Pressable
-									style={[styles.button, styles.buttonClose]}
-									onPress={() => setModalVisible(!modalVisible)}>
-									<Text style={styles.textStyle}>Annuler</Text>
-								</Pressable>
+				{platform === "android" && (
+					<Modal
+						animationType="slide"
+						transparent={true}
+						visible={modalVisible}
+						onRequestClose={() => {
+							setModalVisible(!modalVisible);
+						}}>
+						<View style={styles.centeredView}>
+							<View style={styles.modalView}>
+								<TextInput
+									style={styles.input}
+									onChangeText={setPseudo}
+									placeholder="Pseudo"
+									value={pseudo}
+								/>
+								<View style={styles.modalButton}>
+									<Pressable
+										style={[styles.button, styles.buttonClose]}
+										onPress={() => {
+											changerPseudo(pseudo);
+											setModalVisible(!modalVisible);
+											setPseudo(pseudo);
+										}}>
+										<Text style={styles.textStyle}>Appliquer</Text>
+									</Pressable>
+									<Pressable
+										style={[styles.button, styles.buttonClose]}
+										onPress={() => setModalVisible(!modalVisible)}>
+										<Text style={styles.textStyle}>Annuler</Text>
+									</Pressable>
+								</View>
 							</View>
 						</View>
-					</View>
-				</Modal>
-
+					</Modal>
+				)}
 				<TouchableOpacity onPress={() => setModalVisible(true)}>
 					<View style={styles.accountMenuItem}>
 						<View style={styles.accountMenuTextBox}>
