@@ -1,3 +1,4 @@
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import Routes from "./src/routes/Routes";
 import TimeAgo from "javascript-time-ago";
 import { auth } from "./firebase";
@@ -8,5 +9,9 @@ TimeAgo.addDefaultLocale(fr);
 
 export default function App() {
 	const [currentUser] = useAuthState(auth);
-	return <Routes user={currentUser} />;
+	return (
+		<ActionSheetProvider>
+			<Routes user={currentUser} />
+		</ActionSheetProvider>
+	);
 }
