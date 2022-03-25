@@ -45,7 +45,7 @@ const Connexion = () => {
 						login(email, password);
 					}}>
 					<View style={styles.button}>
-						<Text style={styles.buttonText}>Inscription</Text>
+						<Text style={styles.buttonText}>Connexion</Text>
 					</View>
 				</TouchableWithoutFeedback>
 			</View>
