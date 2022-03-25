@@ -1,13 +1,14 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View, Button } from "react-native";
 import { auth, db } from "../../firebase";
 import { collection, limit, orderBy, query } from "firebase/firestore";
 import CircularProgress from "react-native-circular-progress-indicator";
-
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const Accueil = ({ navigation }) => {
 	const user = auth.currentUser;
+	const [totalBudget, setTotalBudget] = useState(0);
 
 	const [depenses, loading, error] = useCollectionData(
 		query(
@@ -16,6 +17,19 @@ const Accueil = ({ navigation }) => {
 			limit(4)
 		)
 	);
+
+	const [categories, loadingCategories, errorCategories] = useCollectionData(
+		query(collection(db, "users", user.uid, "categories"))
+	);
+
+	const budgetMax = () => {
+		const tmp = categories.reduce(
+			(total, categorie) => total + categorie.limite,
+			0
+		);
+		setTotalBudget(tmp);
+		return tmp;
+	};
 
 	const renderDepense = ({ item }) => (
 		<View style={styles.depense}>
@@ -54,6 +68,12 @@ const Accueil = ({ navigation }) => {
 							renderItem={renderDepense}
 							keyExtractor={(item) => item.nom}
 						/>
+					)}
+
+					{categories && (
+						<View style={styles.container}>
+							<Button title="test" onPress={() => alert(budgetMax())} />
+						</View>
 					)}
 
 					{loading && (
