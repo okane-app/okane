@@ -71,7 +71,7 @@ const Profil = () => {
 
 			<View style={styles.infoContainer}>
 				<Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-					{pseudo}
+					@{pseudo}
 				</Text>
 			</View>
 

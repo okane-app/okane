@@ -8,6 +8,5 @@ TimeAgo.addDefaultLocale(fr);
 
 export default function App() {
 	const [user] = useAuthState(auth);
-
 	return <Routes user={user} />;
 }

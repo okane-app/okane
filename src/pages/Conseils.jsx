@@ -1,5 +1,6 @@
 import {
 	FlatList,
+	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
 	StyleSheet,
@@ -106,6 +107,7 @@ const Conseils = () => {
 				<TouchableHighlight
 					onPress={() => {
 						addMessage(inputMessage).then(() => setInputMessage(""));
+						Keyboard.dismiss();
 					}}>
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Envoyer</Text>
