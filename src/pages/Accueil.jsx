@@ -1,11 +1,10 @@
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { auth, db } from "../../firebase";
 import { collection, limit, orderBy, query } from "firebase/firestore";
 
 import CircularProgress from "react-native-circular-progress-indicator";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { useState } from "react";
 
 const Accueil = ({ navigation }) => {
 	const user = auth.currentUser;
@@ -51,6 +50,8 @@ const Accueil = ({ navigation }) => {
 
 	const dpt = depenses ? depensesTotales() : 0;
 	const max = categories ? budgetMax() : 0;
+	const pourcentage =
+		depenses && categories ? (depensesTotales() / budgetMax()) * 100 : 0;
 
 	return (
 		<View style={styles.container}>
@@ -60,13 +61,19 @@ const Accueil = ({ navigation }) => {
 				{depenses && (
 					<CircularProgress
 						value={dpt}
+						valueSuffix={`,${
+							(dpt - Math.floor(dpt)).toFixed(2).split(".")[1]
+						} €`}
 						radius={120}
 						duration={2000}
 						textColor={"#ecf0f1"}
+						activeStrokeColor={"#AEF259"}
+						activeStrokeSecondaryColor={"#BB0B0B"}
 						maxValue={max}
-						title={"EUROS"}
+						title={`${pourcentage}% dépensés`}
 						titleColor={"white"}
-						titleStyle={{ fontWeight: "bold" }}
+						titleStyle={{ fontWeight: "bold", fontSize: 15 }}
+						textStyle={{ fontSize: 40 }}
 					/>
 				)}
 			</View>
