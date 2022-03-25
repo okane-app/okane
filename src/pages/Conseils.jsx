@@ -16,12 +16,9 @@ import {
 	query,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
-import {
-	useCollectionData,
-	useCollectionDataOnce,
-} from "react-firebase-hooks/firestore";
 
 import { StatusBar } from "expo-status-bar";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 
 const Conseils = () => {
@@ -31,8 +28,7 @@ const Conseils = () => {
 		query(collection(db, "messages"), orderBy("timestamp", "asc"))
 	);
 
-	// once?
-	const [users, loadingUsers, errorUsers] = useCollectionDataOnce(
+	const [users, loadingUsers, errorUsers] = useCollectionData(
 		collection(db, "users")
 	);
 
