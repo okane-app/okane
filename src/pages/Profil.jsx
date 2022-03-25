@@ -14,7 +14,6 @@ import { auth, db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { signOut, updateProfile } from "firebase/auth";
 
-import { CommonActions } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
@@ -70,9 +69,7 @@ const Profil = () => {
 			</View>
 
 			<View>
-				<Text style={[styles.username, { fontWeight: "200", fontSize: 36 }]}>
-					@{pseudo}
-				</Text>
+				<Text style={styles.username}>@{pseudo}</Text>
 			</View>
 
 			<View style={styles.menu}>
@@ -148,7 +145,8 @@ const styles = StyleSheet.create({
 	username: {
 		marginTop: 10,
 		color: "white",
-		fontWeight: "500",
+		fontSize: 36,
+		fontWeight: "300",
 	},
 
 	image: {
