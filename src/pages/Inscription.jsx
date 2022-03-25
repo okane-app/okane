@@ -1,4 +1,11 @@
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import {
+	KeyboardAvoidingView,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableWithoutFeedback,
+	View,
+} from "react-native";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -30,31 +37,51 @@ const Inscription = () => {
 	};
 
 	return (
-		<View style={styles.container}>
-			<TextInput
-				style={styles.input}
-				placeholder="Nom d'utilisateur"
-				onChangeText={setUsername}
-			/>
-			<TextInput
-				style={styles.input}
-				placeholder="Adresse mail"
-				onChangeText={setEmail}
-			/>
-			<TextInput
-				style={styles.input}
-				placeholder="Mot de passe"
-				secureTextEntry={true}
-				onChangeText={setPassword}
-			/>
-			<Button
-				title="Inscription"
-				onPress={() => {
-					register(username, email, password);
-				}}
-			/>
+		<KeyboardAvoidingView
+			style={styles.container}
+			behavior={Platform.OS === "ios" ? "padding" : undefined}>
+			<Text style={styles.title}>Inscription</Text>
+
+			<View style={styles.form}>
+				<View style={styles.input}>
+					<TextInput
+						placeholder="Nom d'utilisateur"
+						onChangeText={setUsername}
+					/>
+				</View>
+
+				<View style={styles.input}>
+					<TextInput placeholder="Adresse mail" onChangeText={setEmail} />
+				</View>
+
+				<View style={styles.input}>
+					<TextInput
+						placeholder="Mot de passe"
+						secureTextEntry={true}
+						onChangeText={setPassword}
+					/>
+				</View>
+
+				<Text>
+					En vous inscrivant, vous acceptez nos{" "}
+					<Text style={{ color: "blue", textDecorationLine: "underline" }}>
+						conditions générales d'utilisation
+					</Text>
+					.
+				</Text>
+
+				<TouchableWithoutFeedback
+					onPress={() => {
+						register(username, email, password);
+					}}>
+					<View style={styles.button}>
+						<Text style={styles.buttonText}>Inscription</Text>
+					</View>
+				</TouchableWithoutFeedback>
+			</View>
+
 			<StatusBar style="auto" />
-		</View>
+		</KeyboardAvoidingView>
 	);
 };
 
@@ -63,11 +90,45 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#fff",
 		alignItems: "center",
-		justifyContent: "center",
+		paddingTop: 100,
+	},
+
+	title: {
+		fontSize: 30,
+		fontWeight: "600",
+	},
+
+	form: {
+		alignSelf: "stretch",
+		marginTop: 32,
+		marginLeft: 16,
+		marginRight: 16,
 	},
 
 	input: {
-		marginVertical: 10,
+		justifyContent: "center",
+		backgroundColor: "#F6F6F6",
+		height: 50,
+		padding: 16,
+		marginBottom: 16,
+		borderWidth: 1,
+		borderColor: "#E8E8E8",
+		borderRadius: 8,
+	},
+
+	button: {
+		marginTop: 32,
+		alignItems: "center",
+		paddingTop: 16,
+		paddingBottom: 16,
+		borderRadius: 100,
+		backgroundColor: "#74CA8D",
+	},
+
+	buttonText: {
+		color: "white",
+		fontSize: 16,
+		fontWeight: "600",
 	},
 });
 
