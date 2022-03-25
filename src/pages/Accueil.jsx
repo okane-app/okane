@@ -25,7 +25,7 @@ const Accueil = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={[styles.semi, { backgroundColor: "#5BB774" }]}></View>
+			<View style={[styles.semi, { backgroundColor: "#5DB075" }]}></View>
 
 			<View style={styles.semi}>
 				<View style={styles.dernieresDepenses}>
