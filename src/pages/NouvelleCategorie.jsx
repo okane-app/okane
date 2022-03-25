@@ -78,6 +78,13 @@ const NouvelleCategorie = ({ navigation }) => {
                 }}
             />
             <StatusBar style="auto" />
+
+            <Text
+                style={styles.link_color}
+                onPress={() => navigation.navigate("allCategorie")}>
+                Catégorie
+            </Text>
+
         </View >
 
     );
