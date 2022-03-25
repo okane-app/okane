@@ -84,8 +84,7 @@ const Conseils = () => {
 	return (
 		<KeyboardAvoidingView
 			style={styles.container}
-			behavior={Platform.OS === "ios" ? "padding" : undefined}
-		>
+			behavior={Platform.OS === "ios" ? "padding" : undefined}>
 			<View style={styles.main}>
 				<Text style={styles.title}>Vos conseils</Text>
 
@@ -109,8 +108,7 @@ const Conseils = () => {
 					onPress={() => {
 						addMessage(inputMessage).then(() => setInputMessage(""));
 						Keyboard.dismiss();
-					}}
-				>
+					}}>
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Envoyer</Text>
 					</View>
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: "center",
-		backgroundColor: "#5BB774",
+		backgroundColor: "#5DB075",
 	},
 
 	main: {

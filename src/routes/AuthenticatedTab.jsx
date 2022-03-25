@@ -11,7 +11,7 @@ const AuthenticatedTab = () => {
 		<Tab.Navigator
 			screenOptions={{
 				headerTitleAlign: "center",
-				tabBarActiveTintColor: "#5BB774",
+				tabBarActiveTintColor: "#5DB075",
 			}}>
 			<Tab.Screen
 				name="Accueil"

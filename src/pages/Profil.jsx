@@ -202,7 +202,7 @@ styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "#5BB774",
+		backgroundColor: "#5DB075",
 	},
 
 	username: {
