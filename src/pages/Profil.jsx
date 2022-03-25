@@ -1,3 +1,5 @@
+import * as ImagePicker from "expo-image-picker";
+
 import {
 	Alert,
 	Image,
@@ -8,19 +10,24 @@ import {
 	Text,
 	TextInput,
 	TouchableOpacity,
+	TouchableWithoutFeedback,
 	View,
 } from "react-native";
-import { auth, db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { signOut, updateProfile } from "firebase/auth";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useState } from "react";
 
 const Profil = () => {
 	const [modalVisible, setModalVisible] = useState(false);
+
 	const [pseudo, setPseudo] = useState(auth.currentUser?.displayName);
+	const [photoURL, setPhotoURL] = useState(null);
 
 	const platform = Platform.OS;
 
@@ -37,11 +44,35 @@ const Profil = () => {
 				onPress: (pseudo) => {
 					changerPseudo(pseudo);
 					setModalVisible(!modalVisible);
-					setPseudo(pseudo);
 				},
 			},
 		]);
 	}
+
+	const changerPhoto = async () => {
+		const result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: "Images",
+			allowsEditing: true,
+		});
+
+		// Méta-données de l'image
+		const ext = result.uri.split(".")[1];
+		const newImagePath = `images/profile/${auth.currentUser.uid}.${ext}`;
+		const newImageRef = ref(storage, newImagePath);
+
+		// Conversion de l'image en bytes
+		const r = await fetch(result.uri);
+		const blob = await r.blob();
+
+		await uploadBytesResumable(newImageRef, blob);
+
+		const downloadURL = await getDownloadURL(newImageRef);
+		await updateProfile(auth.currentUser, {
+			photoURL: downloadURL,
+		});
+
+		setPhotoURL(downloadURL);
+	};
 
 	const changerPseudo = async (pseudo) => {
 		// Met à jour le pseudo interne de l'utilisateur
@@ -52,21 +83,53 @@ const Profil = () => {
 		await updateDoc(doc(db, "users", auth.currentUser.uid), {
 			username: pseudo,
 		});
+
+		setPseudo(pseudo);
 	};
+
+	if (!photoURL && auth.currentUser.photoURL) {
+		setPhotoURL(auth.currentUser.photoURL);
+	}
 
 	const logout = async () => {
 		await signOut(auth);
 	};
 
+	const { showActionSheetWithOptions } = useActionSheet(); // Menu changer photo
+
 	return (
 		<View style={styles.container}>
-			<View style={styles.profileImage}>
-				<Image
-					source={require("../../assets/test.jpg")}
-					style={styles.image}
-					resizeMode="cover"
-				/>
-			</View>
+			<TouchableWithoutFeedback
+				onLongPress={() => {
+					showActionSheetWithOptions(
+						{
+							options: ["Changer de photo de profil", "Annuler"],
+							cancelButtonIndex: 1,
+						},
+						async (index) => {
+							if (index === 0) {
+								changerPhoto();
+							}
+						}
+					);
+				}}>
+				<View style={styles.profileImage}>
+					{!photoURL && (
+						<Image
+							source={require("../../assets/profile.png")}
+							style={styles.image}
+							resizeMode="cover"
+						/>
+					)}
+					{photoURL && (
+						<Image
+							source={{ uri: photoURL }}
+							style={styles.image}
+							resizeMode="cover"
+						/>
+					)}
+				</View>
+			</TouchableWithoutFeedback>
 
 			<View>
 				<Text style={styles.username}>@{pseudo}</Text>
@@ -94,7 +157,6 @@ const Profil = () => {
 									onPress={() => {
 										changerPseudo(pseudo);
 										setModalVisible(!modalVisible);
-										setPseudo(pseudo);
 									}}>
 									<Text>Appliquer</Text>
 								</Pressable>
@@ -134,7 +196,7 @@ const Profil = () => {
 	);
 };
 
-const styles = StyleSheet.create({
+styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: "center",
