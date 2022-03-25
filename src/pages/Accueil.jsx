@@ -1,16 +1,16 @@
-import { FlatList, StyleSheet, Text, View, Button } from "react-native";
+import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import { auth, db } from "../../firebase";
 import { collection, limit, orderBy, query } from "firebase/firestore";
+
 import CircularProgress from "react-native-circular-progress-indicator";
-import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useState } from "react";
 
 const Accueil = ({ navigation }) => {
 	const user = auth.currentUser;
-	const [totalBudget, setTotalBudget] = useState(0);
 
-	const [depenses, loading, error] = useCollectionData(
+	const [depensesRecente, loading, error] = useCollectionData(
 		query(
 			collection(db, "users", user.uid, "depenses"),
 			orderBy("date", "desc"),
@@ -22,13 +22,23 @@ const Accueil = ({ navigation }) => {
 		query(collection(db, "users", user.uid, "categories"))
 	);
 
+	const [depenses, loadingDepenses, errorDepenses] = useCollectionData(
+		query(collection(db, "users", user.uid, "depenses"))
+	);
+
 	const budgetMax = () => {
 		const tmp = categories.reduce(
 			(total, categorie) => total + categorie.limite,
 			0
 		);
-		setTotalBudget(tmp);
 		return tmp;
+	};
+
+	const depensesTotales = () => {
+		if (depenses) {
+			return depenses.reduce((total, depense) => total + depense.montant, 0);
+		}
+		return 0;
 	};
 
 	const renderDepense = ({ item }) => (
@@ -41,19 +51,33 @@ const Accueil = ({ navigation }) => {
 		</View>
 	);
 
+	const dpt = depenses ? depensesTotales() : 0;
+	const max = categories ? budgetMax() : 0;
+
 	return (
 		<View style={styles.container}>
 			<View
 				style={[styles.semi, styles.container, { backgroundColor: "#5BB774" }]}
 			>
-				<CircularProgress value={58} />
+				{depenses && (
+					<CircularProgress
+						value={dpt}
+						radius={120}
+						duration={2000}
+						textColor={"#ecf0f1"}
+						maxValue={max}
+						title={"EUROS"}
+						titleColor={"white"}
+						titleStyle={{ fontWeight: "bold" }}
+					/>
+				)}
 			</View>
 
 			<View style={styles.semi}>
 				<View style={styles.dernieresDepenses}>
 					<Text style={styles.title}>Dernières dépenses</Text>
 
-					{depenses && depenses.length === 0 && (
+					{depensesRecente && depensesRecente.length === 0 && (
 						<View style={styles.container}>
 							<Text>
 								Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
@@ -61,19 +85,13 @@ const Accueil = ({ navigation }) => {
 						</View>
 					)}
 
-					{depenses && (
+					{depensesRecente && (
 						<FlatList
 							style={styles.listeDepenses}
-							data={depenses}
+							data={depensesRecente}
 							renderItem={renderDepense}
 							keyExtractor={(item) => item.nom}
 						/>
-					)}
-
-					{categories && (
-						<View style={styles.container}>
-							<Button title="test" onPress={() => alert(budgetMax())} />
-						</View>
 					)}
 
 					{loading && (
