@@ -57,13 +57,6 @@ const Profil = ({ navigation }) => {
 
 	const logout = async () => {
 		await signOut(auth);
-		// Redirige à l'accueil
-		navigation.dispatch(
-			CommonActions.reset({
-				index: 0,
-				routes: [{ name: "GuestStack" }],
-			})
-		);
 	};
 
 	return (
