@@ -22,7 +22,6 @@ const NouvelleDepense = ({ navigation }) => {
     let date = new Date();
 
 
-
     const ajouter = async () => {
         await addDoc(usersCollectionRef, { nom: nom, montant: parseFloat(montant), categorie: categorie, date: date });
     };
@@ -81,11 +80,13 @@ const NouvelleDepense = ({ navigation }) => {
                 Nouvelle Catégorie
             </Text> */}
 
+
             <Text
                 style={styles.link_color}
                 onPress={() => navigation.navigate("NouvelleCategorie")}>
                 Nouvelle Catégorie
             </Text>
+
             <StatusBar style="auto" />
 
             <TextInput
