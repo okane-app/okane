@@ -84,7 +84,8 @@ const Conseils = () => {
 	return (
 		<KeyboardAvoidingView
 			style={styles.container}
-			behavior={Platform.OS === "ios" ? "padding" : "height"}>
+			behavior={Platform.OS === "ios" ? "padding" : undefined}
+		>
 			<View style={styles.main}>
 				<Text style={styles.title}>Vos conseils</Text>
 
@@ -108,7 +109,8 @@ const Conseils = () => {
 					onPress={() => {
 						addMessage(inputMessage).then(() => setInputMessage(""));
 						Keyboard.dismiss();
-					}}>
+					}}
+				>
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Envoyer</Text>
 					</View>
