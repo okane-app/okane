@@ -12,12 +12,6 @@ const Connexion = ({ navigation }) => {
 
 	const login = async (email, password) => {
 		await signInWithEmailAndPassword(auth, email, password);
-		navigation.dispatch(
-			CommonActions.reset({
-				index: 0,
-				routes: [{ name: "UserTab" }],
-			})
-		);
 	};
 
 	return (
