@@ -19,7 +19,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 
-const Profil = ({ navigation }) => {
+const Profil = () => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [pseudo, setPseudo] = useState(auth.currentUser?.displayName);
 
