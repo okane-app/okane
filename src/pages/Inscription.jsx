@@ -65,8 +65,6 @@ const Inscription = ({ navigation }) => {
 	);
 };
 
-export default Inscription;
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -79,3 +77,5 @@ const styles = StyleSheet.create({
 		marginVertical: 10,
 	},
 });
+
+export default Inscription;

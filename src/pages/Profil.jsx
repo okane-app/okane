@@ -22,9 +22,11 @@ const Profil = ({ navigation }) => {
 	const [pseudo, setPseudo] = useState("");
 
 	const changerPseudo = async (pseudo) => {
+		// Met à jour le pseudo interne de l'utilisateur
 		await updateProfile(auth.currentUser, {
 			displayName: pseudo,
 		});
+		// Met à jour le pseudo dans la base de données
 		await updateDoc(doc(db, "users", auth.currentUser.uid), {
 			username: pseudo,
 		});
@@ -34,6 +36,7 @@ const Profil = ({ navigation }) => {
 
 	const logout = async () => {
 		await signOut(auth);
+		// Redirige à l'accueil
 		navigation.dispatch(
 			CommonActions.reset({
 				index: 0,
@@ -125,8 +128,6 @@ const Profil = ({ navigation }) => {
 	);
 };
 
-export default Profil;
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -215,3 +216,5 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 });
+
+export default Profil;
