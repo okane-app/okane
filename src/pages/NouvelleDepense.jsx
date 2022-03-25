@@ -1,19 +1,18 @@
-import { Button, StyleSheet, Text, View, TextInput, FlatList } from "react-native";
-import { useState } from "react";
-import { RadioButton } from 'react-native-paper';
-import { db, auth } from "../../firebase"
-import { StatusBar } from "expo-status-bar";
-import RNPickerSelect from 'react-native-picker-select';
-import { useCollection, useCollectionData, useCollectionOnce } from "react-firebase-hooks/firestore";
-import { collection, limit, orderBy, query, addDoc, onSnapshot } from "firebase/firestore";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { addDoc, collection, query } from "firebase/firestore";
+import { auth, db } from "../../firebase"
 
+import RNPickerSelect from 'react-native-picker-select';
+import { RadioButton } from 'react-native-paper';
+import { StatusBar } from "expo-status-bar";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useState } from "react";
 
 const NouvelleDepense = ({ navigation }) => {
     const user = auth.currentUser;
-    
 
     const [checked, setChecked] = useState('first');
-    const [categorie, setCategorie] = useState("1");
+    const [categorie, setCategorie] = useState("");
     const [nom, setNom] = useState("");
     const [montant, setMontant] = useState("");
     const [frequence, setFrequence] = useState("");
@@ -21,28 +20,22 @@ const NouvelleDepense = ({ navigation }) => {
     const usersCollectionRef = collection(db, "users", user.uid, "depenses");
 
     let date = new Date();
+    
 
 
     const ajouter = async () => {
         await addDoc(usersCollectionRef, { nom: nom, montant: parseFloat(montant), categorie: categorie, date: date });
     };
 
-    
-    // const [categories, loading, error] = useCollection(
-    //     query(
-    //         collection(db, "users", user.uid, "categories"),
 
-    //     )
-    // );
-
-    const d = db.collection("users").get()
-    console.log(d)
+    const [categories, loading, error] = useCollectionData(
+        query(
+            collection(db, "users", user.uid, "categories"),
+        )
+    );
 
     return (
         <View style={styles.container}>
-
-            <Text>Nouvelle, Depense!</Text>
-
             <View style={styles.ligne} >
                 <Text>Dépenses ponctuelle</Text>
                 <RadioButton
@@ -70,24 +63,29 @@ const NouvelleDepense = ({ navigation }) => {
                     onPress={() => setChecked('troisième')} />
             </View>
 
-           
-                {/* <RNPickerSelect
+            {categories && (
+                <RNPickerSelect
+                    value={categorie}
                     onValueChange={setCategorie}
-                    items={[    
-                                            
-                        { label:categories.nom, value: KEYID }
-                    ]}
-                >
-                 </RNPickerSelect> */}
-         
-             
+                    placeholder={{label: 'Choisis une catégorie...', value: undefined,}}
+                    items={categories?.map((categorie) => ({ label: categorie.nom, value: categorie.id }))}
+                />
+            )}
+
+
             {/* {loading && <Text>Chargement des catégories</Text>}
             {error && <Text>Erreur : {JSON.stringify(error)}</Text>} */}
 
 
-            <Text style={styles.link_color} onPress={() => navigation.navigate("NouvelleCategorie")}>
+            {/* <Text style={styles.link_color} onPress={() => navigation.navigate("NouvelleCategorie")}>
                 Nouvelle Catégorie
-            </Text>
+            </Text> */}
+
+            <Button
+				title="Nouvelle Catégorie"
+				onPress={() => navigation.navigate("NouvelleCategorie")}
+			/>
+            <StatusBar style="auto" />
 
             <TextInput
                 title="Nom de la dépense"
