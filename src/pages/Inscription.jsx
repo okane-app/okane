@@ -7,7 +7,7 @@ import { CommonActions } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 
-const Inscription = ({ navigation }) => {
+const Inscription = () => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -27,12 +27,6 @@ const Inscription = ({ navigation }) => {
 					username,
 				});
 			}
-		);
-		navigation.dispatch(
-			CommonActions.reset({
-				index: 0,
-				routes: [{ name: "AuthenticatedTab" }],
-			})
 		);
 	};
 
