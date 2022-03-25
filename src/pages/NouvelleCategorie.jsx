@@ -1,10 +1,11 @@
 import { Button, StyleSheet, Text, TextInput, ScrollView, View } from "react-native";
 //import {Picker} from '@react-native-picker/picker';
-import { db } from "../../firebase"
+import { db, auth } from "../../firebase"
 import { StatusBar } from "expo-status-bar";
 import { CommonActions } from "@react-navigation/native";
 import { useState } from "react";
-import RNPickerSelect from 'react-native-picker-select';
+import DropDownPicker from 'react-native-dropdown-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
     collection,
@@ -13,18 +14,30 @@ import {
 
 
 const NouvelleCategorie = ({ navigation }) => {
+    const user = auth.currentUser;
+
     const [Nom, setNom] = useState("");
     const [Limite, setLimite] = useState("");
-    const [icon, setIcon] = useState("");
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        { value: 'gamepad',icon: () => <Icon name="gamepad" size={30} color="#900" /> },
+        { value: 'book',icon: () => <Icon name="book" size={30} color="#900" /> },
+        { value: 'shopping-cart',icon: () => <Icon name="shopping-cart" size={30} color="#900" /> },
+        { value: 'medkit',icon: () => <Icon name="medkit" size={30} color="#900" /> },
+        { value: 'soccer-ball-o',icon: () => <Icon name="soccer-ball-o" size={30} color="#900" /> },
+        { value: 'laptop',icon: () => <Icon name="laptop" size={30} color="#900" /> },
+        { value: 'plane',icon: () => <Icon name="plane" size={30} color="#900" /> },
+    ]);
 
     const usersCollectionRef = collection(db, "users", user.uid, "categories");
 
 
 
     const ajouter = async () => {
-        await addDoc(usersCollectionRef, { Nom: Nom, Limite: parseFloat(Limite),Icon: icon});
+        await addDoc(usersCollectionRef, { Nom: Nom, Limite: parseFloat(Limite), Icon: icon });
     };
-   
+
 
     return (
 
@@ -40,13 +53,15 @@ const NouvelleCategorie = ({ navigation }) => {
                 onChangeText={(setLimite)}
             />
 
-            <RNPickerSelect
-                onValueChange={setIcon}
-                items={[
-                    {label: 'Divertissement', value: 'add-circle-outline'}
-                ]}
-            >
-            </RNPickerSelect>
+            <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+            />
+
 
             <Button
                 title="Ajouter"
@@ -55,7 +70,7 @@ const NouvelleCategorie = ({ navigation }) => {
                 }}
             />
             <StatusBar style="auto" />
-        </View>
+        </View >
 
     );
 };

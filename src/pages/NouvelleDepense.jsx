@@ -20,7 +20,7 @@ const NouvelleDepense = ({ navigation }) => {
     const usersCollectionRef = collection(db, "users", user.uid, "depenses");
 
     let date = new Date();
-    
+
 
 
     const ajouter = async () => {
@@ -67,7 +67,7 @@ const NouvelleDepense = ({ navigation }) => {
                 <RNPickerSelect
                     value={categorie}
                     onValueChange={setCategorie}
-                    placeholder={{label: 'Choisis une catégorie...', value: undefined,}}
+                    placeholder={{ label: 'Choisis une catégorie...', value: undefined, }}
                     items={categories?.map((categorie) => ({ label: categorie.nom, value: categorie.id }))}
                 />
             )}
@@ -81,16 +81,17 @@ const NouvelleDepense = ({ navigation }) => {
                 Nouvelle Catégorie
             </Text> */}
 
-            <Button
-				title="Nouvelle Catégorie"
-				onPress={() => navigation.navigate("NouvelleCategorie")}
-			/>
+            <Text
+                style={styles.link_color}
+                onPress={() => navigation.navigate("NouvelleCategorie")}>
+                Nouvelle Catégorie
+            </Text>
             <StatusBar style="auto" />
 
             <TextInput
                 title="Nom de la dépense"
                 style={styles.input}
-                placeholder="Divertissement"
+                placeholder="Chaussure"
                 onChangeText={setNom}
             />
 
