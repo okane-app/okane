@@ -15,7 +15,7 @@ const Routes = () => {
 				}}>
 				<Stack.Screen name="GuestStack" component={GuestStack} />
 				<Stack.Screen name="UserTab" component={AuthenticatedTab} />
-				<Stack.Screen name="UserDepenseTab" component={DepenseTab} />
+				<Stack.Screen name="DepenseTab" component={DepenseTab} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

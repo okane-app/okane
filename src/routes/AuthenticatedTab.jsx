@@ -2,8 +2,10 @@ import Accueil from "../pages/Accueil";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NouvelleDepense from "../pages/NouvelleDepense"
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator();
+
 
 const AuthenticatedTab = () => {
 	return (
@@ -58,6 +60,8 @@ const AuthenticatedTab = () => {
 				}}
 			/>
 		</Tab.Navigator>
+		
+		
 	);
 };
 
