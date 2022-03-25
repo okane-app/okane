@@ -13,7 +13,14 @@ const GuestStack = () => {
 				component={Splash}
 				options={{ headerShown: false }}
 			/>
-			<Stack.Screen name="Connexion" component={Connexion} />
+			<Stack.Screen
+				name="Connexion"
+				component={Connexion}
+				options={{
+					headerTitle: "",
+					headerTransparent: true,
+				}}
+			/>
 			<Stack.Screen
 				name="Inscription"
 				component={Inscription}
