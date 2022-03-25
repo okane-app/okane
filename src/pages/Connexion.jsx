@@ -6,7 +6,7 @@ import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 
-const Connexion = ({ navigation }) => {
+const Connexion = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
