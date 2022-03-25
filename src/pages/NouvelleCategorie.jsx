@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, ScrollView, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, ScrollView, View, Image } from "react-native";
 //import {Picker} from '@react-native-picker/picker';
 import { db, auth } from "../../firebase"
 import { StatusBar } from "expo-status-bar";
@@ -21,13 +21,13 @@ const NouvelleCategorie = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
-        { value: 'gamepad',icon: () => <Icon name="gamepad" size={30} color="#900" /> },
-        { value: 'book',icon: () => <Icon name="book" size={30} color="#900" /> },
-        { value: 'shopping-cart',icon: () => <Icon name="shopping-cart" size={30} color="#900" /> },
-        { value: 'medkit',icon: () => <Icon name="medkit" size={30} color="#900" /> },
-        { value: 'soccer-ball-o',icon: () => <Icon name="soccer-ball-o" size={30} color="#900" /> },
-        { value: 'laptop',icon: () => <Icon name="laptop" size={30} color="#900" /> },
-        { value: 'plane',icon: () => <Icon name="plane" size={30} color="#900" /> },
+        { value: 'gamepad', icon: () => <Image source={require('../../assets/splash.png')} style={styles.tinyLogo} /> },
+        { value: 'book', icon: () => <Icon name="book" size={30} color="#900" /> },
+        { value: 'shopping-cart', icon: () => <Icon name="shopping-cart" size={30} color="#900" /> },
+        { value: 'medkit', icon: () => <Icon name="medkit" size={30} color="#900" /> },
+        { value: 'soccer-ball-o', icon: () => <Icon name="soccer-ball-o" size={30} color="#900" /> },
+        { value: 'laptop', icon: () => <Icon name="laptop" size={30} color="#900" /> },
+        { value: 'plane', icon: () => <Icon name="plane" size={30} color="#900" /> },
     ]);
 
     const usersCollectionRef = collection(db, "users", user.uid, "categories");
@@ -91,6 +91,11 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
+    },
+
+    tinyLogo: {
+        width: 30,
+        height: 30,
     },
 
 });
