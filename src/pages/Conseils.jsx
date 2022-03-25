@@ -17,9 +17,28 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
+import PropTypes from "prop-types";
+import ReactTimeAgo from "react-time-ago";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
+
+// Pour affichage des horaires des messages relatifs à l'heure actuelle
+
+function TimeAgo(props) {
+	return <ReactTimeAgo {...props} component={Time} />;
+}
+
+function Time({ date, verboseDate, tooltip, children, ...rest }) {
+	return <Text style={styles.messageSecondary}>{children}</Text>;
+}
+
+Time.propTypes = {
+	date: PropTypes.instanceOf(Date).isRequired,
+	verboseDate: PropTypes.string,
+	tooltip: PropTypes.bool.isRequired,
+	children: PropTypes.string.isRequired,
+};
 
 const Conseils = () => {
 	const user = auth.currentUser;
@@ -46,7 +65,10 @@ const Conseils = () => {
 	const renderMessage = ({ item }) => (
 		<View style={styles.message}>
 			<Text style={styles.messageContent}>{item.content}</Text>
-			<Text style={styles.messageAuthor}>{getUsername(item.uid)}</Text>
+			<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+				<Text style={styles.messageSecondary}>{getUsername(item.uid)}</Text>
+				<TimeAgo date={item.timestamp.toDate()} />
+			</View>
 		</View>
 	);
 
@@ -135,7 +157,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 	},
 
-	messageAuthor: {
+	messageSecondary: {
 		color: "gray",
 	},
 
