@@ -10,32 +10,40 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     collection,
     addDoc,
+    updateDoc,
 } from "firebase/firestore";
 
 
 const NouvelleCategorie = ({ navigation }) => {
     const user = auth.currentUser;
 
-    const [Nom, setNom] = useState("");
-    const [Limite, setLimite] = useState("");
+    const [nom, setNom] = useState("");
+    const [limite, setLimite] = useState("");
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-        { value: 'gamepad', icon: () => <Image source={require('../../assets/splash.png')} style={styles.tinyLogo} /> },
-        { value: 'book', icon: () => <Icon name="book" size={30} color="#900" /> },
-        { value: 'shopping-cart', icon: () => <Icon name="shopping-cart" size={30} color="#900" /> },
-        { value: 'medkit', icon: () => <Icon name="medkit" size={30} color="#900" /> },
-        { value: 'soccer-ball-o', icon: () => <Icon name="soccer-ball-o" size={30} color="#900" /> },
-        { value: 'laptop', icon: () => <Icon name="laptop" size={30} color="#900" /> },
-        { value: 'plane', icon: () => <Icon name="plane" size={30} color="#900" /> },
-    ]);
+    // const [items, setItems] = useState([
+    //     { value: '../../assets/icones/divertissement.png', icon: () => <Image source={require('../../assets/icones/divertissement.png')} style={styles.tinyLogo} /> },
+    //     { value: '../../assets/icones/materiel-scolaire.png', icon: () => <Image source={require('../../assets/icones/materiel-scolaire.png')} style={styles.tinyLogo} /> },
+    //     { value: '../../assets/icones/panier-de-courses.png', icon: () => <Image source={require('../../assets/icones/panier-de-courses.png')} style={styles.tinyLogo} /> },
+    //     { value: '../../assets/icones/soins-de-sante.png', icon: () => <Image source={require('../../assets/icones/soins-de-sante.png')} style={styles.tinyLogo} /> },
+    //     { value: '../../assets/icones/variante-de-ballon.png', icon: () => <Image source={require('../../assets/icones/variante-de-ballon.png')} style={styles.tinyLogo} /> },
+    //     { value: '../../assets/icones/ordinateur-de-bureau.png', icon: () => <Image source={require('../../assets/icones/ordinateur-de-bureau.png')} style={styles.tinyLogo} /> },
+    //     { value: '../../assets/icones/avion.png', icon: () => <Image source={require('../../assets/icones/avion.png')} style={styles.tinyLogo} /> },
+       
+    // ]);
 
     const usersCollectionRef = collection(db, "users", user.uid, "categories");
 
 
 
     const ajouter = async () => {
-        await addDoc(usersCollectionRef, { Nom: Nom, Limite: parseFloat(Limite), Icon: icon });
+        await addDoc(usersCollectionRef, { nom: nom, limite: parseFloat(limite)})
+        .then(async (docRef) => {
+            await updateDoc(docRef,{id: docRef.id})
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
     };
 
 
@@ -53,20 +61,20 @@ const NouvelleCategorie = ({ navigation }) => {
                 onChangeText={(setLimite)}
             />
 
-            <DropDownPicker
+            {/* <DropDownPicker
                 open={open}
                 value={value}
                 items={items}
                 setOpen={setOpen}
                 setValue={setValue}
                 setItems={setItems}
-            />
+            /> */}
 
 
             <Button
                 title="Ajouter"
                 onPress={() => {
-                    ajouter(Nom, Limite);
+                    ajouter(nom, limite);
                 }}
             />
             <StatusBar style="auto" />
