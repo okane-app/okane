@@ -55,10 +55,11 @@ const Profil = () => {
 			allowsEditing: true,
 		});
 
-		// Méta-données de l'image
-		const ext = result.uri.split(".")[1];
-		const newImagePath = `images/profile/${auth.currentUser.uid}.${ext}`;
-		const newImageRef = ref(storage, newImagePath);
+		// Référence de l'image
+		const newImageRef = ref(
+			storage,
+			`images/profile/${auth.currentUser.uid}.png`
+		);
 
 		// Conversion de l'image en bytes
 		const r = await fetch(result.uri);
