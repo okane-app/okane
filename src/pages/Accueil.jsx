@@ -35,10 +35,8 @@ const Accueil = ({ navigation }) => {
 	};
 
 	const depensesTotales = () => {
-		if (depenses) {
-			return depenses.reduce((total, depense) => total + depense.montant, 0);
-		}
-		return 0;
+		const tmp = depenses.reduce((total, depense) => total + depense.montant, 0);
+		return tmp;
 	};
 
 	const renderDepense = ({ item }) => (
