@@ -91,9 +91,29 @@ const Conseils = () => {
 								await like(item.id);
 							}
 						}}>
-						<View style={styles.likes}>
-							<Text style={styles.likesText}>💵 {item.likes.length}</Text>
-						</View>
+						{!liked && (
+							<View
+								style={[
+									styles.likes,
+									{ borderColor: "white", borderWidth: 2 },
+								]}>
+								<Text style={styles.likesText}>💵 {item.likes.length}</Text>
+							</View>
+						)}
+						{liked && (
+							<View
+								style={[
+									styles.likes,
+									{
+										borderColor: "green",
+										borderWidth: 2,
+									},
+								]}>
+								<Text style={[styles.likesText, { color: "green" }]}>
+									💵 {item.likes.length}
+								</Text>
+							</View>
+						)}
 					</TouchableOpacity>
 				)}
 
@@ -266,15 +286,16 @@ const styles = StyleSheet.create({
 		marginRight: 30,
 		marginBottom: 8,
 		backgroundColor: "white",
-		paddingTop: 2,
-		paddingBottom: 2,
-		paddingLeft: 5,
-		paddingRight: 5,
+		paddingTop: 1,
+		paddingBottom: 1,
+		paddingLeft: 4,
+		paddingRight: 4,
 		borderRadius: 7,
 	},
 
 	likesText: {
 		fontSize: 16,
+		fontWeight: "500",
 		color: "gray",
 	},
 
