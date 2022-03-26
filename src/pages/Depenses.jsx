@@ -1,15 +1,18 @@
 import {
+	Dimensions,
 	FlatList,
 	StyleSheet,
 	Text,
-	View,
 	TouchableOpacity,
+	View,
 } from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, query } from "firebase/firestore";
-import Swiper from "react-native-swiper";
+import { collection, query, where } from "firebase/firestore";
+
 import CircularProgress from "react-native-circular-progress-indicator";
+import { LineChart } from "react-native-chart-kit";
 import { StatusBar } from "expo-status-bar";
+import Swiper from "react-native-swiper";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const Depenses = ({ navigation }) => {
@@ -41,10 +44,7 @@ const Depenses = ({ navigation }) => {
 	};
 
 	const renderCategorie = ({ item }) => (
-		<TouchableOpacity style={styles.depense}>
-			{/* <Text style={styles.depense}>
-					<Ionicons name={icon} />
-				</Text> */}
+		<TouchableOpacity style={styles.depense} onPress={() => alert("zizi")}>
 			<Text style={{ fontSize: 16 }}>{item.nom}</Text>
 			<Text style={{ fontSize: 16 }}>{item.limite} €</Text>
 		</TouchableOpacity>
@@ -53,17 +53,87 @@ const Depenses = ({ navigation }) => {
 	const dpt = depenses ? depensesTotales() : 0;
 	const max = categories ? budgetMax() : 0;
 
+	const mois = [
+		"Janv",
+		"Févr",
+		"Mars",
+		"Avr",
+		"Mai",
+		"Juin",
+		"Juill",
+		"Août",
+		"Sept",
+		"Oct",
+		"Nov",
+		"Déc",
+	];
+
+	const calculerSixDerniersMois = () => {
+		const six = [];
+		const d = new Date();
+
+		for (let i = 1; i <= 6; i++) {
+			const tmp = d.getMonth() - i;
+			if (tmp < 0) {
+				six.push(tmp + 12);
+			} else {
+				six.push(tmp);
+			}
+		}
+		return six.reverse();
+	};
+
+	const sixDerniersMois = calculerSixDerniersMois();
+	const sixDerniersMoisLabels = sixDerniersMois.map((noMois) => mois[noMois]);
+
+	const sommeSixDerniersMois = sixDerniersMois.map((noMois) => {
+		if (depenses) {
+			return depenses
+				.filter((depense) => depense?.date.toDate().getMonth() === noMois)
+				.reduce((total, depense) => total + depense?.montant, 0);
+		} else {
+			return 0;
+		}
+	});
+
+	const data = {
+		labels: sixDerniersMoisLabels,
+		datasets: [
+			{
+				data: sommeSixDerniersMois,
+				color: (opacity = 1) => `rgba(75, 161, 68, ${opacity})`, // optional
+				strokeWidth: 2, // optional
+			},
+		],
+	};
+
+	const chartConfig = {
+		backgroundGradientFrom: "#fff",
+		backgroundGradientFromOpacity: 0,
+		backgroundGradientTo: "#fff",
+		backgroundGradientToOpacity: 0.5,
+		color: (opacity = 1) => `rgba(75, 161, 68, ${opacity})`,
+		strokeWidth: 2, // optional, default 3
+		barPercentage: 0.5,
+		useShadowColorFromDataset: false, // optional
+		propsForDots: {
+			r: "3",
+			strokeWidth: "3",
+		},
+	};
+
 	return (
 		<View style={styles.container}>
 			<Swiper
 				dot={
 					<View
 						style={{
-							backgroundColor: "rgba(255,255,255,.3)",
+							backgroundColor: "rgba(60,60,60,.3)",
 							width: 10,
 							height: 10,
 							borderRadius: 7,
 							marginLeft: 7,
+							marginTop: 20,
 						}}
 					/>
 				}
@@ -75,6 +145,8 @@ const Depenses = ({ navigation }) => {
 							height: 10,
 							borderRadius: 7,
 							marginLeft: 7,
+							marginTop: 7,
+							marginTop: 20,
 						}}
 					/>
 				}
@@ -100,7 +172,14 @@ const Depenses = ({ navigation }) => {
 					)}
 				</View>
 				<View style={styles.slide2}>
-					<Text style={styles.text}>Beautiful</Text>
+					<LineChart
+						data={data}
+						width={Dimensions.get("window").width}
+						height={256}
+						verticalLabelRotation={30}
+						chartConfig={chartConfig}
+						bezier
+					/>
 				</View>
 			</Swiper>
 
@@ -182,7 +261,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#97CAE5",
+		backgroundColor: "#fff",
 	},
 	text: {
 		color: "#fff",
