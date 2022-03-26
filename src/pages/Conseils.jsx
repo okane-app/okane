@@ -6,7 +6,6 @@ import {
 	StyleSheet,
 	Text,
 	TextInput,
-	TouchableHighlight,
 	TouchableOpacity,
 	View,
 } from "react-native";
@@ -186,7 +185,7 @@ const Conseils = () => {
 						placeholder="Partage ton expérience !"
 					/>
 				</View>
-				<TouchableHighlight
+				<TouchableOpacity
 					onPress={() => {
 						addMessage(inputMessage).then(() => {
 							setInputMessage("");
@@ -196,7 +195,7 @@ const Conseils = () => {
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Envoyer</Text>
 					</View>
-				</TouchableHighlight>
+				</TouchableOpacity>
 			</View>
 
 			<StatusBar style="auto" />
