@@ -22,7 +22,6 @@ import PropTypes from "prop-types";
 import ReactTimeAgo from "react-time-ago";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import useForceUpdate from "use-force-update";
 import { useState } from "react";
 
 // Pour affichage des horaires des messages relatifs à l'heure actuelle
@@ -42,28 +41,6 @@ Time.propTypes = {
 	children: PropTypes.string.isRequired,
 };
 
-// Shuffle conseils
-
-function shuffle(array) {
-	let currentIndex = array.length,
-		randomIndex;
-
-	// While there remain elements to shuffle...
-	while (currentIndex != 0) {
-		// Pick a remaining element...
-		randomIndex = Math.floor(Math.random() * currentIndex);
-		currentIndex--;
-
-		// And swap it with the current element.
-		[array[currentIndex], array[randomIndex]] = [
-			array[randomIndex],
-			array[currentIndex],
-		];
-	}
-
-	return array;
-}
-
 const Conseils = () => {
 	const user = auth.currentUser;
 
@@ -74,9 +51,6 @@ const Conseils = () => {
 	const [users, loadingUsers, errorUsers] = useCollectionData(
 		collection(db, "users")
 	);
-
-	const [refreshing, setRefreshing] = useState(false);
-	const forceUpdate = useForceUpdate();
 
 	const [inputMessage, setInputMessage] = useState("");
 
@@ -107,10 +81,6 @@ const Conseils = () => {
 		});
 	};
 
-	if (messages) {
-		shuffle(messages);
-	}
-
 	return (
 		<KeyboardAvoidingView
 			style={styles.container}
@@ -124,13 +94,6 @@ const Conseils = () => {
 						data={messages}
 						renderItem={renderMessage}
 						keyExtractor={(item, index) => index}
-						refreshing={refreshing}
-						onRefresh={() => {
-							setRefreshing(true);
-							shuffle(messages);
-							setRefreshing(false);
-							forceUpdate();
-						}}
 					/>
 				)}
 			</View>
@@ -176,7 +139,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 30,
 		fontWeight: "600",
-		marginTop: 100,
+		marginTop: 80,
 	},
 
 	chat: {
