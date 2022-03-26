@@ -1,4 +1,5 @@
 import {
+	Keyboard,
 	KeyboardAvoidingView,
 	StyleSheet,
 	Text,
@@ -22,41 +23,43 @@ const Connexion = () => {
 	};
 
 	return (
-		<KeyboardAvoidingView
-			style={styles.container}
-			behavior={Platform.OS === "ios" ? "padding" : undefined}>
-			<Text style={styles.title}>Connexion</Text>
+		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+			<KeyboardAvoidingView
+				style={styles.container}
+				behavior={Platform.OS === "ios" ? "padding" : undefined}>
+				<Text style={styles.title}>Connexion</Text>
 
-			<View style={styles.form}>
-				<View style={styles.input}>
-					<TextInput
-						style={{ height: 50 }}
-						placeholder="Adresse mail"
-						onChangeText={setEmail}
-					/>
-				</View>
-
-				<View style={styles.input}>
-					<TextInput
-						style={{ height: 50 }}
-						placeholder="Mot de passe"
-						secureTextEntry={true}
-						onChangeText={setPassword}
-					/>
-				</View>
-
-				<TouchableWithoutFeedback
-					onPress={() => {
-						login(email, password);
-					}}>
-					<View style={styles.button}>
-						<Text style={styles.buttonText}>Connexion</Text>
+				<View style={styles.form}>
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							placeholder="Adresse mail"
+							onChangeText={setEmail}
+						/>
 					</View>
-				</TouchableWithoutFeedback>
-			</View>
 
-			<StatusBar style="auto" />
-		</KeyboardAvoidingView>
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							placeholder="Mot de passe"
+							secureTextEntry={true}
+							onChangeText={setPassword}
+						/>
+					</View>
+
+					<TouchableWithoutFeedback
+						onPress={() => {
+							login(email, password);
+						}}>
+						<View style={styles.button}>
+							<Text style={styles.buttonText}>Connexion</Text>
+						</View>
+					</TouchableWithoutFeedback>
+				</View>
+
+				<StatusBar style="auto" />
+			</KeyboardAvoidingView>
+		</TouchableWithoutFeedback>
 	);
 };
 

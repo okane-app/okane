@@ -1,4 +1,5 @@
 import {
+	Keyboard,
 	KeyboardAvoidingView,
 	StyleSheet,
 	Text,
@@ -37,57 +38,59 @@ const Inscription = () => {
 	};
 
 	return (
-		<KeyboardAvoidingView
-			style={styles.container}
-			behavior={Platform.OS === "ios" ? "padding" : undefined}>
-			<Text style={styles.title}>Inscription</Text>
+		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+			<KeyboardAvoidingView
+				style={styles.container}
+				behavior={Platform.OS === "ios" ? "padding" : undefined}>
+				<Text style={styles.title}>Inscription</Text>
 
-			<View style={styles.form}>
-				<View style={styles.input}>
-					<TextInput
-						style={{ height: 50 }}
-						placeholder="Nom d'utilisateur"
-						onChangeText={setUsername}
-					/>
-				</View>
-
-				<View style={styles.input}>
-					<TextInput
-						style={{ height: 50 }}
-						placeholder="Adresse mail"
-						onChangeText={setEmail}
-					/>
-				</View>
-
-				<View style={styles.input}>
-					<TextInput
-						style={{ height: 50 }}
-						placeholder="Mot de passe"
-						secureTextEntry={true}
-						onChangeText={setPassword}
-					/>
-				</View>
-
-				<Text>
-					En vous inscrivant, vous acceptez nos{" "}
-					<Text style={{ color: "blue", textDecorationLine: "underline" }}>
-						conditions générales d'utilisation
-					</Text>
-					.
-				</Text>
-
-				<TouchableWithoutFeedback
-					onPress={() => {
-						register(username, email, password);
-					}}>
-					<View style={styles.button}>
-						<Text style={styles.buttonText}>Inscription</Text>
+				<View style={styles.form}>
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							placeholder="Nom d'utilisateur"
+							onChangeText={setUsername}
+						/>
 					</View>
-				</TouchableWithoutFeedback>
-			</View>
 
-			<StatusBar style="auto" />
-		</KeyboardAvoidingView>
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							placeholder="Adresse mail"
+							onChangeText={setEmail}
+						/>
+					</View>
+
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							placeholder="Mot de passe"
+							secureTextEntry={true}
+							onChangeText={setPassword}
+						/>
+					</View>
+
+					<Text>
+						En vous inscrivant, vous acceptez nos{" "}
+						<Text style={{ color: "blue", textDecorationLine: "underline" }}>
+							conditions générales d'utilisation
+						</Text>
+						.
+					</Text>
+
+					<TouchableWithoutFeedback
+						onPress={() => {
+							register(username, email, password);
+						}}>
+						<View style={styles.button}>
+							<Text style={styles.buttonText}>Inscription</Text>
+						</View>
+					</TouchableWithoutFeedback>
+				</View>
+
+				<StatusBar style="auto" />
+			</KeyboardAvoidingView>
+		</TouchableWithoutFeedback>
 	);
 };
 
