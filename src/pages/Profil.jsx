@@ -192,7 +192,7 @@ const Profil = () => {
 					</View>
 				</TouchableOpacity>
 			</View>
-			<StatusBar style="light" />
+			<StatusBar style="auto" />
 		</View>
 	);
 };
