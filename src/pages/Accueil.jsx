@@ -110,7 +110,7 @@ const Accueil = () => {
 					)}
 				</View>
 			</View>
-			<StatusBar style="auto" />
+			<StatusBar style="dark" />
 		</View>
 	);
 };
