@@ -173,21 +173,29 @@ const Profil = () => {
 
 				<TouchableOpacity onPress={() => setModalVisible(true)}>
 					<View style={[styles.menuAction, styles.menuActionBorder]}>
-						<Ionicons name="pencil-outline" style={styles.menuIcon} />
+						<Ionicons name="pencil-outline" style={styles.menuIcon} size={15} />
 						<Text style={styles.menuText}>Changer de pseudo</Text>
 					</View>
 				</TouchableOpacity>
 
 				<TouchableOpacity>
 					<View style={[styles.menuAction, styles.menuActionBorder]}>
-						<Ionicons name="settings-outline" style={styles.menuIcon} />
+						<Ionicons
+							name="settings-outline"
+							style={styles.menuIcon}
+							size={15}
+						/>
 						<Text style={styles.menuText}>Paramètres</Text>
 					</View>
 				</TouchableOpacity>
 
 				<TouchableOpacity onPress={logout}>
 					<View style={styles.menuAction}>
-						<Ionicons name="log-out-outline" style={styles.menuIcon} />
+						<Ionicons
+							name="log-out-outline"
+							style={styles.menuIcon}
+							size={15}
+						/>
 						<Text style={styles.menuText}>Déconnexion</Text>
 					</View>
 				</TouchableOpacity>
