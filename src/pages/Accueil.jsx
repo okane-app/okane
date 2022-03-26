@@ -30,7 +30,7 @@ const Accueil = () => {
 	const dpt = depenses ? depensesTotales() : 0;
 	const max = categories ? budgetMax() : 0;
 	const pourcentage =
-		depenses && categories
+		depenses && categories && depenses.length > 0
 			? Math.round((depensesTotales() / budgetMax()) * 100)
 			: 0;
 
