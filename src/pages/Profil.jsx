@@ -10,7 +10,6 @@ import {
 	Text,
 	TextInput,
 	TouchableOpacity,
-	TouchableWithoutFeedback,
 	View,
 } from "react-native";
 import { auth, db, storage } from "../../firebase";
@@ -100,7 +99,7 @@ const Profil = () => {
 
 	return (
 		<View style={styles.container}>
-			<TouchableWithoutFeedback
+			<TouchableOpacity
 				onLongPress={() => {
 					showActionSheetWithOptions(
 						{
@@ -130,7 +129,7 @@ const Profil = () => {
 						/>
 					)}
 				</View>
-			</TouchableWithoutFeedback>
+			</TouchableOpacity>
 
 			<View>
 				<Text style={styles.username}>@{pseudo}</Text>
