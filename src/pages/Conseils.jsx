@@ -93,6 +93,10 @@ const Conseils = () => {
 				{messages && (
 					<FlatList
 						style={styles.chat}
+						contentContainerStyle={{
+							flex: 1,
+							justifyContent: "center",
+						}}
 						inverted
 						data={[...messages].reverse()}
 						renderItem={renderMessage}
