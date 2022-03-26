@@ -7,6 +7,7 @@ import {
 	Text,
 	TextInput,
 	TouchableHighlight,
+	TouchableWithoutFeedback,
 	View,
 } from "react-native";
 import {
@@ -82,45 +83,46 @@ const Conseils = () => {
 	};
 
 	return (
-		<KeyboardAvoidingView
-			style={styles.container}
-			behavior={Platform.OS === "ios" ? "padding" : undefined}>
-			<View style={styles.main}>
-				<Text style={styles.title}>Vos conseils</Text>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<KeyboardAvoidingView
+				style={styles.container}
+				behavior={Platform.OS === "ios" ? "padding" : undefined}>
+				<View style={styles.main}>
+					<Text style={styles.title}>Vos conseils</Text>
 
-				{messages && (
-					<FlatList
-						style={styles.chat}
-						inverted
-						data={[...messages].reverse()}
-						renderItem={renderMessage}
-						keyExtractor={(item, index) => index}
-					/>
-				)}
-			</View>
-
-			<View style={styles.form}>
-				<View style={styles.input}>
-					<TextInput
-						style={{ height: 50 }}
-						onChangeText={setInputMessage}
-						value={inputMessage}
-						placeholder="Partage ton expérience !"
-					/>
+					{messages && (
+						<FlatList
+							style={styles.chat}
+							inverted
+							data={[...messages].reverse()}
+							renderItem={renderMessage}
+							keyExtractor={(item, index) => index}
+						/>
+					)}
 				</View>
-				<TouchableHighlight
-					onPress={() => {
-						addMessage(inputMessage).then(() => setInputMessage(""));
-						Keyboard.dismiss();
-					}}>
-					<View style={styles.button}>
-						<Text style={styles.buttonText}>Envoyer</Text>
-					</View>
-				</TouchableHighlight>
-			</View>
 
-			<StatusBar style="auto" />
-		</KeyboardAvoidingView>
+				<View style={styles.form}>
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							onChangeText={setInputMessage}
+							value={inputMessage}
+							placeholder="Partage ton expérience !"
+						/>
+					</View>
+					<TouchableHighlight
+						onPress={() => {
+							addMessage(inputMessage).then(() => setInputMessage(""));
+						}}>
+						<View style={styles.button}>
+							<Text style={styles.buttonText}>Envoyer</Text>
+						</View>
+					</TouchableHighlight>
+				</View>
+
+				<StatusBar style="auto" />
+			</KeyboardAvoidingView>
+		</TouchableWithoutFeedback>
 	);
 };
 
