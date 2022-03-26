@@ -154,7 +154,7 @@ const Conseils = () => {
 				</TouchableHighlight>
 			</View>
 
-			<StatusBar style="light" />
+			<StatusBar style="auto" />
 		</KeyboardAvoidingView>
 	);
 };
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
 
 	main: {
 		flex: 6,
-		width: "100%",
+		alignSelf: "stretch",
 		alignItems: "center",
 	},
 
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
 	chat: {
 		flex: 1,
 		alignSelf: "stretch",
-		marginTop: 40,
+		marginTop: 20,
 	},
 
 	message: {

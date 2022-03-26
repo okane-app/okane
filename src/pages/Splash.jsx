@@ -32,7 +32,7 @@ const Splash = ({ navigation }) => {
 
 			<Text style={styles.version}>Version 1.0.0a</Text>
 
-			<StatusBar style="light" />
+			<StatusBar style="auto" />
 		</View>
 	);
 };
