@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
 	chat: {
 		flex: 1,
 		alignSelf: "stretch",
-		marginTop: 10,
+		marginTop: 20,
 	},
 
 	message: {

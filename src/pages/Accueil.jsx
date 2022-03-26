@@ -71,8 +71,8 @@ const Accueil = () => {
 					maxValue={max}
 					title={`${pourcentage}% dépensés`}
 					titleColor={"white"}
-					titleStyle={{ fontWeight: "bold", fontSize: 15 }}
-					textStyle={{ fontSize: 40 }}
+					titleStyle={{ fontSize: 16, fontWeight: "400" }}
+					textStyle={{ fontSize: 40, fontWeight: "500" }}
 				/>
 			</View>
 
