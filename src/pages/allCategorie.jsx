@@ -12,18 +12,13 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, limit, orderBy, query } from "firebase/firestore";
 
 export default function allCategorie() {
-	const user = auth.currentUser;
+    const user = auth.currentUser;
 
-	const [categories, loading, error] = useCollectionData(
-		query(
-			collection(db, "users", user.uid, "categories"),
-		)
-	);
-	
-    const [categorie, setCategorie] = useState([]);
-    setCategorie( 
-        categories?.map((categorie) => ({ key: categorie.id, label: categorie.nom, value: categorie.id })))
-	console.log(categorie)
+    const [categories, loading, error] = useCollectionData(
+        query(
+            collection(db, "users", user.uid, "categories"),
+        )
+    );
 
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
@@ -31,66 +26,39 @@ export default function allCategorie() {
         }
     };
 
-    const deleteRow = (rowMap, rowKey) => {
-        closeRow(rowMap, rowKey);
-        const newData = [...categorie];
-        const prevIndex = categorie.findIndex(item => item.key === rowKey);
-        newData.splice(prevIndex, 1);
-        setCategorie(newData);
-    };
-
-    const onRowDidOpen = rowKey => {
-        console.log('This row opened', rowKey);
-    };
-
-    const renderItem = data => (
-        <TouchableHighlight
-            style={styles.rowFront}
-            underlayColor={'#AAA'}
-        >
-            <View>
-                <Text>{data.item.text}</Text>
-            </View>
-        </TouchableHighlight>
-    );
-
-    const renderHiddenItem = (data, rowMap) => (
-        <View style={styles.rowBack}>
-            <Text>Left</Text>
-            <TouchableOpacity
-                style={[styles.backRightBtn, styles.backRightBtnLeft]}
-                onPress={() => closeRow(rowMap, data.item.key)}
-            >
-                <Text style={styles.backTextWhite}>Close</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.backRightBtn, styles.backRightBtnRight]}
-                onPress={() => deleteRow(rowMap, data.item.key)}
-            >
-                <Text style={styles.backTextWhite}>Delete</Text>
-            </TouchableOpacity>
-        </View>
-    );
 
     return (
         <View style={styles.container}>
-			<Text style={styles.title}>Vos Catégories</Text>
-			{categorie && (
-            <SwipeListView
-                data={categorie}
-                renderItem={renderItem}
-                renderHiddenItem={renderHiddenItem}
-                leftOpenValue={75}
-                rightOpenValue={-150}
-                previewRowKey={'0'}
-                previewOpenValue={-40}
-                previewOpenDelay={3000}
-                onRowDidOpen={onRowDidOpen}
-            />
-			)}
+            <Text style={styles.title}>Vos Catégories</Text>
+            {categories && (
+                <SwipeListView
+                    useFlatList={true}
+                    data={categories}
+                    renderItem={(rowData, rowMap) => (
+                        <View>
+                            <Text> {rowData.item.nom}</Text>
+                        </View>
+                    )}
+                    renderHiddenItem={(rowData, rowMap) => (
+                        <View style={styles.rowBack}>
+                            <TouchableOpacity onPress={() => rowMap[rowData.item.key].closeRow()}>
+                                <Text>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    leftOpenValue={75}
+                    rightOpenValue={-150}
+                    onRowOpen={(rowKey, rowMap) => {
+                        setTimeout(() => {
+                            rowMap[rowKey].closeRow()
+                        }, 2000)
+                    }}
+                />
+            )}
         </View>
     );
 }
+//{ rowData: any, rowMap: { string: SwipeRowRef } } : ReactElement
 
 const styles = StyleSheet.create({
     container: {
