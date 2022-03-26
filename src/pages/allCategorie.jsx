@@ -5,11 +5,13 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     View,
+    Image,
 } from 'react-native';
 import { auth, db } from "../../firebase";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, limit, orderBy, query } from "firebase/firestore";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function allCategorie() {
     const user = auth.currentUser;
@@ -35,18 +37,30 @@ export default function allCategorie() {
                     useFlatList={true}
                     data={categories}
                     renderItem={(rowData, rowMap) => (
+                        <TouchableHighlight
+                        // onPress={() => console.log('You touched me')}
+                        style={styles.rowFront}
+                        underlayColor={'#FFF'}
+                    >
                         <View>
                             <Text> {rowData.item.nom}</Text>
                         </View>
+                    </TouchableHighlight>
                     )}
                     renderHiddenItem={(rowData, rowMap) => (
                         <View style={styles.rowBack}>
-                            <TouchableOpacity onPress={() => rowMap[rowData.item.key].closeRow()}>
-                                <Text>Close</Text>
+                            <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]} onPress={() => rowMap[rowData.item.id].closeRow()}>
+                                <Text style={styles.backTextWhite}>Close</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.backRightBtn, styles.backRightBtnRight]}
+                                onPress={() => deleteRow(rowMap, data.item.id)}
+                            >
+                                <Ionicons name="trash-outline" color={"#FFF"} size={28} />
                             </TouchableOpacity>
                         </View>
                     )}
-                    leftOpenValue={75}
+                    keyExtractor={item => item.id}
                     rightOpenValue={-150}
                     onRowOpen={(rowKey, rowMap) => {
                         setTimeout(() => {
