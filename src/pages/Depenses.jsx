@@ -207,8 +207,6 @@ const Depenses = () => {
 	);
 };
 
-export default Depenses;
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -244,15 +242,18 @@ const styles = StyleSheet.create({
 		paddingTop: 16,
 		paddingBottom: 16,
 	},
+
 	slide2: {
 		flex: 1,
 		justifyContent: "center",
-		alignItems: "center",
 		backgroundColor: "#fff",
 	},
+
 	text: {
 		color: "#fff",
 		fontSize: 30,
 		fontWeight: "bold",
 	},
 });
+
+export default Depenses;
