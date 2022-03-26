@@ -13,6 +13,7 @@ import {
 	Timestamp,
 	addDoc,
 	collection,
+	deleteDoc,
 	doc,
 	orderBy,
 	query,
@@ -69,8 +70,15 @@ const Conseils = () => {
 	};
 
 	const renderMessage = ({ item }) => {
+		const options = ["Annuler"];
+
+		const own = item.uid === user.uid;
+		own ? options.unshift("Supprimer") : null;
+		const destructive = own ? 1 : undefined;
+
 		const liked = item.likes.includes(user.uid);
-		const options = liked ? ["Retirer like", "Annuler"] : ["Like", "Annuler"];
+		liked ? options.unshift("Retirer like") : options.unshift("Like");
+		const cancel = liked ? 1 : 2;
 
 		return (
 			<>
@@ -94,7 +102,8 @@ const Conseils = () => {
 						showActionSheetWithOptions(
 							{
 								options: options,
-								cancelButtonIndex: 1,
+								destructiveButtonIndex: destructive,
+								cancelButtonIndex: cancel,
 							},
 							async (index) => {
 								if (index === 0) {
@@ -103,6 +112,8 @@ const Conseils = () => {
 									} else {
 										await like(item.id);
 									}
+								} else if (own && index === 1) {
+									await deleteMessage(item.id);
 								}
 							}
 						);
@@ -136,6 +147,10 @@ const Conseils = () => {
 		await updateDoc(ref, {
 			id: ref.id,
 		});
+	};
+
+	const deleteMessage = async (id) => {
+		await deleteDoc(doc(db, "messages", id));
 	};
 
 	const like = async (id) => {
