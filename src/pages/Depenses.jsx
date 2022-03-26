@@ -7,7 +7,7 @@ import {
 	View,
 } from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, query, where } from "firebase/firestore";
+import { collection, doc, deleteDoc, query } from "firebase/firestore";
 
 import CircularProgress from "react-native-circular-progress-indicator";
 import { LineChart } from "react-native-chart-kit";
@@ -44,11 +44,30 @@ const Depenses = ({ navigation }) => {
 	};
 
 	const renderCategorie = ({ item }) => (
-		<TouchableOpacity style={styles.depense} onPress={() => alert("zizi")}>
+		<TouchableOpacity
+			style={styles.depense}
+			onPress={() => deleteCategorie(item)}
+		>
 			<Text style={{ fontSize: 16 }}>{item.nom}</Text>
 			<Text style={{ fontSize: 16 }}>{item.limite} €</Text>
 		</TouchableOpacity>
 	);
+
+	const deleteCategorie = (item) => {
+		const nomCat = item.nom;
+		const docRef = doc(db, "users", user.uid, "categories", item.id);
+		deleteDoc(docRef).then(() => {
+			alert(`Categorie ${nomCat} supprimé`);
+		});
+	};
+
+	const deleteDepense = (item) => {
+		const nomDep = item.nom;
+		const docRef = doc(db, "users", user.uid, "depenses", item.id);
+		deleteDoc(docRef).then(() => {
+			alert(`Depense ${nomDep} supprimé`);
+		});
+	};
 
 	const dpt = depenses ? depensesTotales() : 0;
 	const max = categories ? budgetMax() : 0;
@@ -172,6 +191,7 @@ const Depenses = ({ navigation }) => {
 					)}
 				</View>
 				<View style={styles.slide2}>
+					<Text>Dépenses des 6 derniers mois</Text>
 					<LineChart
 						data={data}
 						width={Dimensions.get("window").width}
