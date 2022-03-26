@@ -7,20 +7,24 @@ import {
 	Text,
 	TextInput,
 	TouchableHighlight,
+	TouchableOpacity,
 	View,
 } from "react-native";
 import {
 	Timestamp,
 	addDoc,
 	collection,
+	doc,
 	orderBy,
 	query,
+	updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
 import PropTypes from "prop-types";
 import ReactTimeAgo from "react-time-ago";
 import { StatusBar } from "expo-status-bar";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 
@@ -65,23 +69,91 @@ const Conseils = () => {
 		}
 	};
 
-	const renderMessage = ({ item }) => (
-		<View style={styles.message}>
-			<Text style={styles.messageContent}>{item.content}</Text>
-			<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-				<Text style={styles.messageSecondary}>{getUsername(item.uid)}</Text>
-				<TimeAgo date={item.timestamp.toDate()} />
-			</View>
-		</View>
-	);
+	const renderMessage = ({ item }) => {
+		const liked = item.likes.includes(user.uid);
+		const options = liked ? ["Retirer like", "Annuler"] : ["Like", "Annuler"];
+
+		return (
+			<>
+				{item.likes.length > 0 && (
+					<TouchableOpacity
+						onPress={async () => {
+							if (liked) {
+								await removeLike(item.id);
+							} else {
+								await like(item.id);
+							}
+						}}>
+						<View style={styles.likes}>
+							<Text style={styles.likesText}>💵 {item.likes.length}</Text>
+						</View>
+					</TouchableOpacity>
+				)}
+
+				<TouchableOpacity
+					onLongPress={() => {
+						showActionSheetWithOptions(
+							{
+								options: options,
+								cancelButtonIndex: 1,
+							},
+							async (index) => {
+								if (index === 0) {
+									if (liked) {
+										await removeLike(item.id);
+									} else {
+										await like(item.id);
+									}
+								}
+							}
+						);
+					}}>
+					<View style={styles.message}>
+						<Text style={styles.messageContent}>{item.content}</Text>
+						<View
+							style={{
+								flexDirection: "row",
+								justifyContent: "space-between",
+							}}>
+							<Text style={styles.messageSecondary}>
+								{getUsername(item.uid)}
+							</Text>
+							<TimeAgo date={item.timestamp.toDate()} />
+						</View>
+					</View>
+				</TouchableOpacity>
+			</>
+		);
+	};
 
 	const addMessage = async (message) => {
-		await addDoc(collection(db, "messages"), {
+		const ref = await addDoc(collection(db, "messages"), {
 			content: message,
 			timestamp: Timestamp.now(),
 			uid: user.uid,
+			likes: [],
+		});
+
+		await updateDoc(ref, {
+			id: ref.id,
 		});
 	};
+
+	const like = async (id) => {
+		const message = messages.find((message) => message.id === id);
+		await updateDoc(doc(db, "messages", message.id), {
+			likes: [...message.likes, user.uid],
+		});
+	};
+
+	const removeLike = async (id) => {
+		const message = messages.find((message) => message.id === id);
+		await updateDoc(doc(db, "messages", message.id), {
+			likes: message.likes.filter((uid) => uid !== user.uid),
+		});
+	};
+
+	const { showActionSheetWithOptions } = useActionSheet();
 
 	return (
 		<KeyboardAvoidingView
@@ -95,7 +167,7 @@ const Conseils = () => {
 						style={styles.chat}
 						contentContainerStyle={{
 							flex: 1,
-							justifyContent: "center",
+							justifyContent: "flex-end",
 						}}
 						inverted
 						data={[...messages].reverse()}
@@ -140,7 +212,7 @@ const styles = StyleSheet.create({
 	},
 
 	main: {
-		flex: 6,
+		flex: 10,
 		alignSelf: "stretch",
 		alignItems: "center",
 	},
@@ -149,20 +221,20 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 30,
 		fontWeight: "600",
-		marginTop: 80,
+		marginTop: 60,
 	},
 
 	chat: {
 		flex: 1,
 		alignSelf: "stretch",
-		marginTop: 20,
+		marginTop: 10,
 	},
 
 	message: {
 		backgroundColor: "white",
 		padding: 20,
 		borderRadius: 10,
-		marginBottom: 10,
+		marginBottom: 8,
 		marginLeft: 25,
 		marginRight: 25,
 	},
@@ -172,12 +244,29 @@ const styles = StyleSheet.create({
 	},
 
 	messageSecondary: {
+		color: "dimgray",
+	},
+
+	likes: {
+		alignSelf: "flex-end",
+		marginRight: 30,
+		marginBottom: 8,
+		backgroundColor: "white",
+		paddingTop: 2,
+		paddingBottom: 2,
+		paddingLeft: 5,
+		paddingRight: 5,
+		borderRadius: 7,
+	},
+
+	likesText: {
+		fontSize: 16,
 		color: "gray",
 	},
 
 	form: {
 		flex: 1,
-		width: "100%",
+		alignSelf: "stretch",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
