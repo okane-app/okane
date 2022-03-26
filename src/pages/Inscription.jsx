@@ -4,6 +4,7 @@ import {
 	StyleSheet,
 	Text,
 	TextInput,
+	TouchableOpacity,
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
@@ -78,14 +79,14 @@ const Inscription = () => {
 						.
 					</Text>
 
-					<TouchableWithoutFeedback
+					<TouchableOpacity
 						onPress={() => {
 							register(username, email, password);
 						}}>
 						<View style={styles.button}>
 							<Text style={styles.buttonText}>Inscription</Text>
 						</View>
-					</TouchableWithoutFeedback>
+					</TouchableOpacity>
 				</View>
 
 				<StatusBar style="auto" />

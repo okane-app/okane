@@ -1,10 +1,4 @@
-import {
-	Image,
-	StyleSheet,
-	Text,
-	TouchableWithoutFeedback,
-	View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
 
@@ -15,19 +9,17 @@ const Splash = ({ navigation }) => {
 			<Text style={styles.motto}>Ne dépense plus jamais de trop.</Text>
 
 			<View style={styles.buttons}>
-				<TouchableWithoutFeedback
-					onPress={() => navigation.navigate("Connexion")}>
+				<TouchableOpacity onPress={() => navigation.navigate("Connexion")}>
 					<View style={[styles.button, styles.buttonLogin]}>
 						<Text style={styles.buttonText}>Connexion</Text>
 					</View>
-				</TouchableWithoutFeedback>
+				</TouchableOpacity>
 
-				<TouchableWithoutFeedback
-					onPress={() => navigation.navigate("Inscription")}>
+				<TouchableOpacity onPress={() => navigation.navigate("Inscription")}>
 					<View style={[styles.button, styles.buttonRegister]}>
 						<Text style={styles.buttonText}>Inscription</Text>
 					</View>
-				</TouchableWithoutFeedback>
+				</TouchableOpacity>
 			</View>
 
 			<Text style={styles.version}>Version 1.0.0a</Text>

@@ -4,6 +4,7 @@ import {
 	StyleSheet,
 	Text,
 	TextInput,
+	TouchableOpacity,
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
@@ -47,14 +48,14 @@ const Connexion = () => {
 						/>
 					</View>
 
-					<TouchableWithoutFeedback
+					<TouchableOpacity
 						onPress={() => {
 							login(email, password);
 						}}>
 						<View style={styles.button}>
 							<Text style={styles.buttonText}>Connexion</Text>
 						</View>
-					</TouchableWithoutFeedback>
+					</TouchableOpacity>
 				</View>
 
 				<StatusBar style="auto" />
