@@ -1,6 +1,8 @@
 import Accueil from "../pages/Accueil";
 import Conseils from "../pages/Conseils";
+import Depenses from "../pages/Depenses";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import NouvelleDepense from "../pages/NouvelleDepense";
 import Profil from "../pages/Profil";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -24,7 +26,7 @@ const AuthenticatedTab = () => {
 			/>
 			<Tab.Screen
 				name="Dépenses"
-				component={Accueil}
+				component={Depenses}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name="wallet-outline" color={color} size={size} />
@@ -33,7 +35,7 @@ const AuthenticatedTab = () => {
 			/>
 			<Tab.Screen
 				name="Nouvelle dépense"
-				component={Accueil}
+				component={NouvelleDepense}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name="add-circle-outline" color={color} size={size} />
