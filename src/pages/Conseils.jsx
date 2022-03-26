@@ -91,7 +91,8 @@ const Conseils = () => {
 				{messages && (
 					<FlatList
 						style={styles.chat}
-						data={messages}
+						inverted
+						data={[...messages].reverse()}
 						renderItem={renderMessage}
 						keyExtractor={(item, index) => index}
 					/>
