@@ -50,7 +50,7 @@ const Connexion = () => {
 				</TouchableWithoutFeedback>
 			</View>
 
-			<StatusBar style="light" />
+			<StatusBar style="auto" />
 		</KeyboardAvoidingView>
 	);
 };
