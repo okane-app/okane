@@ -93,7 +93,7 @@ const Accueil = () => {
 							style={styles.listeDepenses}
 							data={depensesRecentes}
 							renderItem={renderDepense}
-							keyExtractor={(item) => item.nom}
+							keyExtractor={(item, index) => index}
 						/>
 					)}
 
