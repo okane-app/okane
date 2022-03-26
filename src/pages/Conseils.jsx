@@ -102,6 +102,7 @@ const Conseils = () => {
 			<View style={styles.form}>
 				<View style={styles.input}>
 					<TextInput
+						style={{ height: 50 }}
 						onChangeText={setInputMessage}
 						value={inputMessage}
 						placeholder="Partage ton expérience !"

@@ -45,17 +45,23 @@ const Inscription = () => {
 			<View style={styles.form}>
 				<View style={styles.input}>
 					<TextInput
+						style={{ height: 50 }}
 						placeholder="Nom d'utilisateur"
 						onChangeText={setUsername}
 					/>
 				</View>
 
 				<View style={styles.input}>
-					<TextInput placeholder="Adresse mail" onChangeText={setEmail} />
+					<TextInput
+						style={{ height: 50 }}
+						placeholder="Adresse mail"
+						onChangeText={setEmail}
+					/>
 				</View>
 
 				<View style={styles.input}>
 					<TextInput
+						style={{ height: 50 }}
 						placeholder="Mot de passe"
 						secureTextEntry={true}
 						onChangeText={setPassword}
