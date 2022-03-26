@@ -9,7 +9,6 @@ import {
 import { auth, db } from "../../firebase";
 import { collection, query, where } from "firebase/firestore";
 
-import CircularProgress from "react-native-circular-progress-indicator";
 import { LineChart } from "react-native-chart-kit";
 import { StatusBar } from "expo-status-bar";
 import Swiper from "react-native-swiper";
@@ -149,7 +148,8 @@ const Depenses = () => {
 							marginTop: 20,
 						}}
 					/>
-				}>
+				}
+				loop={false}>
 				<View
 					style={[
 						styles.semi,
