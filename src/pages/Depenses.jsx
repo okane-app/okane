@@ -55,7 +55,30 @@ const Depenses = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<Swiper>
+			<Swiper
+				dot={
+					<View
+						style={{
+							backgroundColor: "rgba(255,255,255,.3)",
+							width: 10,
+							height: 10,
+							borderRadius: 7,
+							marginLeft: 7,
+						}}
+					/>
+				}
+				activeDot={
+					<View
+						style={{
+							backgroundColor: "#000",
+							width: 10,
+							height: 10,
+							borderRadius: 7,
+							marginLeft: 7,
+						}}
+					/>
+				}
+			>
 				<View
 					style={[
 						styles.semi,
