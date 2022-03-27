@@ -7,7 +7,14 @@ import {
 	View,
 } from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, doc, deleteDoc, query, where } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	deleteDoc,
+	query,
+	where,
+	onSnapshot,
+} from "firebase/firestore";
 
 import CircularProgress from "react-native-circular-progress-indicator";
 import { LineChart } from "react-native-chart-kit";
