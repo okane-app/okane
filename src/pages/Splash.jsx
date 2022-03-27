@@ -5,7 +5,7 @@ import { StatusBar } from "expo-status-bar";
 const Splash = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
-			<Image style={styles.logo} source={require("../../assets/okane.png")} />
+			<Image style={styles.logo} source={require("../assets/okane.png")} />
 			<Text style={styles.motto}>Ne dépense plus jamais de trop.</Text>
 
 			<View style={styles.buttons}>

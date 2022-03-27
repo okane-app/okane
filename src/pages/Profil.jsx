@@ -114,7 +114,7 @@ const Profil = () => {
 				<View style={styles.profileImage}>
 					{!photoURL && (
 						<Image
-							source={require("../../assets/profile.png")}
+							source={require("../assets/profile.png")}
 							style={styles.image}
 							resizeMode="cover"
 						/>
