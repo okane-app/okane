@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity, } from "react-native";
 import { addDoc, collection, query, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
@@ -42,36 +42,14 @@ const NouvelleDepense = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.ligne}>
-				<Text>Dépenses ponctuelle</Text>
-				<RadioButton
-					label="Dépenses ponctuelle"
-					value="first"
-					status={checked === "first" ? "checked" : "unchecked"}
-					onPress={() => setChecked("first")}
-				/>
-			</View>
+			<View style={styles.form}>
 
-			<View style={styles.ligne}>
-				<Text>Dépenses ponctuelle</Text>
-				<RadioButton
-					value="second"
-					status={checked === "second" ? "checked" : "unchecked"}
-					onPress={() => setChecked("second")}
-				/>
-			</View>
-
-			<View>
-				<Text>Dépenses ponctuelle</Text>
-				<RadioButton
-					value="troisième"
-					status={checked === "troisième" ? "checked" : "unchecked"}
-					onPress={() => setChecked("troisième")}
-				/>
-			</View>
-
+		<View>
+			<View style={styles.input}>
 			{categories && (
-				<RNPickerSelect
+				<RNPickerSelect 
+					style={pickerSelectStyles}
+					useNativeAndroidPickerStyle={false}
 					value={categorie}
 					onValueChange={setCategorie}
 					placeholder={{ label: "Choisis une catégorie...", value: undefined }}
@@ -82,49 +60,58 @@ const NouvelleDepense = ({ navigation }) => {
 					}))}
 				/>
 			)}
-
-			{/* {loading && <Text>Chargement des catégories</Text>}
-            {error && <Text>Erreur : {JSON.stringify(error)}</Text>} */}
-
-			{/* <Text style={styles.link_color} onPress={() => navigation.navigate("NouvelleCategorie")}>
-                Nouvelle Catégorie
-            </Text> */}
-
+			
+			</View>
 			<Text
 				style={styles.link_color}
 				onPress={() => navigation.navigate("NouvelleCategorie")}
 			>
 				Nouvelle Catégorie
 			</Text>
-
 			<StatusBar style="auto" />
+		</View>
 
+			{/* {loading && <Text>Chargement des catégories</Text>}
+            {error && <Text>Erreur : {JSON.stringify(error)}</Text>} */}
+
+
+			
+
+			
+
+			<View style={styles.input}>
 			<TextInput
 				title="Nom de la dépense"
-				style={styles.input}
+				style={{ height: 50 }}
 				placeholder="Chaussure"
 				onChangeText={setNom}
 			/>
+			</View>
 
-			<TextInput
-				title="Montant"
-				style={styles.input}
-				placeholder="14,50 €"
-				onChangeText={setMontant}
-			/>
+			<View style={styles.input}>
+				<TextInput
+					style={{ height: 50 }}
+					title="Montant"
+					placeholder="14,50 €"
+					onChangeText={setMontant}
+				/>
+			</View>
+					
+					
 
-			<Button
-				title="Ajouter"
+			<TouchableOpacity
 				onPress={() => {
 					ajouter(nom, montant, categorie).then(
 						navigation.navigate("UserTab", { screen: "Dépenses" })
 					);
 				}}
-			/>
-			{/* Voir pour changer la zone fréquence en une somme qui sera débité tout les mois */}
-			{/* {checked == "second" ? <TextInput title="Fréquence" style={styles.input} placeholder="Mensuelle" onChangeText={setMontant}/> : 
-            <TextInput title="Montant" style={styles.input} placeholder="14,50 €" onChangeText={setMontant} />} */}
+			>
+				<View style={styles.button}>
+							<Text style={styles.buttonText}>Ajouter</Text>
+				</View>
+			</TouchableOpacity>
 			<StatusBar style="auto" />
+			</View>
 		</View>
 	);
 };
@@ -136,18 +123,62 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#fff",
 		alignItems: "center",
-		justifyContent: "center",
+		paddingTop: 100,
 	},
+
+
 
 	link_color: {
 		color: "#5DB075",
+		marginBottom: 10,
+		marginLeft: 200,
+
+	},
+
+	form: {
+		alignSelf: "stretch",
+		marginTop: 32,
+		marginLeft: 16,
+		marginRight: 16,
 	},
 
 	input: {
-		height: 40,
-		width: 140,
-		margin: 12,
+		justifyContent: "center",
+		backgroundColor: "#F6F6F6",
+		height: 50,
+		padding: 16,
+		marginBottom: 16,
 		borderWidth: 1,
-		padding: 10,
+		borderColor: "#E8E8E8",
+		borderRadius: 8,
+	},
+	button: {
+		marginTop: 32,
+		alignItems: "center",
+		paddingTop: 16,
+		paddingBottom: 16,
+		borderRadius: 100,
+		backgroundColor: "#74CA8D",
+	},
+
+	buttonText: {
+		color: "white",
+		fontSize: 16,
+		fontWeight: "600",
 	},
 });
+
+const pickerSelectStyles = StyleSheet.create({
+	input: {
+		justifyContent: "center",
+		backgroundColor: "#F6F6F6",
+		height: 50,
+		padding: 16,
+		marginBottom: 16,
+		borderWidth: 1,
+		borderColor: "#E8E8E8",
+		borderRadius: 8,
+	},
+  });
+
+

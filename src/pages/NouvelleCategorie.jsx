@@ -6,6 +6,7 @@ import {
 	ScrollView,
 	View,
 	Image,
+	TouchableOpacity,
 } from "react-native";
 //import {Picker} from '@react-native-picker/picker';
 import { db, auth } from "../../firebase";
@@ -48,35 +49,35 @@ const NouvelleCategorie = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
+			<View style={styles.form}>
 			<TextInput style={styles.input} placeholder="Nom" onChangeText={setNom} />
+
 			<TextInput
 				style={styles.input}
 				placeholder="Limite"
 				onChangeText={setLimite}
 			/>
 
-			{/* <DropDownPicker
-                open={open}
-                value={value}
-                items={items}
-                setOpen={setOpen}
-                setValue={setValue}
-                setItems={setItems}
-            /> */}
+		<Text
+				style={styles.link_color}
+				onPress={() => navigation.navigate("AllCategorie")}
+			>
+		Nouvelle Catégorie
+			</Text>
 
-			<Button
-				title="Ajouter"
+			<TouchableOpacity
 				onPress={() => {
 					ajouter(nom, limite).then(navigation.navigate("AllCategorie"));
 				}}
-			/>
-			<StatusBar style="auto" />
+			>
+			<View style={styles.button}>
+							<Text style={styles.buttonText}>Vos catégories</Text>
+				</View>
+			</TouchableOpacity>
 
-			<Button
-				title="Categorie"
-				style={styles.link_color}
-				onPress={() => navigation.navigate("AllCategorie")}
-			/>
+			
+			
+			</View>
 		</View>
 	);
 };
@@ -92,15 +93,46 @@ const styles = StyleSheet.create({
 	},
 
 	input: {
-		height: 40,
-		width: 140,
-		margin: 12,
+		justifyContent: "center",
+		backgroundColor: "#F6F6F6",
+		height: 50,
+		padding: 16,
+		marginBottom: 16,
 		borderWidth: 1,
-		padding: 10,
+		borderColor: "#E8E8E8",
+		borderRadius: 8,
 	},
 
 	tinyLogo: {
 		width: 30,
 		height: 30,
+	},
+
+	form: {
+		alignSelf: "stretch",
+		marginTop: 32,
+		marginLeft: 16,
+		marginRight: 16,
+	},
+
+	button: {
+		marginTop: 32,
+		alignItems: "center",
+		paddingTop: 16,
+		paddingBottom: 16,
+		borderRadius: 100,
+		backgroundColor: "#74CA8D",
+	},
+
+	buttonText: {
+		color: "white",
+		fontSize: 16,
+		fontWeight: "600",
+	},
+	link_color: {
+		color: "#5DB075",
+		marginBottom: 10,
+		marginLeft: 200,
+
 	},
 });
