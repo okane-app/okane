@@ -17,7 +17,8 @@
 			"supportsTablet": true
 		},
 		"android": {
-			"package": "com.yusaai.okane"
+			"package": "com.yusaai.okane",
+			"softwareKeyboardLayoutMode": "pan"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
