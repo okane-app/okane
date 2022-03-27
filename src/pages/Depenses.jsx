@@ -133,8 +133,8 @@ const Depenses = () => {
 	const renderCategorie = ({ item }) => (
 		<TouchableHighlight style={styles.categorie}>
 			<>
-				<Text style={{ fontSize: 16, paddingLeft: 5 }}>{item.nom}</Text>
-				<Text style={{ fontSize: 16, paddingRight: 5 }}>{item.limite} €</Text>
+				<Text style={{ fontSize: 16, paddingLeft: 7 }}>{item.nom}</Text>
+				<Text style={{ fontSize: 16, paddingRight: 7 }}>{item.limite} €</Text>
 			</>
 		</TouchableHighlight>
 	);
