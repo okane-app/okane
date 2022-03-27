@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
 
 	input: {
 		justifyContent: "center",
-		width: 285,
+		flexGrow: 1,
 		height: 50,
 		padding: 10,
 		backgroundColor: "white",
@@ -324,6 +324,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		justifyContent: "center",
 		alignItems: "center",
+		marginLeft: 10,
 		marginRight: 25,
 	},
 
