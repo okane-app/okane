@@ -7,7 +7,7 @@ import {
 	View,
 } from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, doc, deleteDoc, query } from "firebase/firestore";
+import { collection, doc, deleteDoc, query, where } from "firebase/firestore";
 
 import CircularProgress from "react-native-circular-progress-indicator";
 import { LineChart } from "react-native-chart-kit";
@@ -55,6 +55,14 @@ const Depenses = ({ navigation }) => {
 
 	const deleteCategorie = (item) => {
 		const nomCat = item.nom;
+		const q = query(
+			collection(db, "users", user.uid, "depenses"),
+			where("categorie", "==", item.id)
+		);
+		q.map((depense) => {
+			const docRefDepense = doc(db, "users", user.uid, "depenses", depense.id);
+			deleteDoc(docRefDepense);
+		});
 		const docRef = doc(db, "users", user.uid, "categories", item.id);
 		deleteDoc(docRef).then(() => {
 			alert(`Categorie ${nomCat} supprimé`);
