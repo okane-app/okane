@@ -59,9 +59,23 @@ const Depenses = ({ navigation }) => {
 			collection(db, "users", user.uid, "depenses"),
 			where("categorie", "==", item.id)
 		);
-		q.map((depense) => {
-			const docRefDepense = doc(db, "users", user.uid, "depenses", depense.id);
-			deleteDoc(docRefDepense);
+
+		onSnapshot(q, (snapshot) => {
+			let depensesCateg = [];
+			snapshot.docs.forEach((doc) => {
+				depensesCateg.push({ ...doc.data() });
+			});
+			console.log(depensesCateg);
+			depensesCateg.map((depense) => {
+				const docRefDepense = doc(
+					db,
+					"users",
+					user.uid,
+					"depenses",
+					depense.id
+				);
+				deleteDoc(docRefDepense).then(console.log("1"));
+			});
 		});
 		const docRef = doc(db, "users", user.uid, "categories", item.id);
 		deleteDoc(docRef).then(() => {
