@@ -80,20 +80,20 @@ const Accueil = () => {
 				<View style={styles.dernieresDepenses}>
 					<Text style={styles.title}>Dernières dépenses</Text>
 
-					{depensesRecentes && depensesRecentes.length === 0 && (
-						<View style={styles.container}>
-							<Text>
-								Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
-							</Text>
-						</View>
-					)}
-
 					{depensesRecentes && (
 						<FlatList
 							style={styles.listeDepenses}
 							data={depensesRecentes}
 							renderItem={renderDepense}
 							keyExtractor={(item, index) => index}
+							ListEmptyComponent={() => (
+								<View style={styles.container}>
+									<Text>
+										Vous n'avez aucune dépense. Et si vous ajoutiez votre
+										première ?
+									</Text>
+								</View>
+							)}
 						/>
 					)}
 
