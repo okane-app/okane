@@ -1,34 +1,41 @@
 import {
 	Dimensions,
-	FlatList,
 	StyleSheet,
 	Text,
+	TouchableHighlight,
 	TouchableOpacity,
 	View,
 } from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, query, where } from "firebase/firestore";
+import {
+	collection,
+	deleteDoc,
+	doc,
+	getDocs,
+	query,
+	where,
+} from "firebase/firestore";
 
+import Ionicons from "react-native-vector-icons/Ionicons";
 import JaugeDepenses from "../components/JaugeDepenses";
 import { LineChart } from "react-native-chart-kit";
 import { StatusBar } from "expo-status-bar";
+import { SwipeListView } from "react-native-swipe-list-view";
 import Swiper from "react-native-swiper";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const Depenses = () => {
 	const user = auth.currentUser;
 
-	const [depensesRecente, loading, error] = useCollectionData(
-		query(collection(db, "users", user.uid, "depenses"))
-	);
-
 	const [categories, loadingCategories, errorCategories] = useCollectionData(
 		query(collection(db, "users", user.uid, "categories"))
 	);
 
-	const [depenses, loadingDepenses, errorDepenses] = useCollectionData(
+	const [depenses] = useCollectionData(
 		query(collection(db, "users", user.uid, "depenses"))
 	);
+
+	// Jauge circulaire
 
 	const budgetMax = () => {
 		const tmp = categories.reduce(
@@ -43,19 +50,14 @@ const Depenses = () => {
 		return tmp;
 	};
 
-	const renderCategorie = ({ item }) => (
-		<TouchableOpacity style={styles.depense}>
-			<Text style={{ fontSize: 16 }}>{item.nom}</Text>
-			<Text style={{ fontSize: 16 }}>{item.limite} €</Text>
-		</TouchableOpacity>
-	);
-
 	const dpt = depenses ? depensesTotales() : 0;
 	const max = categories ? budgetMax() : 0;
 	const pourcentage =
 		depenses && categories && depenses.length > 0
 			? Math.round((depensesTotales() / budgetMax()) * 100)
 			: 0;
+
+	// Graphique
 
 	const mois = [
 		"Janv",
@@ -105,8 +107,8 @@ const Depenses = () => {
 		datasets: [
 			{
 				data: sommeSixDerniersMois,
-				color: (opacity = 1) => `rgba(75, 161, 68, ${opacity})`, // optional
-				strokeWidth: 2, // optional
+				color: (opacity = 1) => `rgba(75, 161, 68, ${opacity})`,
+				strokeWidth: 2,
 			},
 		],
 	};
@@ -117,44 +119,67 @@ const Depenses = () => {
 		backgroundGradientTo: "#fff",
 		backgroundGradientToOpacity: 0.5,
 		color: (opacity = 1) => `rgba(75, 161, 68, ${opacity})`,
-		strokeWidth: 2, // optional, default 3
+		strokeWidth: 2,
 		barPercentage: 0.5,
-		useShadowColorFromDataset: false, // optional
+		useShadowColorFromDataset: false,
 		propsForDots: {
 			r: "3",
 			strokeWidth: "3",
 		},
 	};
 
+	// Liste des catégories
+
+	const renderCategorie = ({ item }) => (
+		<TouchableHighlight style={styles.categorie}>
+			<>
+				<Text style={{ fontSize: 16, paddingLeft: 5 }}>{item.nom}</Text>
+				<Text style={{ fontSize: 16, paddingRight: 5 }}>{item.limite} €</Text>
+			</>
+		</TouchableHighlight>
+	);
+
+	const renderSwipeButtons = (data, map) => (
+		<View style={styles.swipeButtons}>
+			<TouchableOpacity
+				style={[styles.backButton, styles.backButtonLeft]}
+				onPress={() => map[data.item.id].closeRow()}>
+				<Text style={{ color: "white" }}>Fermer</Text>
+			</TouchableOpacity>
+
+			<TouchableOpacity
+				style={[styles.backButton, styles.backButtonRight]}
+				onPress={async () => {
+					await deleteCategorie(data.item.id);
+				}}>
+				<Ionicons name="trash-outline" color={"#FFF"} size={28} />
+			</TouchableOpacity>
+		</View>
+	);
+
+	const deleteCategorie = async (id) => {
+		// Suppression de la catégorie
+		await deleteDoc(doc(db, "users", user.uid, "categories", id));
+
+		// Suppression des dépenses de la catégorie
+		const depenses = await getDocs(
+			query(
+				collection(db, "users", user.uid, "depenses"),
+				where("categorie", "==", id.toString())
+			)
+		);
+		depenses.forEach(async (depense) => {
+			await deleteDoc(doc(db, "users", user.uid, "depenses", depense.id));
+		});
+	};
+
 	return (
 		<View style={styles.container}>
 			<Swiper
-				dot={
-					<View
-						style={{
-							backgroundColor: "rgba(60,60,60,.3)",
-							width: 10,
-							height: 10,
-							borderRadius: 7,
-							marginLeft: 7,
-							marginTop: 20,
-						}}
-					/>
-				}
-				activeDot={
-					<View
-						style={{
-							backgroundColor: "#000",
-							width: 10,
-							height: 10,
-							borderRadius: 7,
-							marginLeft: 7,
-							marginTop: 7,
-							marginTop: 20,
-						}}
-					/>
-				}
+				dot={<View style={styles.dot} />}
+				activeDot={<View style={styles.activeDot} />}
 				loop={false}>
+				{/* Jauge circulaire de dépenses */}
 				<View
 					style={[
 						styles.semi,
@@ -163,6 +188,8 @@ const Depenses = () => {
 					]}>
 					<JaugeDepenses dpt={dpt} max={max} pourcentage={pourcentage} />
 				</View>
+
+				{/* Graphique */}
 				<View style={styles.slide2}>
 					<LineChart
 						data={data}
@@ -176,36 +203,29 @@ const Depenses = () => {
 			</Swiper>
 
 			<View style={styles.semi}>
-				<View style={styles.dernieresDepenses}>
-					{depensesRecente && depensesRecente.length === 0 && (
-						<View style={styles.container}>
-							<Text>
-								Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
-							</Text>
-						</View>
-					)}
+				{categories && (
+					<SwipeListView
+						useFlatList={true}
+						data={categories}
+						renderItem={renderCategorie}
+						renderHiddenItem={renderSwipeButtons}
+						keyExtractor={(item) => item.id}
+						rightOpenValue={-150}
+						disableRightSwipe={true}
+					/>
+				)}
 
-					{categories && (
-						<FlatList
-							style={styles.listeDepenses}
-							data={categories}
-							renderItem={renderCategorie}
-							keyExtractor={(item) => item.nom}
-						/>
-					)}
+				{loadingCategories && (
+					<View style={styles.container}>
+						<Text>Chargement de vos catégories...</Text>
+					</View>
+				)}
 
-					{loadingCategories && (
-						<View style={styles.container}>
-							<Text>Chargement de vos dépenses...</Text>
-						</View>
-					)}
-
-					{errorCategories && (
-						<View style={styles.container}>
-							<Text>Erreur : {JSON.stringify(error)}</Text>
-						</View>
-					)}
-				</View>
+				{errorCategories && (
+					<View style={styles.container}>
+						<Text>Erreur : {JSON.stringify(error)}</Text>
+					</View>
+				)}
 			</View>
 			<StatusBar style="auto" />
 		</View>
@@ -220,33 +240,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 
-	semi: { flex: 1, width: "100%" },
-
-	title: {
-		fontSize: 30,
-		fontWeight: "500",
-		alignSelf: "flex-start",
-	},
-
-	dernieresDepenses: {
-		flex: 1,
-		paddingLeft: 20, // 16 avec icône couleur
-		paddingRight: 20, // 16
-	},
-
-	listeDepenses: {
-		marginTop: 5,
-	},
-
-	depense: {
-		flexDirection: "row",
-		minWidth: "60%",
-		justifyContent: "space-between",
-		borderBottomWidth: 1,
-		borderBottomColor: "#E8E8E8",
-		paddingTop: 16,
-		paddingBottom: 16,
-	},
+	semi: { flex: 1, alignSelf: "stretch" },
 
 	slide2: {
 		flex: 1,
@@ -254,10 +248,65 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 	},
 
-	text: {
-		color: "#fff",
-		fontSize: 30,
-		fontWeight: "bold",
+	// Swiper
+
+	dot: {
+		backgroundColor: "rgba(60,60,60,.3)",
+		width: 10,
+		height: 10,
+		borderRadius: 7,
+		marginLeft: 7,
+		marginTop: 20,
+	},
+
+	activeDot: {
+		backgroundColor: "#000",
+		width: 10,
+		height: 10,
+		borderRadius: 7,
+		marginLeft: 7,
+		marginTop: 7,
+		marginTop: 20,
+	},
+
+	// Catégories
+
+	categorie: {
+		flexDirection: "row",
+		minWidth: "60%",
+		justifyContent: "space-between",
+		borderBottomWidth: 1,
+		borderBottomColor: "#E8E8E8",
+		paddingTop: 16,
+		paddingBottom: 16,
+		backgroundColor: "white",
+	},
+
+	swipeButtons: {
+		alignItems: "center",
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		paddingLeft: 15,
+	},
+
+	backButton: {
+		alignItems: "center",
+		bottom: 0,
+		justifyContent: "center",
+		position: "absolute",
+		top: 0,
+		width: 75,
+	},
+
+	backButtonLeft: {
+		backgroundColor: "blue",
+		right: 75,
+	},
+
+	backButtonRight: {
+		backgroundColor: "red",
+		right: 0,
 	},
 });
 
