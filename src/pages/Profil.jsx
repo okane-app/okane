@@ -3,12 +3,9 @@ import * as ImagePicker from "expo-image-picker";
 import {
 	Alert,
 	Image,
-	Modal,
 	Platform,
-	Pressable,
 	StyleSheet,
 	Text,
-	TextInput,
 	TouchableOpacity,
 	View,
 } from "react-native";
@@ -17,6 +14,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { signOut, updateProfile } from "firebase/auth";
 
+import Dialog from "react-native-dialog";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
 import { useActionSheet } from "@expo/react-native-action-sheet";
@@ -40,8 +38,8 @@ const Profil = () => {
 			},
 			{
 				text: "Confirmer",
-				onPress: (pseudo) => {
-					changerPseudo(pseudo);
+				onPress: async (pseudo) => {
+					await changerPseudo(pseudo);
 					setModalVisible(!modalVisible);
 				},
 			},
@@ -136,40 +134,6 @@ const Profil = () => {
 			</View>
 
 			<View style={styles.menu}>
-				{platform === "android" && (
-					<Modal
-						animationType="slide"
-						transparent={true}
-						visible={modalVisible}
-						onRequestClose={() => {
-							setModalVisible(!modalVisible);
-						}}>
-						<View style={styles.modal}>
-							<TextInput
-								style={styles.modalInput}
-								onChangeText={setPseudo}
-								placeholder="Pseudo"
-								value={pseudo}
-							/>
-							<View style={styles.modalButtons}>
-								<Pressable
-									style={[styles.modalButton, styles.modalButtonClose]}
-									onPress={() => {
-										changerPseudo(pseudo);
-										setModalVisible(!modalVisible);
-									}}>
-									<Text>Appliquer</Text>
-								</Pressable>
-								<Pressable
-									style={[styles.modalButton, styles.modalButtonClose]}
-									onPress={() => setModalVisible(!modalVisible)}>
-									<Text>Annuler</Text>
-								</Pressable>
-							</View>
-						</View>
-					</Modal>
-				)}
-
 				<TouchableOpacity onPress={() => setModalVisible(true)}>
 					<View style={[styles.menuAction, styles.menuActionBorder]}>
 						<Ionicons name="pencil-outline" style={styles.menuIcon} size={15} />
@@ -199,6 +163,29 @@ const Profil = () => {
 					</View>
 				</TouchableOpacity>
 			</View>
+
+			{platform === "android" && (
+				<Dialog.Container
+					visible={modalVisible}
+					onBackdropPress={() => {
+						setModalVisible(false);
+					}}>
+					<Dialog.Title>Changer de pseudo</Dialog.Title>
+					<Dialog.Input placeholder="Nouveau pseudo" onChangeText={setPseudo} />
+					<Dialog.Button
+						label="Annuler"
+						onPress={() => setModalVisible(false)}
+					/>
+					<Dialog.Button
+						label="Confirmer"
+						onPress={async () => {
+							await changerPseudo(pseudo);
+							setModalVisible(!modalVisible);
+						}}
+					/>
+				</Dialog.Container>
+			)}
+
 			<StatusBar style="auto" />
 		</View>
 	);
@@ -268,46 +255,6 @@ const styles = StyleSheet.create({
 	menuText: {
 		fontSize: 16,
 		fontWeight: "500",
-	},
-
-	modal: {
-		margin: 20,
-		backgroundColor: "white",
-		borderRadius: 20,
-		padding: 35,
-		alignItems: "center",
-		shadowColor: "#000",
-		backgroundColor: "#EEEE",
-		width: 200,
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 5,
-	},
-
-	modalButtons: {
-		alignItems: "center",
-		flexDirection: "row",
-	},
-
-	modalButton: {
-		borderRadius: 20,
-		padding: 10,
-		elevation: 2,
-	},
-
-	modalButtonClose: {
-		backgroundColor: "#2196F3",
-	},
-
-	modalInput: {
-		height: 40,
-		margin: 12,
-		borderWidth: 1,
-		padding: 10,
 	},
 });
 
