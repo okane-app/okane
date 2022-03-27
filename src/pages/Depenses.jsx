@@ -11,7 +11,7 @@ import { collection, query, where } from "firebase/firestore";
 
 import { LineChart } from "react-native-chart-kit";
 import { StatusBar } from "expo-status-bar";
-import Swiper from "react-native-swiper/src";
+import Swiper from "react-native-swiper";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const Depenses = () => {
