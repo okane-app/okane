@@ -9,6 +9,7 @@ import {
 import { auth, db } from "../../firebase";
 import { collection, query, where } from "firebase/firestore";
 
+import JaugeDepenses from "../components/JaugeDepenses";
 import { LineChart } from "react-native-chart-kit";
 import { StatusBar } from "expo-status-bar";
 import Swiper from "react-native-swiper";
@@ -51,6 +52,10 @@ const Depenses = () => {
 
 	const dpt = depenses ? depensesTotales() : 0;
 	const max = categories ? budgetMax() : 0;
+	const pourcentage =
+		depenses && categories && depenses.length > 0
+			? Math.round((depensesTotales() / budgetMax()) * 100)
+			: 0;
 
 	const mois = [
 		"Janv",
@@ -156,7 +161,7 @@ const Depenses = () => {
 						styles.container,
 						{ backgroundColor: "#5BB774" },
 					]}>
-					{/* Camembert */}
+					<JaugeDepenses dpt={dpt} max={max} pourcentage={pourcentage} />
 				</View>
 				<View style={styles.slide2}>
 					<LineChart

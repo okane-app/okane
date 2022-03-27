@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { auth, db } from "../../firebase";
 import { collection, limit, orderBy, query } from "firebase/firestore";
 
-import CircularProgress from "react-native-circular-progress-indicator";
+import JaugeDepenses from "../components/JaugeDepenses";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
@@ -62,18 +62,7 @@ const Accueil = () => {
 						backgroundColor: "#5DB075",
 					},
 				]}>
-				<CircularProgress
-					value={dpt}
-					valueSuffix={`,${(dpt - Math.floor(dpt)).toFixed(2).split(".")[1]} €`}
-					radius={120}
-					duration={2000}
-					textColor={"#ecf0f1"}
-					maxValue={max}
-					title={`${pourcentage}% dépensés`}
-					titleColor={"white"}
-					titleStyle={{ fontSize: 16, fontWeight: "400" }}
-					textStyle={{ fontSize: 40, fontWeight: "500" }}
-				/>
+				<JaugeDepenses dpt={dpt} max={max} pourcentage={pourcentage} />
 			</View>
 
 			<View style={styles.semi}>
