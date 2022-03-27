@@ -1,23 +1,21 @@
 import {
-    Image,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import React, { useState } from 'react';
+	Image,
+	StyleSheet,
+	Text,
+	TouchableHighlight,
+	TouchableOpacity,
+	View,
+} from "react-native";
+import React, { useState } from "react";
 import { auth, db } from "../../firebase";
+import { collection, limit, orderBy, query } from "firebase/firestore";
 
-import { collection, limit, orderBy, query } from "firebase/firestore"
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { SwipeListView } from 'react-native-swipe-list-view';
+import { SwipeListView } from "react-native-swipe-list-view";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-
-export default function AllCategorie( {navigation}) {
-    const user = auth.currentUser;
-
+export default function AllCategorie({ navigation }) {
+	const user = auth.currentUser;
 
 	const [categories, loading, error] = useCollectionData(
 		query(collection(db, "users", user.uid, "categories"))
@@ -29,53 +27,53 @@ export default function AllCategorie( {navigation}) {
 		}
 	};
 
-
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Vos Catégories</Text>
-            {categories && (
-                <SwipeListView
-                    useFlatList={true}
-                    data={categories}
-                    renderItem={(rowData, rowMap) => (
-                        <TouchableHighlight
-                        onPress={() => navigation.navigate("DepensesCategorie", {
-                            idCategorie: rowData.item.id,
-                            nomCateg: rowData.item.nom
-                        })}
-                        style={styles.rowFront}
-                        underlayColor={'#FFF'}
-                    >
-                        <View>
-                            <Text> {rowData.item.nom}</Text>
-                        </View>
-                    </TouchableHighlight>
-                    )}
-                    renderHiddenItem={(rowData, rowMap) => (
-                        <View style={styles.rowBack}>
-                            <TouchableOpacity style={[styles.backRightBtn, styles.backRightBtnLeft]} onPress={() => rowMap[rowData.item.id].closeRow()}>
-                                <Text style={styles.backTextWhite}>Close</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.backRightBtn, styles.backRightBtnRight]}
-                                onPress={() => deleteRow(rowMap, data.item.id)}
-                            >
-                                <Ionicons name="trash-outline" color={"#FFF"} size={28} />
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                    keyExtractor={item => item.id}
-                    rightOpenValue={-150}
-                    onRowOpen={(rowKey, rowMap) => {
-                        setTimeout(() => {
-                            rowMap[rowKey].closeRow()
-                        }, 2000)
-                    }}
-                />
-            )}
-        </View>
-    );
+	return (
+		<View style={styles.container}>
+			<Text style={styles.title}>Vos Catégories</Text>
+			{categories && (
+				<SwipeListView
+					useFlatList={true}
+					data={categories}
+					renderItem={(rowData, rowMap) => (
+						<TouchableHighlight
+							onPress={() =>
+								navigation.navigate("DepensesCategorie", {
+									idCategorie: rowData.item.id,
+									nomCateg: rowData.item.nom,
+								})
+							}
+							style={styles.rowFront}
+							underlayColor={"#FFF"}>
+							<View>
+								<Text> {rowData.item.nom}</Text>
+							</View>
+						</TouchableHighlight>
+					)}
+					renderHiddenItem={(rowData, rowMap) => (
+						<View style={styles.rowBack}>
+							<TouchableOpacity
+								style={[styles.backRightBtn, styles.backRightBtnLeft]}
+								onPress={() => rowMap[rowData.item.id].closeRow()}>
+								<Text style={styles.backTextWhite}>Close</Text>
+							</TouchableOpacity>
+							<TouchableOpacity
+								style={[styles.backRightBtn, styles.backRightBtnRight]}
+								onPress={() => deleteRow(rowMap, data.item.id)}>
+								<Ionicons name="trash-outline" color={"#FFF"} size={28} />
+							</TouchableOpacity>
+						</View>
+					)}
+					keyExtractor={(item) => item.id}
+					rightOpenValue={-150}
+					onRowOpen={(rowKey, rowMap) => {
+						setTimeout(() => {
+							rowMap[rowKey].closeRow();
+						}, 2000);
+					}}
+				/>
+			)}
+		</View>
+	);
 }
 //{ rowData: any, rowMap: { string: SwipeRowRef } } : ReactElement
 
