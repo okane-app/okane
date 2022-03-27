@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
 	StyleSheet,
 	Text,
-	TouchableOpacity,
 	TouchableHighlight,
 	View,
 	Image,
@@ -34,7 +33,7 @@ export default function AllCategorie() {
 					useFlatList={true}
 					data={categories}
 					renderItem={(rowData, rowMap) => (
-						<TouchableOpacity
+						<TouchableHighlight
 							key={rowData.item.nom}
 							// onPress={() => console.log('You touched me')}
 							style={styles.rowFront}
@@ -43,31 +42,26 @@ export default function AllCategorie() {
 							<View>
 								<Text> {rowData.item.nom}</Text>
 							</View>
-						</TouchableOpacity>
+						</TouchableHighlight>
 					)}
 					renderHiddenItem={(rowData, rowMap) => (
 						<View style={styles.rowBack}>
-							<TouchableOpacity
+							<TouchableHighlight
 								style={[styles.backRightBtn, styles.backRightBtnLeft]}
 								onPress={() => rowMap[rowData.item.id].closeRow()}
 							>
 								<Text style={styles.backTextWhite}>Close</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
+							</TouchableHighlight>
+							<TouchableHighlight
 								style={[styles.backRightBtn, styles.backRightBtnRight]}
 								onPress={() => deleteRow(rowMap, data.item.id)}
 							>
 								<Ionicons name="trash-outline" color={"#FFF"} size={28} />
-							</TouchableOpacity>
+							</TouchableHighlight>
 						</View>
 					)}
 					keyExtractor={(item) => item.id}
 					rightOpenValue={-150}
-					onRowOpen={(rowKey, rowMap) => {
-						setTimeout(() => {
-							rowMap[rowKey].closeRow();
-						}, 2000);
-					}}
 				/>
 			)}
 		</View>
