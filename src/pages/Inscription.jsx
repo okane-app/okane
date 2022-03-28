@@ -13,6 +13,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 import { StatusBar } from "expo-status-bar";
+import { showMessage } from "react-native-flash-message";
 import { useState } from "react";
 
 const Inscription = () => {
@@ -21,8 +22,16 @@ const Inscription = () => {
 	const [password, setPassword] = useState("");
 
 	const register = async (username, email, password) => {
-		createUserWithEmailAndPassword(auth, email, password).then(
-			async (userCredential) => {
+		if (username.length === 0) {
+			showMessage({
+				message: "Veuillez entrer un nom d'utilisateur",
+				type: "danger",
+			});
+			return;
+		}
+
+		createUserWithEmailAndPassword(auth, email, password)
+			.then(async (userCredential) => {
 				const user = userCredential.user;
 
 				// Mise à jour du nom d'utilisateur interne
@@ -30,12 +39,11 @@ const Inscription = () => {
 
 				// Création de l'utilisateur dans Firestore
 				await setDoc(doc(db, "users", user.uid), {
-					authProvider: "local",
 					uid: user.uid,
 					username,
 				});
-			}
-		);
+			})
+			.catch((e) => showMessage({ message: e.message, type: "danger" }));
 	};
 
 	return (

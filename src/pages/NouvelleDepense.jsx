@@ -22,6 +22,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RNPickerSelect from "react-native-picker-select";
 import { StatusBar } from "expo-status-bar";
+import { showMessage } from "react-native-flash-message";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 
@@ -49,7 +50,19 @@ const NouvelleDepense = ({ navigation }) => {
 
 	const usersCollectionRef = collection(db, "users", user.uid, "depenses");
 
+	const controleSaisie = () => {
+		return categorie.length > 0 && depense.length > 0 && montant.length > 0;
+	};
+
 	const creerDepense = async () => {
+		if (!controleSaisie()) {
+			showMessage({
+				message: "Veuillez remplir tous les champs",
+				type: "danger",
+			});
+			return;
+		}
+
 		await addDoc(usersCollectionRef, {
 			nom: depense,
 			montant: parseFloat(montant),
@@ -57,6 +70,10 @@ const NouvelleDepense = ({ navigation }) => {
 			date: Timestamp.fromDate(date),
 		}).then(async (docRef) => {
 			await updateDoc(docRef, { id: docRef.id });
+			showMessage({
+				message: "Depense ajoutée avec succès !",
+				type: "success",
+			});
 		});
 	};
 
@@ -124,7 +141,6 @@ const NouvelleDepense = ({ navigation }) => {
 								color={grayPlaceholder}
 								style={styles.calendarIcon}
 							/>
-							{/* Icône date */}
 						</View>
 					</TouchableOpacity>
 

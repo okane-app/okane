@@ -1,4 +1,5 @@
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import FlashMessage from "react-native-flash-message";
 import Routes from "./src/routes/Routes";
 import TimeAgo from "javascript-time-ago";
 import { auth } from "./firebase";
@@ -11,7 +12,10 @@ export default function App() {
 	const [currentUser] = useAuthState(auth);
 	return (
 		<ActionSheetProvider>
-			<Routes user={currentUser} />
+			<>
+				<Routes user={currentUser} />
+				<FlashMessage position="top" />
+			</>
 		</ActionSheetProvider>
 	);
 }

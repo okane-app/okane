@@ -24,6 +24,7 @@ import { auth, db } from "../../firebase";
 import PropTypes from "prop-types";
 import ReactTimeAgo from "react-time-ago";
 import { StatusBar } from "expo-status-bar";
+import { showMessage } from "react-native-flash-message";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
@@ -69,6 +70,7 @@ const Conseils = () => {
 		}
 	};
 
+	// TODO component
 	const renderMessage = ({ item }) => {
 		const options = ["Annuler"];
 
@@ -158,6 +160,11 @@ const Conseils = () => {
 	};
 
 	const addMessage = async (message) => {
+		if (message.length === 0) {
+			showMessage({ message: "Vous devez écrire un message", type: "danger" });
+			return;
+		}
+
 		const ref = await addDoc(collection(db, "messages"), {
 			content: message,
 			timestamp: Timestamp.now(),
