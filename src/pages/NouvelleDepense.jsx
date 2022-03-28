@@ -19,10 +19,23 @@ import {
 import { auth, db } from "../../firebase";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import RNPickerSelect from "react-native-picker-select";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
+
+const grayPlaceholder = Platform.OS === "ios" ? "#bebec0" : "#a3a3a3";
+
+// function that takes a date and returns its string value in format dd/mm/yyyy
+function formatDate(date) {
+	const day = date.getDate();
+	const month = date.getMonth() + 1;
+	const year = date.getFullYear();
+	return `${day < 10 ? "0" + day : day}/${
+		month < 10 ? "0" + month : month
+	}/${year}`;
+}
 
 const NouvelleDepense = ({ navigation }) => {
 	const user = auth.currentUser;
@@ -104,7 +117,13 @@ const NouvelleDepense = ({ navigation }) => {
 
 					<TouchableOpacity onPress={() => setShow(true)}>
 						<View style={styles.datePicker}>
-							<Text style={{ color: "#a3a3a3" }}>{date.toString()}</Text>
+							<Text style={{ color: grayPlaceholder }}>{formatDate(date)}</Text>
+							<Ionicons
+								name="calendar-outline"
+								size={20}
+								color={grayPlaceholder}
+								style={styles.calendarIcon}
+							/>
 							{/* Icône date */}
 						</View>
 					</TouchableOpacity>
@@ -174,10 +193,11 @@ const styles = StyleSheet.create({
 	},
 
 	datePicker: {
-		justifyContent: "center",
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
 		backgroundColor: "#F6F6F6",
-		height: 50,
-		paddingLeft: 16,
+		padding: 16,
 		marginBottom: 16,
 		borderWidth: 1,
 		borderColor: "#E8E8E8",
@@ -202,7 +222,7 @@ const styles = StyleSheet.create({
 
 const picker = StyleSheet.create({
 	placeholder: {
-		color: "#a3a3a3",
+		color: grayPlaceholder,
 	},
 
 	inputAndroidContainer: {
