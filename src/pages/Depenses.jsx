@@ -24,7 +24,7 @@ import { SwipeListView } from "react-native-swipe-list-view";
 import Swiper from "react-native-swiper";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-const Depenses = () => {
+const Depenses = ({ navigation }) => {
 	const user = auth.currentUser;
 
 	const [categories, loadingCategories, errorCategories] = useCollectionData(
@@ -131,10 +131,17 @@ const Depenses = () => {
 	// Liste des catégories
 
 	const renderCategorie = ({ item }) => (
-		<TouchableHighlight style={styles.categorie}>
+		<TouchableHighlight
+			style={styles.categorie}
+			onPress={() => {
+				navigation.navigate("DepensesCategorie", {
+					categorie: item.id,
+					title: item.nom,
+				});
+			}}>
 			<>
-				<Text style={{ fontSize: 16, paddingLeft: 7 }}>{item.nom}</Text>
-				<Text style={{ fontSize: 16, paddingRight: 7 }}>{item.limite} €</Text>
+				<Text style={{ fontSize: 16, paddingLeft: 10 }}>{item.nom}</Text>
+				<Text style={{ fontSize: 16, paddingRight: 10 }}>{item.limite} €</Text>
 			</>
 		</TouchableHighlight>
 	);
