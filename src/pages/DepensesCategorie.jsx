@@ -52,7 +52,7 @@ const DepensesCategorie = ({ route }) => {
 		<View style={styles.container}>
 			<View style={styles.depenses}>
 				{depenses && depenses.length === 0 && (
-					<View style={styles.container}>
+					<View style={{ marginTop: 10, padding: 10 }}>
 						<Text>
 							Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
 						</Text>
