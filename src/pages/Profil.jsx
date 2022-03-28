@@ -27,6 +27,8 @@ const Profil = () => {
 	const [pseudo, setPseudo] = useState("");
 	const [photoURL, setPhotoURL] = useState(null);
 
+	const [easterEgg, setEasterEgg] = useState(0);
+
 	const platform = Platform.OS;
 
 	// Utilise le modal d'alerte natif pour iOS
@@ -102,6 +104,27 @@ const Profil = () => {
 		await signOut(auth);
 	};
 
+	const checkEasterEgg = async () => {
+		setEasterEgg(easterEgg + 1);
+		if (easterEgg === 4) {
+			const downloadURL = await getDownloadURL(
+				ref(storage, `images/profile/easterEgg.png`)
+			);
+			await updateProfile(auth.currentUser, {
+				photoURL: downloadURL,
+			});
+			setPhotoURL(downloadURL);
+
+			showMessage({
+				message: "Un bon bain est un bon bain d'or !",
+				type: "warning",
+				duration: 5000,
+			});
+
+			setEasterEgg(0);
+		}
+	};
+
 	const { showActionSheetWithOptions } = useActionSheet(); // Menu changer photo
 
 	return (
@@ -150,7 +173,7 @@ const Profil = () => {
 					</View>
 				</TouchableOpacity>
 
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => checkEasterEgg()}>
 					<View style={[styles.menuAction, styles.menuActionBorder]}>
 						<Ionicons
 							name="settings-outline"
