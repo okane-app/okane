@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 
 const DepensesStack = () => (
-	<Stack.Navigator>
+	<Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
 		<Stack.Screen name="Dépenses" component={Depenses} />
 		<Stack.Screen
 			name="DepensesCategorie"
