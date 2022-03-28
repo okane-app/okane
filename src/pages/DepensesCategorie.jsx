@@ -1,8 +1,10 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { auth, db } from "../../firebase";
-import { collection, orderBy, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, query, where } from "firebase/firestore";
 
+import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
+import { SwipeListView } from "react-native-swipe-list-view";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const DepensesCategorie = ({ route }) => {
@@ -24,21 +26,50 @@ const DepensesCategorie = ({ route }) => {
 		</View>
 	);
 
+	const renderSwipeButtons = (data, map) => (
+		<View style={styles.swipeButtons}>
+			<TouchableOpacity
+				style={[styles.backButton, styles.backButtonLeft]}
+				onPress={() => map[data.item.id].closeRow()}>
+				<Text style={{ color: "white" }}>Fermer</Text>
+			</TouchableOpacity>
+
+			<TouchableOpacity
+				style={[styles.backButton, styles.backButtonRight]}
+				onPress={async () => {
+					await deleteDepense(data.item.id);
+				}}>
+				<Ionicons name="trash-outline" color={"#FFF"} size={28} />
+			</TouchableOpacity>
+		</View>
+	);
+
+	const deleteDepense = async (id) => {
+		await deleteDoc(doc(db, "users", user.uid, "depenses", id));
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.depenses}>
-				<FlatList
-					data={depenses}
-					renderItem={renderDepense}
-					keyExtractor={(item, index) => index}
-					ListEmptyComponent={() => (
-						<View style={styles.container}>
-							<Text style={{ marginTop: 20 }}>
-								Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
-							</Text>
-						</View>
-					)}
-				/>
+				{depenses && depenses.length === 0 && (
+					<View style={styles.container}>
+						<Text>
+							Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
+						</Text>
+					</View>
+				)}
+
+				{depenses && depenses.length > 0 && (
+					<SwipeListView
+						useFlatList={true}
+						data={depenses}
+						renderItem={renderDepense}
+						renderHiddenItem={renderSwipeButtons}
+						keyExtractor={(item) => item.id}
+						rightOpenValue={-150}
+						disableRightSwipe={true}
+					/>
+				)}
 			</View>
 
 			<StatusBar style="auto" />
@@ -67,6 +98,33 @@ const styles = StyleSheet.create({
 		paddingTop: 16,
 		paddingBottom: 16,
 		backgroundColor: "white",
+	},
+
+	swipeButtons: {
+		alignItems: "center",
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		paddingLeft: 15,
+	},
+
+	backButton: {
+		alignItems: "center",
+		bottom: 0,
+		justifyContent: "center",
+		position: "absolute",
+		top: 0,
+		width: 75,
+	},
+
+	backButtonLeft: {
+		backgroundColor: "blue",
+		right: 75,
+	},
+
+	backButtonRight: {
+		backgroundColor: "red",
+		right: 0,
 	},
 });
 
