@@ -8,6 +8,7 @@ import {
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
+import { showMessage } from "react-native-flash-message";
 import { useState } from "react";
 
 const NouvelleCategorie = ({ navigation }) => {
@@ -19,11 +20,20 @@ const NouvelleCategorie = ({ navigation }) => {
 	const usersCollectionRef = collection(db, "users", user.uid, "categories");
 
 	const creerCategorie = async () => {
+		if (!(nom.length > 0 && limite.length > 0)) {
+			showMessage({
+				message: "Veuillez remplir tous les champs",
+				type: "danger",
+			});
+			return;
+		}
+
 		await addDoc(usersCollectionRef, {
 			nom: nom,
 			limite: parseFloat(limite),
 		}).then(async (docRef) => {
 			await updateDoc(docRef, { id: docRef.id });
+			navigation.goBack();
 		});
 	};
 
@@ -44,7 +54,7 @@ const NouvelleCategorie = ({ navigation }) => {
 
 				<TouchableOpacity
 					onPress={() => {
-						creerCategorie(nom, limite).then(navigation.goBack());
+						creerCategorie(nom, limite);
 					}}>
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Ajouter</Text>
