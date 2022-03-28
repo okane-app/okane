@@ -107,6 +107,7 @@ const Conseils = () => {
 									{
 										borderColor: "green",
 										borderWidth: 2,
+										backgroundColor: "rgba(255, 255, 255, 0.4)",
 									},
 								]}>
 								<Text style={[styles.likesText, { color: "green" }]}>
