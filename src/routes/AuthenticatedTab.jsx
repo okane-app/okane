@@ -2,7 +2,7 @@ import Accueil from "../pages/Accueil";
 import Conseils from "../pages/Conseils";
 import DepensesStack from "../routes/DepensesStack";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import NouvelleDepense from "../pages/NouvelleDepense";
+import NouvelleDepenseStack from "../routes/NouvelleDepenseStack";
 import Profil from "../pages/Profil";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -37,9 +37,10 @@ const AuthenticatedTab = () => {
 				}}
 			/>
 			<Tab.Screen
-				name="NouvelleDepense"
-				component={NouvelleDepense}
+				name="NouvelleDepenseStack"
+				component={NouvelleDepenseStack}
 				options={{
+					headerShown: false,
 					title: "Nouvelle dépense",
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name="add-circle-outline" color={color} size={size} />

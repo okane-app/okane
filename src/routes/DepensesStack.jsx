@@ -6,7 +6,11 @@ const Stack = createNativeStackNavigator();
 
 const DepensesStack = () => (
 	<Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
-		<Stack.Screen name="Dépenses" component={Depenses} />
+		<Stack.Screen
+			name="Depenses"
+			component={Depenses}
+			options={{ title: "Dépenses" }}
+		/>
 		<Stack.Screen
 			name="DepensesCategorie"
 			component={DepensesCategorie}
