@@ -12,6 +12,7 @@ import {
 import { Platform } from "expo-modules-core";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "../../firebase";
+import { showMessage } from "react-native-flash-message";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 
@@ -20,7 +21,9 @@ const Connexion = () => {
 	const [password, setPassword] = useState("");
 
 	const login = async (email, password) => {
-		await signInWithEmailAndPassword(auth, email, password);
+		await signInWithEmailAndPassword(auth, email, password).catch((e) =>
+			showMessage({ message: e.message, type: "danger" })
+		);
 	};
 
 	return (

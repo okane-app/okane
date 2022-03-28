@@ -17,14 +17,17 @@ import { signOut, updateProfile } from "firebase/auth";
 import Dialog from "react-native-dialog";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
+import { showMessage } from "react-native-flash-message";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useState } from "react";
 
 const Profil = () => {
 	const [modalVisible, setModalVisible] = useState(false);
 
-	const [pseudo, setPseudo] = useState(auth.currentUser?.displayName);
+	const [pseudo, setPseudo] = useState("");
 	const [photoURL, setPhotoURL] = useState(null);
+
+	const [easterEgg, setEasterEgg] = useState(0);
 
 	const platform = Platform.OS;
 
@@ -73,6 +76,14 @@ const Profil = () => {
 	};
 
 	const changerPseudo = async (pseudo) => {
+		if (pseudo.length === 0) {
+			showMessage({
+				message: "Veuillez entrer un pseudo",
+				type: "danger",
+			});
+			return;
+		}
+
 		// Met à jour le pseudo interne de l'utilisateur
 		await updateProfile(auth.currentUser, {
 			displayName: pseudo,
@@ -91,6 +102,27 @@ const Profil = () => {
 
 	const logout = async () => {
 		await signOut(auth);
+	};
+
+	const checkEasterEgg = async () => {
+		setEasterEgg(easterEgg + 1);
+		if (easterEgg === 4) {
+			const downloadURL = await getDownloadURL(
+				ref(storage, `images/profile/easterEgg.png`)
+			);
+			await updateProfile(auth.currentUser, {
+				photoURL: downloadURL,
+			});
+			setPhotoURL(downloadURL);
+
+			showMessage({
+				message: "Un bon bain est un bon bain d'or !",
+				type: "warning",
+				duration: 5000,
+			});
+
+			setEasterEgg(0);
+		}
 	};
 
 	const { showActionSheetWithOptions } = useActionSheet(); // Menu changer photo
@@ -130,7 +162,7 @@ const Profil = () => {
 			</TouchableOpacity>
 
 			<View>
-				<Text style={styles.username}>@{pseudo}</Text>
+				<Text style={styles.username}>@{auth.currentUser.displayName}</Text>
 			</View>
 
 			<View style={styles.menu}>
@@ -141,7 +173,7 @@ const Profil = () => {
 					</View>
 				</TouchableOpacity>
 
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => checkEasterEgg()}>
 					<View style={[styles.menuAction, styles.menuActionBorder]}>
 						<Ionicons
 							name="settings-outline"
