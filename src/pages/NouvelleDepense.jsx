@@ -9,9 +9,16 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
-import { addDoc, collection, query, updateDoc } from "firebase/firestore";
+import {
+	Timestamp,
+	addDoc,
+	collection,
+	query,
+	updateDoc,
+} from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
+import DateTimePicker from "@react-native-community/datetimepicker";
 import RNPickerSelect from "react-native-picker-select";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -24,16 +31,17 @@ const NouvelleDepense = ({ navigation }) => {
 	const [depense, setDepense] = useState("");
 	const [montant, setMontant] = useState("");
 
-	const usersCollectionRef = collection(db, "users", user.uid, "depenses");
+	const [date, setDate] = useState(new Date());
+	const [show, setShow] = useState(false);
 
-	let date = new Date();
+	const usersCollectionRef = collection(db, "users", user.uid, "depenses");
 
 	const creerDepense = async () => {
 		await addDoc(usersCollectionRef, {
 			nom: depense,
 			montant: parseFloat(montant),
 			categorie: categorie,
-			date: date,
+			date: Timestamp.fromDate(date),
 		}).then(async (docRef) => {
 			await updateDoc(docRef, { id: docRef.id });
 		});
@@ -50,7 +58,7 @@ const NouvelleDepense = ({ navigation }) => {
 				behavior={Platform.OS === "ios" ? "padding" : undefined}>
 				<View style={styles.form}>
 					<View>
-						<View style={styles.select}>
+						<View style={{ justifyContent: "center" }}>
 							{categories && (
 								<RNPickerSelect
 									style={picker}
@@ -94,9 +102,26 @@ const NouvelleDepense = ({ navigation }) => {
 						/>
 					</View>
 
+					<TouchableOpacity onPress={() => setShow(true)}>
+						<View style={styles.datePicker}>
+							<Text style={{ color: "#a3a3a3" }}>{date.toString()}</Text>
+							{/* Icône date */}
+						</View>
+					</TouchableOpacity>
+
+					{show && (
+						<DateTimePicker
+							value={date}
+							onChange={(e, date) => {
+								if (date) setDate(date);
+								setShow(false);
+							}}
+						/>
+					)}
+
 					<TouchableOpacity
 						onPress={() => {
-							creerDepense(depense, montant, categorie).then(() => {
+							creerDepense().then(() => {
 								Keyboard.dismiss();
 								setCategorie("");
 								setDepense("");
@@ -148,6 +173,17 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
 
+	datePicker: {
+		justifyContent: "center",
+		backgroundColor: "#F6F6F6",
+		height: 50,
+		paddingLeft: 16,
+		marginBottom: 16,
+		borderWidth: 1,
+		borderColor: "#E8E8E8",
+		borderRadius: 8,
+	},
+
 	button: {
 		marginTop: 32,
 		alignItems: "center",
@@ -165,6 +201,10 @@ const styles = StyleSheet.create({
 });
 
 const picker = StyleSheet.create({
+	placeholder: {
+		color: "#a3a3a3",
+	},
+
 	inputAndroidContainer: {
 		backgroundColor: "#F6F6F6",
 		borderWidth: 1,
