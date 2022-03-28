@@ -133,6 +133,7 @@ const Depenses = ({ navigation }) => {
 	const renderCategorie = ({ item }) => (
 		<TouchableHighlight
 			style={styles.categorie}
+			underlayColor="#f5f5f5"
 			onPress={() => {
 				navigation.navigate("DepensesCategorie", {
 					categorie: item.id,
