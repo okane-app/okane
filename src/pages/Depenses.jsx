@@ -130,22 +130,32 @@ const Depenses = ({ navigation }) => {
 
 	// Liste des catégories
 
-	const renderCategorie = ({ item }) => (
-		<TouchableHighlight
-			style={styles.categorie}
-			underlayColor="#f5f5f5"
-			onPress={() => {
-				navigation.navigate("DepensesCategorie", {
-					categorie: item.id,
-					title: item.nom,
-				});
-			}}>
-			<>
-				<Text style={{ fontSize: 16, paddingLeft: 10 }}>{item.nom}</Text>
-				<Text style={{ fontSize: 16, paddingRight: 10 }}>{item.limite} €</Text>
-			</>
-		</TouchableHighlight>
-	);
+	const renderCategorie = ({ item }) => {
+		const sommeDepensesCategorie = depenses
+			? depenses
+					.filter((depense) => depense.categorie === item.id)
+					.reduce((total, depense) => total + depense.montant, 0)
+			: 0;
+
+		return (
+			<TouchableHighlight
+				style={styles.categorie}
+				underlayColor="#f5f5f5"
+				onPress={() => {
+					navigation.navigate("DepensesCategorie", {
+						categorie: item.id,
+						title: item.nom,
+					});
+				}}>
+				<>
+					<Text style={{ fontSize: 16, paddingLeft: 10 }}>{item.nom}</Text>
+					<Text style={{ fontSize: 16, paddingRight: 10 }}>
+						{sommeDepensesCategorie} € / {item.limite} €
+					</Text>
+				</>
+			</TouchableHighlight>
+		);
+	};
 
 	const renderSwipeButtons = (data, map) => (
 		<View style={styles.swipeButtons}>
