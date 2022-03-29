@@ -73,12 +73,15 @@ const Depenses = ({ navigation }) => {
 	};
 
 	const depensesTotales = () => {
+		const p = previousMonth();
+		const n = nextMonth();
+
 		return depenses
 			.filter((depense) => {
 				const d = depense.date.toDate();
 				d.setMilliseconds(0);
 
-				return d > previousMonth() && d < nextMonth();
+				return d > p && d < n;
 			})
 			.reduce((total, depense) => total + depense.montant, 0);
 	};
