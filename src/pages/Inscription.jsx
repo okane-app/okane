@@ -16,7 +16,7 @@ import { StatusBar } from "expo-status-bar";
 import { showMessage } from "react-native-flash-message";
 import { useState } from "react";
 
-const Inscription = () => {
+const Inscription = ({ navigation }) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -81,10 +81,7 @@ const Inscription = () => {
 
 					<Text>
 						En vous inscrivant, vous acceptez nos{" "}
-						<Text style={{ color: "blue", textDecorationLine: "underline" }}>
-							conditions générales d'utilisation
-						</Text>
-						.
+						<Text style={styles.link}>conditions générales d'utilisation</Text>.
 					</Text>
 
 					<TouchableOpacity
@@ -94,6 +91,12 @@ const Inscription = () => {
 						<View style={styles.button}>
 							<Text style={styles.buttonText}>Inscription</Text>
 						</View>
+
+						<Text
+							style={[styles.link, styles.already]}
+							onPress={() => navigation.navigate("Connexion")}>
+							Déjà un compte ?
+						</Text>
 					</TouchableOpacity>
 				</View>
 
@@ -147,6 +150,16 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 16,
 		fontWeight: "600",
+	},
+
+	link: {
+		color: "blue",
+		textDecorationLine: "underline",
+	},
+
+	already: {
+		marginTop: 20,
+		alignSelf: "center",
 	},
 });
 

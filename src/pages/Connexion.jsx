@@ -16,7 +16,7 @@ import { showMessage } from "react-native-flash-message";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 
-const Connexion = () => {
+const Connexion = ({ navigation }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -58,6 +58,12 @@ const Connexion = () => {
 						<View style={styles.button}>
 							<Text style={styles.buttonText}>Connexion</Text>
 						</View>
+
+						<Text
+							style={styles.already}
+							onPress={() => navigation.navigate("Inscription")}>
+							Pas encore de compte ?
+						</Text>
 					</TouchableOpacity>
 				</View>
 
@@ -111,6 +117,13 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 16,
 		fontWeight: "600",
+	},
+
+	already: {
+		color: "blue",
+		textDecorationLine: "underline",
+		marginTop: 20,
+		alignSelf: "center",
 	},
 });
 
