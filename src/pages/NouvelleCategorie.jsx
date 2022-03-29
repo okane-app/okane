@@ -42,13 +42,13 @@ const NouvelleCategorie = ({ navigation }) => {
 			<View style={styles.form}>
 				<TextInput
 					style={styles.input}
-					placeholder="Nom"
+					placeholder="Nom de la catégorie"
 					onChangeText={setNom}
 				/>
 
 				<TextInput
 					style={styles.input}
-					placeholder="Limite"
+					placeholder="Budget"
 					onChangeText={setLimite}
 				/>
 
