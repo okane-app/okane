@@ -1,10 +1,39 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+	Timestamp,
+	collection,
+	limit,
+	orderBy,
+	query,
+} from "firebase/firestore";
 import { auth, db } from "../../firebase";
-import { collection, limit, orderBy, query } from "firebase/firestore";
 
 import JaugeDepenses from "../components/JaugeDepenses";
 import { StatusBar } from "expo-status-bar";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+
+// function that returns date of last day of previous month
+const previousMonth = () => {
+	const date = new Date();
+	date.setDate(0);
+	date.setHours(23);
+	date.setMinutes(59);
+	date.setSeconds(59);
+	date.setMilliseconds(999);
+	return date;
+};
+
+// function that returns date of first day of next month
+const nextMonth = () => {
+	const date = new Date();
+	date.setDate(1);
+	date.setMonth(date.getMonth() + 1);
+	date.setHours(0);
+	date.setMinutes(0);
+	date.setSeconds(0);
+	date.setMilliseconds(0);
+	return date;
+};
 
 const Accueil = () => {
 	const user = auth.currentUser;
@@ -24,7 +53,14 @@ const Accueil = () => {
 	};
 
 	const depensesTotales = () => {
-		return depenses.reduce((total, depense) => total + depense.montant, 0);
+		return depenses
+			.filter((depense) => {
+				const d = depense.date.toDate();
+				d.setMilliseconds(0);
+
+				return d > previousMonth() && d < nextMonth();
+			})
+			.reduce((total, depense) => total + depense.montant, 0);
 	};
 
 	const dpt = depenses ? depensesTotales() : 0;

@@ -24,6 +24,29 @@ import { SwipeListView } from "react-native-swipe-list-view";
 import Swiper from "react-native-swiper";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
+// function that returns date of last day of previous month
+const previousMonth = () => {
+	const date = new Date();
+	date.setDate(0);
+	date.setHours(23);
+	date.setMinutes(59);
+	date.setSeconds(59);
+	date.setMilliseconds(999);
+	return date;
+};
+
+// function that returns date of first day of next month
+const nextMonth = () => {
+	const date = new Date();
+	date.setDate(1);
+	date.setMonth(date.getMonth() + 1);
+	date.setHours(0);
+	date.setMinutes(0);
+	date.setSeconds(0);
+	date.setMilliseconds(0);
+	return date;
+};
+
 const Depenses = ({ navigation }) => {
 	const user = auth.currentUser;
 
@@ -32,6 +55,10 @@ const Depenses = ({ navigation }) => {
 	);
 
 	const [depenses] = useCollectionData(
+		query(collection(db, "users", user.uid, "depenses"))
+	);
+
+	const [depensesMois] = useCollectionData(
 		query(collection(db, "users", user.uid, "depenses"))
 	);
 
@@ -46,8 +73,14 @@ const Depenses = ({ navigation }) => {
 	};
 
 	const depensesTotales = () => {
-		const tmp = depenses.reduce((total, depense) => total + depense.montant, 0);
-		return tmp;
+		return depenses
+			.filter((depense) => {
+				const d = depense.date.toDate();
+				d.setMilliseconds(0);
+
+				return d > previousMonth() && d < nextMonth();
+			})
+			.reduce((total, depense) => total + depense.montant, 0);
 	};
 
 	const dpt = depenses ? depensesTotales() : 0;
