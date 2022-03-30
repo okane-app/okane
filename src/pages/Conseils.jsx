@@ -49,8 +49,6 @@ Time.propTypes = {
 const Conseils = () => {
 	const user = auth.currentUser;
 
-	// TODO Loading and error messages
-
 	const [messages, loadingMessages, errorMessages] = useCollectionData(
 		query(collection(db, "messages"), orderBy("timestamp", "asc"))
 	);
@@ -70,7 +68,6 @@ const Conseils = () => {
 		}
 	};
 
-	// TODO component
 	const renderMessage = ({ item }) => {
 		const options = ["Annuler"];
 
