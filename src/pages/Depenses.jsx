@@ -239,6 +239,7 @@ const Depenses = ({ navigation }) => {
 						categorie: data.item.id,
 						title: data.item.nom,
 					});
+					map[data.item.id].closeRow();
 				}}>
 				<Ionicons name="create-outline" color={"#FFF"} size={28} />
 			</TouchableOpacity>
