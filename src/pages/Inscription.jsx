@@ -8,9 +8,9 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
+import { addDoc, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 
 import { StatusBar } from "expo-status-bar";
 import { showMessage } from "react-native-flash-message";
@@ -41,6 +41,20 @@ const Inscription = ({ navigation }) => {
 				await setDoc(doc(db, "users", user.uid), {
 					uid: user.uid,
 					username,
+				});
+
+				// Ajout de catégories par défaut
+				await addDoc(doc(db, "users", user.uid, "categories"), {
+					nom: "Courses",
+					limite: 200,
+				});
+				await addDoc(doc(db, "users", user.uid, "categories"), {
+					nom: "Divertissement",
+					limite: 100,
+				});
+				await addDoc(doc(db, "users", user.uid, "categories"), {
+					nom: "Hygiène",
+					limite: 30,
 				});
 			})
 			.catch((e) => showMessage({ message: e.message, type: "danger" }));
