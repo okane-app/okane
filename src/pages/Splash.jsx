@@ -6,7 +6,9 @@ const Splash = ({ navigation }) => {
 	return (
 		<View style={styles.container}>
 			<Image style={styles.logo} source={require("../assets/okane.png")} />
-			<Text style={styles.motto}>Ne dépense plus jamais de trop.</Text>
+			<Text style={styles.motto}>
+				Gère tes dépenses de manière simple et rapide.
+			</Text>
 
 			<View style={styles.buttons}>
 				<TouchableOpacity onPress={() => navigation.navigate("Connexion")}>
@@ -43,6 +45,8 @@ const styles = StyleSheet.create({
 	},
 
 	motto: {
+		padding: 10,
+		alignSelf: "flex-start",
 		color: "white",
 		fontSize: 30,
 		fontWeight: "600",
