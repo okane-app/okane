@@ -221,6 +221,7 @@ const Conseils = () => {
 						style={{ height: 50 }}
 						onChangeText={setInputMessage}
 						value={inputMessage}
+						maxLength={200}
 						placeholder="Partage ton expérience !"
 					/>
 				</View>
