@@ -292,7 +292,16 @@ const Depenses = ({ navigation }) => {
 			</Swiper>
 
 			<View style={styles.semi}>
-				{categories && (
+				{categories && categories.length === 0 && (
+					<View style={{ marginTop: 20 }}>
+						<Text style={{ alignSelf: "center" }}>
+							Tu n'as aucune catégorie. Et si tu en ajoutais une avec ta
+							première dépense ?
+						</Text>
+					</View>
+				)}
+
+				{categories && categories.length > 0 && (
 					<SwipeListView
 						useFlatList={true}
 						data={categories}
