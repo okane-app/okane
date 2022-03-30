@@ -171,6 +171,7 @@ const ModifierDepense = ({ navigation, route }) => {
 							onChangeText={setMontant}
 							value={montant}
 							maxLength={5}
+							keyboardType={"numeric"}
 						/>
 					</View>
 

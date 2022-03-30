@@ -67,6 +67,7 @@ const Inscription = ({ navigation }) => {
 							style={{ height: 50 }}
 							placeholder="Adresse mail"
 							onChangeText={setEmail}
+							keyboardType={"email-address"}
 						/>
 					</View>
 

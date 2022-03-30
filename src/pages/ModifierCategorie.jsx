@@ -79,6 +79,7 @@ const ModifierCategorie = ({ navigation, route }) => {
 						placeholder="Budget"
 						value={limite}
 						onChangeText={setLimite}
+						keyboardType={"numeric"}
 					/>
 
 					<TouchableOpacity

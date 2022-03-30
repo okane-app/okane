@@ -145,6 +145,7 @@ const NouvelleDepense = ({ navigation }) => {
 							onChangeText={setMontant}
 							value={montant}
 							maxLength={5}
+							keyboardType={"numeric"}
 						/>
 					</View>
 

@@ -59,6 +59,7 @@ const NouvelleCategorie = ({ navigation }) => {
 					style={styles.input}
 					placeholder="Budget"
 					onChangeText={setLimite}
+					keyboardType={"numeric"}
 				/>
 
 				<TouchableOpacity
