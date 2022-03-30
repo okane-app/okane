@@ -178,6 +178,7 @@ const NouvelleDepense = ({ navigation }) => {
 								setCategorie("");
 								setDepense("");
 								setMontant("");
+								setDate(new Date());
 							});
 						}}>
 						<View style={styles.button}>
