@@ -207,10 +207,6 @@ const Conseils = () => {
 				{messages && (
 					<FlatList
 						style={styles.chat}
-						contentContainerStyle={{
-							flex: 1,
-							justifyContent: "flex-end",
-						}}
 						inverted
 						data={[...messages].reverse()}
 						renderItem={renderMessage}
@@ -313,6 +309,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
+		marginBottom: 5,
 	},
 
 	input: {
