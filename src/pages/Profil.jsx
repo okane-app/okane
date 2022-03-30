@@ -140,7 +140,7 @@ const Profil = () => {
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity
-				onLongPress={() => {
+				onPress={() => {
 					showActionSheetWithOptions(
 						{
 							options: ["Changer de photo de profil", "Annuler"],
