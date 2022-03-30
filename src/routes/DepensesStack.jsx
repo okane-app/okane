@@ -18,7 +18,7 @@ const DepensesStack = () => (
 		<Stack.Screen
 			name="ModifierCategorie"
 			component={ModifierCategorie}
-			options={({ route }) => ({ title: "Modifier " + route.params.title })}
+			options={({ route }) => ({ title: route.params.title })}
 		/>
 
 		<Stack.Screen
@@ -30,7 +30,7 @@ const DepensesStack = () => (
 		<Stack.Screen
 			name="ModifierDepense"
 			component={ModifierDepense}
-			options={({ route }) => ({ title: "Modifier " + route.params.title })}
+			options={({ route }) => ({ title: route.params.title })}
 		/>
 
 		<Stack.Screen
