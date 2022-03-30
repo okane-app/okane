@@ -160,7 +160,7 @@ const Conseils = () => {
 	};
 
 	const addMessage = async (message) => {
-		if (message.length === 0) {
+		if (message.trim().length === 0) {
 			showMessage({ message: "Tu dois écrire un message", type: "danger" });
 			return;
 		}

@@ -76,7 +76,7 @@ const Profil = () => {
 	};
 
 	const changerPseudo = async (pseudo) => {
-		if (pseudo.length === 0) {
+		if (pseudo.trim().length === 0) {
 			showMessage({
 				message: "Veuillez entrer un pseudo",
 				type: "danger",

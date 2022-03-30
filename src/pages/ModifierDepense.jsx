@@ -82,7 +82,13 @@ const ModifierDepense = ({ navigation, route }) => {
 	}
 
 	const modifierDepense = async () => {
-		if (!(categorie.length > 0 && depense.length > 0 && montant.length > 0)) {
+		if (
+			!(
+				categorie.trim().length > 0 &&
+				depense.trim().length > 0 &&
+				montant.trim().length > 0
+			)
+		) {
 			showMessage({
 				message: "Veuillez remplir tous les champs",
 				type: "danger",
@@ -90,9 +96,9 @@ const ModifierDepense = ({ navigation, route }) => {
 			return;
 		}
 
-		if (parseFloat(montant) <= 0.0) {
+		if (isNaN(parseFloat(montant)) || parseFloat(montant) <= 0.0) {
 			showMessage({
-				message: "Le montant doit être supérieur à 0",
+				message: "Le montant doit être un nombre supérieur à 0",
 				type: "danger",
 			});
 			return;

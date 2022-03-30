@@ -20,7 +20,7 @@ const NouvelleCategorie = ({ navigation }) => {
 	const usersCollectionRef = collection(db, "users", user.uid, "categories");
 
 	const creerCategorie = async () => {
-		if (!(nom.length > 0 && limite.length > 0)) {
+		if (!(nom.trim().length > 0 && limite.trim().length > 0)) {
 			showMessage({
 				message: "Veuillez remplir tous les champs",
 				type: "danger",
@@ -28,9 +28,9 @@ const NouvelleCategorie = ({ navigation }) => {
 			return;
 		}
 
-		if (parseFloat(limite) <= 0.0) {
+		if (isNaN(parseFloat(limite)) || parseFloat(limite) <= 0.0) {
 			showMessage({
-				message: "La limite doit être supérieure à 0",
+				message: "La limite doit être un nombre supérieur à 0",
 				type: "danger",
 			});
 			return;
