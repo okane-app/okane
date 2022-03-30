@@ -80,6 +80,7 @@ const ModifierCategorie = ({ navigation, route }) => {
 						value={limite}
 						onChangeText={setLimite}
 						keyboardType={"numeric"}
+						maxLength={6}
 					/>
 
 					<TouchableOpacity

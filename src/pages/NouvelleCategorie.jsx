@@ -60,6 +60,7 @@ const NouvelleCategorie = ({ navigation }) => {
 					placeholder="Budget"
 					onChangeText={setLimite}
 					keyboardType={"numeric"}
+					maxLength={6}
 				/>
 
 				<TouchableOpacity
