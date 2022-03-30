@@ -8,15 +8,18 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
-import { addDoc, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import { StatusBar } from "expo-status-bar";
 import { showMessage } from "react-native-flash-message";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 
 const Inscription = ({ navigation }) => {
+	const [users] = useCollectionData(collection(db, "users"));
+
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 
@@ -24,9 +27,29 @@ const Inscription = ({ navigation }) => {
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
 	const register = async () => {
+		if (users) {
+			const usernames = users.map((user) => user.username);
+			if (usernames.includes(username)) {
+				showMessage({
+					message: "Ce nom d'utilisateur est déjà pris",
+					type: "danger",
+				});
+				return;
+			}
+		}
+
 		if (username.length === 0) {
 			showMessage({
 				message: "Veuillez entrer un nom d'utilisateur",
+				type: "danger",
+			});
+			return;
+		}
+
+		if (username !== username.trim()) {
+			showMessage({
+				message:
+					"Veuillez ne pas entrer d'espaces pour votre nom d'utilisateur",
 				type: "danger",
 			});
 			return;

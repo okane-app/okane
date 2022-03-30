@@ -86,6 +86,15 @@ const Profil = () => {
 			return;
 		}
 
+		if (pseudo !== pseudo.trim()) {
+			showMessage({
+				message:
+					"Veuillez ne pas entrer d'espaces pour votre nom d'utilisateur",
+				type: "danger",
+			});
+			return;
+		}
+
 		if (pseudo.length > 20) {
 			showMessage({
 				message: "Votre pseudo ne doit pas dépasser 20 caractères",
