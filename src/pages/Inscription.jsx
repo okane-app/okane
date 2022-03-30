@@ -77,18 +77,45 @@ const Inscription = ({ navigation }) => {
 				});
 
 				// Ajout de catégories par défaut
-				await addDoc(doc(db, "users", user.uid, "categories"), {
+				await addDoc(collection(db, "users", user.uid, "categories"), {
 					nom: "Courses",
 					limite: 200,
-				});
-				await addDoc(doc(db, "users", user.uid, "categories"), {
+				}).then(
+					async (docRef) =>
+						await setDoc(
+							docRef,
+							{
+								id: docRef.id,
+							},
+							{ merge: true }
+						)
+				);
+				await addDoc(collection(db, "users", user.uid, "categories"), {
 					nom: "Divertissement",
 					limite: 100,
-				});
-				await addDoc(doc(db, "users", user.uid, "categories"), {
+				}).then(
+					async (docRef) =>
+						await setDoc(
+							docRef,
+							{
+								id: docRef.id,
+							},
+							{ merge: true }
+						)
+				);
+				await addDoc(collection(db, "users", user.uid, "categories"), {
 					nom: "Hygiène",
 					limite: 30,
-				});
+				}).then(
+					async (docRef) =>
+						await setDoc(
+							docRef,
+							{
+								id: docRef.id,
+							},
+							{ merge: true }
+						)
+				);
 			})
 			.catch((e) => showMessage({ message: e.message, type: "danger" }));
 	};
