@@ -316,6 +316,7 @@ const styles = StyleSheet.create({
 	input: {
 		justifyContent: "center",
 		flexGrow: 1,
+		flexShrink: 1,
 		height: 50,
 		padding: 10,
 		backgroundColor: "white",
