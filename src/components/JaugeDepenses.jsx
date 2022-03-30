@@ -7,11 +7,11 @@ const JaugeDepenses = ({ dpt, max, pourcentage }) => {
 				<CircularProgress
 					value={dpt}
 					valueSuffix={`,${(dpt - Math.floor(dpt)).toFixed(2).split(".")[1]} €`}
-					radius={120}
+					radius={125}
 					duration={2000}
 					textColor={"#ecf0f1"}
 					maxValue={max}
-					title={`${pourcentage}% dépensés`}
+					title={`${pourcentage}% dépensés ce mois`}
 					titleColor={"white"}
 					titleStyle={{ fontSize: 16, fontWeight: "400" }}
 					textStyle={{ fontSize: 40, fontWeight: "500" }}
