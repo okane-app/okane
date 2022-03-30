@@ -79,7 +79,7 @@ const Accueil = () => {
 		query(
 			collection(db, "users", user.uid, "depenses"),
 			orderBy("date", "desc"),
-			limit(6)
+			limit(5)
 		)
 	);
 
