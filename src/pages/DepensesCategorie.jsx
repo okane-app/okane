@@ -29,9 +29,16 @@ const DepensesCategorie = ({ navigation, route }) => {
 
 	const renderDepense = ({ item }) => (
 		<View style={styles.depense}>
-			<Text style={{ fontSize: 16, paddingLeft: 10 }}>{item.nom}</Text>
-			<Text style={{ fontSize: 16 }}>{formatDate(item.date.toDate())}</Text>
-			<Text style={{ fontSize: 16, paddingRight: 10 }}>{item.montant} €</Text>
+			<Text style={{ flex: 1, fontSize: 16, paddingLeft: 10 }}>{item.nom}</Text>
+			<View
+				style={{
+					flex: 1,
+					flexDirection: "row",
+					justifyContent: "space-between",
+				}}>
+				<Text style={{ fontSize: 16 }}>{formatDate(item.date.toDate())}</Text>
+				<Text style={{ fontSize: 16, paddingRight: 10 }}>{item.montant} €</Text>
+			</View>
 		</View>
 	);
 
