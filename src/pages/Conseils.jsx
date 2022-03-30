@@ -3,6 +3,7 @@ import {
 	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
+	Pressable,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -243,7 +244,8 @@ const Conseils = () => {
 						/>
 					</View>
 				)}
-				<TouchableOpacity
+				<Pressable
+					disabled={adminMessages?.disabled}
 					onPress={() => {
 						addMessage(inputMessage).then(() => {
 							setInputMessage("");
@@ -253,7 +255,7 @@ const Conseils = () => {
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Envoyer</Text>
 					</View>
-				</TouchableOpacity>
+				</Pressable>
 			</View>
 
 			<StatusBar style="auto" />
