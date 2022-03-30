@@ -203,7 +203,7 @@ const Depenses = ({ navigation }) => {
 							<Text style={{ color: "red" }}>{sommeDepensesCategorie} €</Text>
 						)}
 
-						{taux >= 1 && (
+						{taux >= 1.0 && (
 							<Text style={{ color: "#8c1818" }}>
 								{sommeDepensesCategorie} €
 							</Text>
