@@ -1,5 +1,6 @@
 {
 	"expo": {
+		"owner": "okane-app",
 		"name": "Okane",
 		"slug": "okane",
 		"version": "1.0.0",
