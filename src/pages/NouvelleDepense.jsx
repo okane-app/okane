@@ -128,6 +128,7 @@ const NouvelleDepense = ({ navigation }) => {
 							placeholder="Nom de la dépense"
 							onChangeText={setDepense}
 							value={depense}
+							maxLength={20}
 						/>
 					</View>
 
@@ -137,6 +138,7 @@ const NouvelleDepense = ({ navigation }) => {
 							placeholder="Montant"
 							onChangeText={setMontant}
 							value={montant}
+							maxLength={5}
 						/>
 					</View>
 

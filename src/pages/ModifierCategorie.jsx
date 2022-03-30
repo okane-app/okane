@@ -71,6 +71,7 @@ const ModifierCategorie = ({ navigation, route }) => {
 						placeholder="Nom de la catégorie"
 						value={nom}
 						onChangeText={setNom}
+						maxLength={30}
 					/>
 
 					<TextInput

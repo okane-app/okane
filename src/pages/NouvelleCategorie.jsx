@@ -52,6 +52,7 @@ const NouvelleCategorie = ({ navigation }) => {
 					style={styles.input}
 					placeholder="Nom de la catégorie"
 					onChangeText={setNom}
+					maxLength={30}
 				/>
 
 				<TextInput

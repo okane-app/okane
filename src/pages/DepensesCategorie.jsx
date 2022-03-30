@@ -7,6 +7,16 @@ import { StatusBar } from "expo-status-bar";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
+// function that takes a date and returns its string value in format dd/mm/yyyy
+function formatDate(date) {
+	const day = date.getDate();
+	const month = date.getMonth() + 1;
+	const year = date.getFullYear();
+	return `${day < 10 ? "0" + day : day}/${
+		month < 10 ? "0" + month : month
+	}/${year}`;
+}
+
 const DepensesCategorie = ({ navigation, route }) => {
 	const user = auth.currentUser;
 
@@ -17,12 +27,18 @@ const DepensesCategorie = ({ navigation, route }) => {
 		)
 	);
 
-	depenses?.sort((a, b) => a.date > b.date);
-
 	const renderDepense = ({ item }) => (
 		<View style={styles.depense}>
 			<Text style={{ fontSize: 16, paddingLeft: 10 }}>{item.nom}</Text>
-			<Text style={{ fontSize: 16, paddingRight: 10 }}>{item.montant} €</Text>
+			<View
+				style={{
+					flexDirection: "row",
+					justifyContent: "space-between",
+					width: "45%",
+				}}>
+				<Text style={{ fontSize: 16 }}>{formatDate(item.date.toDate())}</Text>
+				<Text style={{ fontSize: 16, paddingRight: 10 }}>{item.montant} €</Text>
+			</View>
 		</View>
 	);
 
@@ -75,7 +91,7 @@ const DepensesCategorie = ({ navigation, route }) => {
 				{depenses && depenses.length > 0 && (
 					<SwipeListView
 						useFlatList={true}
-						data={depenses}
+						data={[...depenses].sort((a, b) => a.nom > b.nom)}
 						renderItem={renderDepense}
 						renderHiddenItem={renderSwipeButtons}
 						keyExtractor={(item) => item.id}
