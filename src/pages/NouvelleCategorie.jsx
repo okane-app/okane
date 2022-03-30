@@ -28,13 +28,21 @@ const NouvelleCategorie = ({ navigation }) => {
 			return;
 		}
 
-		await addDoc(usersCollectionRef, {
+		if (parseFloat(limite) <= 0.0) {
+			showMessage({
+				message: "La limite doit être supérieure à 0",
+				type: "danger",
+			});
+			return;
+		}
+
+		const docRef = await addDoc(usersCollectionRef, {
 			nom: nom,
 			limite: parseFloat(limite),
-		}).then(async (docRef) => {
-			await updateDoc(docRef, { id: docRef.id });
-			navigation.goBack();
 		});
+
+		await updateDoc(docRef, { id: docRef.id });
+		navigation.goBack();
 	};
 
 	return (
@@ -53,8 +61,8 @@ const NouvelleCategorie = ({ navigation }) => {
 				/>
 
 				<TouchableOpacity
-					onPress={() => {
-						creerCategorie(nom, limite);
+					onPress={async () => {
+						await creerCategorie(nom, limite);
 					}}>
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>Ajouter</Text>

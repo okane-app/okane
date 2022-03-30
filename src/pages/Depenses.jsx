@@ -12,6 +12,7 @@ import {
 	deleteDoc,
 	doc,
 	getDocs,
+	orderBy,
 	query,
 	where,
 } from "firebase/firestore";
@@ -51,7 +52,10 @@ const Depenses = ({ navigation }) => {
 	const user = auth.currentUser;
 
 	const [categories, loadingCategories, errorCategories] = useCollectionData(
-		query(collection(db, "users", user.uid, "categories"))
+		query(
+			collection(db, "users", user.uid, "categories"),
+			orderBy("nom", "asc")
+		)
 	);
 
 	const [depenses] = useCollectionData(
@@ -169,6 +173,8 @@ const Depenses = ({ navigation }) => {
 					.reduce((total, depense) => total + depense.montant, 0)
 			: 0;
 
+		const taux = sommeDepensesCategorie / item.limite;
+
 		return (
 			<TouchableHighlight
 				style={styles.categorie}
@@ -181,9 +187,30 @@ const Depenses = ({ navigation }) => {
 				}}>
 				<>
 					<Text style={{ fontSize: 16, paddingLeft: 10 }}>{item.nom}</Text>
-					<Text style={{ fontSize: 16, paddingRight: 10 }}>
-						{sommeDepensesCategorie} € / {item.limite} €
-					</Text>
+					<View
+						style={{ flexDirection: "row", fontSize: 16, paddingRight: 10 }}>
+						{taux < 0.7 && (
+							<Text style={{ color: "green" }}>{sommeDepensesCategorie} €</Text>
+						)}
+
+						{taux >= 0.7 && taux < 0.9 && (
+							<Text style={{ color: "#e67e00" }}>
+								{sommeDepensesCategorie} €
+							</Text>
+						)}
+
+						{taux >= 0.9 && taux < 1 && (
+							<Text style={{ color: "red" }}>{sommeDepensesCategorie} €</Text>
+						)}
+
+						{taux >= 1 && (
+							<Text style={{ color: "#8c1818" }}>
+								{sommeDepensesCategorie} €
+							</Text>
+						)}
+
+						<Text> / {item.limite} €</Text>
+					</View>
 				</>
 			</TouchableHighlight>
 		);

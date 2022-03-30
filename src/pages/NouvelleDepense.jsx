@@ -13,6 +13,7 @@ import {
 	Timestamp,
 	addDoc,
 	collection,
+	orderBy,
 	query,
 	updateDoc,
 } from "firebase/firestore";
@@ -50,14 +51,18 @@ const NouvelleDepense = ({ navigation }) => {
 
 	const usersCollectionRef = collection(db, "users", user.uid, "depenses");
 
-	const controleSaisie = () => {
-		return categorie.length > 0 && depense.length > 0 && montant.length > 0;
-	};
-
 	const creerDepense = async () => {
-		if (!controleSaisie()) {
+		if (!(categorie.length > 0 && depense.length > 0 && montant.length > 0)) {
 			showMessage({
 				message: "Veuillez remplir tous les champs",
+				type: "danger",
+			});
+			return;
+		}
+
+		if (parseFloat(montant) <= 0.0) {
+			showMessage({
+				message: "Le montant doit être supérieur à 0",
 				type: "danger",
 			});
 			return;
@@ -78,7 +83,10 @@ const NouvelleDepense = ({ navigation }) => {
 	};
 
 	const [categories, loading, error] = useCollectionData(
-		query(collection(db, "users", user.uid, "categories"))
+		query(
+			collection(db, "users", user.uid, "categories"),
+			orderBy("nom", "asc")
+		)
 	);
 
 	return (
@@ -89,7 +97,7 @@ const NouvelleDepense = ({ navigation }) => {
 				<View style={styles.form}>
 					<View>
 						<View style={{ justifyContent: "center" }}>
-							{categories && (
+							{categories && categories.every((categorie) => categorie.id) && (
 								<RNPickerSelect
 									style={picker}
 									useNativeAndroidPickerStyle={false}
