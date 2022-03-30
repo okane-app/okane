@@ -86,6 +86,14 @@ const Profil = () => {
 			return;
 		}
 
+		if (pseudo.length > 20) {
+			showMessage({
+				message: "Votre pseudo ne doit pas dépasser 20 caractères",
+				type: "danger",
+			});
+			return;
+		}
+
 		// Met à jour le pseudo interne de l'utilisateur
 		await updateProfile(auth.currentUser, {
 			displayName: pseudo,
