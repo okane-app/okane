@@ -59,6 +59,7 @@ const Inscription = ({ navigation }) => {
 							style={{ height: 50 }}
 							placeholder="Nom d'utilisateur"
 							onChangeText={setUsername}
+							maxLength={20}
 						/>
 					</View>
 
@@ -68,6 +69,7 @@ const Inscription = ({ navigation }) => {
 							placeholder="Adresse mail"
 							onChangeText={setEmail}
 							keyboardType={"email-address"}
+							maxLength={50}
 						/>
 					</View>
 
@@ -77,6 +79,7 @@ const Inscription = ({ navigation }) => {
 							placeholder="Mot de passe"
 							secureTextEntry={true}
 							onChangeText={setPassword}
+							maxLength={50}
 						/>
 					</View>
 
