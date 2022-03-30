@@ -19,12 +19,22 @@ import { useState } from "react";
 const Inscription = ({ navigation }) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 
-	const register = async (username, email, password) => {
+	const [password, setPassword] = useState("");
+	const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+	const register = async () => {
 		if (username.length === 0) {
 			showMessage({
 				message: "Veuillez entrer un nom d'utilisateur",
+				type: "danger",
+			});
+			return;
+		}
+
+		if (password !== passwordConfirmation) {
+			showMessage({
+				message: "Les mots de passe ne correspondent pas",
 				type: "danger",
 			});
 			return;
@@ -97,6 +107,16 @@ const Inscription = ({ navigation }) => {
 						/>
 					</View>
 
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							placeholder="Confirmer le mot de passe"
+							secureTextEntry={true}
+							onChangeText={setPasswordConfirmation}
+							maxLength={50}
+						/>
+					</View>
+
 					<Text style={{ paddingLeft: 10 }}>
 						En t'inscrivant, tu acceptes nos{" "}
 						<Text style={styles.link}>conditions générales d'utilisation</Text>.
@@ -104,7 +124,7 @@ const Inscription = ({ navigation }) => {
 
 					<TouchableOpacity
 						onPress={() => {
-							register(username, email, password);
+							register();
 						}}>
 						<View style={styles.button}>
 							<Text style={styles.buttonText}>Inscription</Text>
