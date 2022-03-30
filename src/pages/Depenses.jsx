@@ -58,10 +58,6 @@ const Depenses = ({ navigation }) => {
 		query(collection(db, "users", user.uid, "depenses"))
 	);
 
-	const [depensesMois] = useCollectionData(
-		query(collection(db, "users", user.uid, "depenses"))
-	);
-
 	// Jauge circulaire
 
 	const budgetMax = () => {
