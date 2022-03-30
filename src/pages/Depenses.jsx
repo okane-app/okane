@@ -219,17 +219,28 @@ const Depenses = ({ navigation }) => {
 	const renderSwipeButtons = (data, map) => (
 		<View style={styles.swipeButtons}>
 			<TouchableOpacity
-				style={[styles.backButton, styles.backButtonLeft]}
+				style={[styles.backButton, styles.backButtonRL]}
 				onPress={() => map[data.item.id].closeRow()}>
 				<Text style={{ color: "white" }}>Fermer</Text>
 			</TouchableOpacity>
 
 			<TouchableOpacity
-				style={[styles.backButton, styles.backButtonRight]}
+				style={[styles.backButton, styles.backButtonRR]}
 				onPress={async () => {
 					await deleteCategorie(data.item.id);
 				}}>
 				<Ionicons name="trash-outline" color={"#FFF"} size={28} />
+			</TouchableOpacity>
+
+			<TouchableOpacity
+				style={[styles.backButton, styles.backButtonL]}
+				onPress={() => {
+					navigation.navigate("ModifierCategorie", {
+						categorie: data.item.id,
+						title: data.item.nom,
+					});
+				}}>
+				<Ionicons name="create-outline" color={"#FFF"} size={28} />
 			</TouchableOpacity>
 		</View>
 	);
@@ -287,8 +298,8 @@ const Depenses = ({ navigation }) => {
 						renderItem={renderCategorie}
 						renderHiddenItem={renderSwipeButtons}
 						keyExtractor={(item) => item.id}
+						leftOpenValue={75}
 						rightOpenValue={-150}
-						disableRightSwipe={true}
 					/>
 				)}
 
@@ -376,12 +387,16 @@ const styles = StyleSheet.create({
 		width: 75,
 	},
 
-	backButtonLeft: {
+	backButtonL: {
+		backgroundColor: "orange",
+	},
+
+	backButtonRL: {
 		backgroundColor: "blue",
 		right: 75,
 	},
 
-	backButtonRight: {
+	backButtonRR: {
 		backgroundColor: "red",
 		right: 0,
 	},
