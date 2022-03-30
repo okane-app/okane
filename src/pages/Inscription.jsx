@@ -79,8 +79,8 @@ const Inscription = ({ navigation }) => {
 						/>
 					</View>
 
-					<Text>
-						En vous inscrivant, vous acceptez nos{" "}
+					<Text style={{ paddingLeft: 10 }}>
+						En t'inscrivant, tu acceptes nos{" "}
 						<Text style={styles.link}>conditions générales d'utilisation</Text>.
 					</Text>
 

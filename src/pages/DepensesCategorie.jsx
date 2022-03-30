@@ -66,7 +66,8 @@ const DepensesCategorie = ({ navigation, route }) => {
 				{depenses && depenses.length === 0 && (
 					<View style={{ marginTop: 20 }}>
 						<Text style={{ alignSelf: "center" }}>
-							Vous n'avez aucune dépense. Et si vous ajoutiez votre première ?
+							Tu n'as aucune dépense dans cette catégorie. Et si tu en ajoutais
+							une ?
 						</Text>
 					</View>
 				)}

@@ -117,8 +117,7 @@ const Accueil = () => {
 							ListEmptyComponent={() => (
 								<View style={styles.container}>
 									<Text>
-										Vous n'avez aucune dépense. Et si vous ajoutiez votre
-										première ?
+										Tu n'as aucune dépense. Et si tu en ajoutais une ?
 									</Text>
 								</View>
 							)}
