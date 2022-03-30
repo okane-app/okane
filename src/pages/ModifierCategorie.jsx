@@ -27,12 +27,12 @@ const ModifierCategorie = ({ navigation, route }) => {
 	const [nomOnce, setNomOnce] = useState(false);
 	const [limiteOnce, setLimiteOnce] = useState(false);
 
-	if (categorie && !nom && !nomOnce) {
+	if (categorie && !nomOnce) {
 		setNom(categorie.nom);
 		setNomOnce(true);
 	}
 
-	if (categorie && !limite && !limiteOnce) {
+	if (categorie && !limiteOnce) {
 		setLimite(categorie.limite.toString());
 		setLimiteOnce(true);
 	}

@@ -7,7 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-const DepensesCategorie = ({ route }) => {
+const DepensesCategorie = ({ navigation, route }) => {
 	const user = auth.currentUser;
 
 	const [depenses] = useCollectionData(
@@ -45,6 +45,7 @@ const DepensesCategorie = ({ route }) => {
 			<TouchableOpacity
 				style={[styles.backButton, styles.backButtonL]}
 				onPress={() => {
+					map[data.item.id].closeRow();
 					navigation.navigate("ModifierDepense", {
 						depense: data.item.id,
 						title: data.item.nom,
