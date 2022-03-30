@@ -283,6 +283,7 @@ const styles = StyleSheet.create({
 	},
 
 	messageSecondary: {
+		marginTop: 5,
 		color: "dimgray",
 	},
 
