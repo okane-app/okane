@@ -55,6 +55,8 @@ const Profil = () => {
 			allowsEditing: true,
 		});
 
+		if (result.cancelled) return;
+
 		// Référence de l'image
 		const newImageRef = ref(
 			storage,
