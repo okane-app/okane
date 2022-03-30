@@ -296,7 +296,7 @@ const Depenses = ({ navigation }) => {
 					<View style={{ marginTop: 20 }}>
 						<Text style={{ alignSelf: "center" }}>
 							Tu n'as aucune catégorie. Et si tu en ajoutais une avec ta
-							première dépense ?
+							première dépense ? 😉
 						</Text>
 					</View>
 				)}

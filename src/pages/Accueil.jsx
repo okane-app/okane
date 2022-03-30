@@ -113,11 +113,11 @@ const Accueil = () => {
 							style={styles.listeDepenses}
 							data={depensesRecentes}
 							renderItem={renderDepense}
-							keyExtractor={(item, index) => index}
+							keyExtractor={(_item, index) => index}
 							ListEmptyComponent={() => (
 								<View style={styles.container}>
 									<Text>
-										Tu n'as aucune dépense. Et si tu en ajoutais une ?
+										Tu n'as aucune dépense. Et si tu en ajoutais une ? 💸
 									</Text>
 								</View>
 							)}
