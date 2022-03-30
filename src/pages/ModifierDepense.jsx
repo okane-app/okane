@@ -160,7 +160,7 @@ const ModifierDepense = ({ navigation, route }) => {
 							placeholder="Nom de la dépense"
 							onChangeText={setDepense}
 							value={depense}
-							maxLength={20}
+							maxLength={30}
 						/>
 					</View>
 
