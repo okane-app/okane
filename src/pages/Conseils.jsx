@@ -20,13 +20,16 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+import {
+	useCollectionData,
+	useDocumentData,
+} from "react-firebase-hooks/firestore";
 
 import PropTypes from "prop-types";
 import ReactTimeAgo from "react-time-ago";
 import { StatusBar } from "expo-status-bar";
 import { showMessage } from "react-native-flash-message";
 import { useActionSheet } from "@expo/react-native-action-sheet";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useState } from "react";
 
 // Pour affichage des horaires des messages relatifs à l'heure actuelle
@@ -47,6 +50,9 @@ Time.propTypes = {
 };
 
 const Conseils = () => {
+	// Pour désactiver le chat à distance
+	const [adminMessages] = useDocumentData(doc(db, "admin", "messages"));
+
 	const user = auth.currentUser;
 
 	const [messages, loadingMessages, errorMessages] = useCollectionData(
@@ -213,15 +219,30 @@ const Conseils = () => {
 			</View>
 
 			<View style={styles.form}>
-				<View style={styles.input}>
-					<TextInput
-						style={{ height: 50 }}
-						onChangeText={setInputMessage}
-						value={inputMessage}
-						maxLength={200}
-						placeholder="Partage ton expérience !"
-					/>
-				</View>
+				{!adminMessages?.disabled && (
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							onChangeText={setInputMessage}
+							value={inputMessage}
+							maxLength={200}
+							placeholder="Partage ton expérience !"
+						/>
+					</View>
+				)}
+
+				{adminMessages?.disabled && (
+					<View style={styles.input}>
+						<TextInput
+							style={{ height: 50 }}
+							onChangeText={setInputMessage}
+							value={inputMessage}
+							maxLength={200}
+							placeholder="Chat désactivé par l'équipe d'Okane"
+							editable={false}
+						/>
+					</View>
+				)}
 				<TouchableOpacity
 					onPress={() => {
 						addMessage(inputMessage).then(() => {
