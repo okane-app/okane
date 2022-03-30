@@ -205,7 +205,11 @@ const Profil = () => {
 						setModalVisible(false);
 					}}>
 					<Dialog.Title>Changer de pseudo</Dialog.Title>
-					<Dialog.Input placeholder="Nouveau pseudo" onChangeText={setPseudo} />
+					<Dialog.Input
+						placeholder="Nouveau pseudo"
+						onChangeText={setPseudo}
+						maxLength={20}
+					/>
 					<Dialog.Button
 						label="Annuler"
 						onPress={() => setModalVisible(false)}
