@@ -3,7 +3,7 @@
 # Okane (Application de gestion de budget)
 
 Ce répertoire contient les codes sources d'un projet réalisé dans le cadre d'un projet de fin d'étude
-à l'[IUT de Paris - Rives de Seine](https://iutparis-seine.u-paris.fr/) en 2022.
+à [l'IUT de Paris - Rives de Seine](https://iutparis-seine.u-paris.fr/) en 2022.
 
 Ce projet consiste à créer une application de gestion de dépense afin d'améliorer nos compétences en développement mobile à l'aide des frameworks
 [React Native](https://reactnative.dev/) et [React](https://fr.reactjs.org/).
